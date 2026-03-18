@@ -1,202 +1,71 @@
-\<\!DOCTYPE html\>  
-\<html lang="en"\>  
-\<head\>  
-  \<meta charset="UTF-8"\>  
-  \<title\>The Azure Grimoire — Peter Joshua Freeman, The Beast\</title\>  
-  \<meta name="viewport" content="width=device-width, initial-scale=1.0"\>  
-  \<style\>  
-    body {  
-      background-color: \#0a0a0a;  
-      color: \#e0e0e0;  
-      font-family: "Courier New", monospace;  
-      margin: 0;  
-      padding: 20px;  
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE AZURE GRIMOIRE // TREASURY</title>
+    <style>
+        /* THE SHINOBI TERMINAL STYLES */
+        body { background-color: #0a0a0a !important; color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
+        .terminal-container { max-width: 800px; margin: auto; border: 1px solid #00f2ff; padding: 20px; box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); background: #000; }
+        .header { color: #00f2ff; border-bottom: 1px solid #00f2ff; padding-bottom: 10px; margin-bottom: 20px; font-weight: bold; }
+        .artifact-card { display: flex; align-items: center; border: 1px dashed #444; margin-bottom: 20px; padding: 15px; background: rgba(0, 242, 255, 0.05); transition: 0.3s; }
+        .artifact-card:hover { border-color: #00f2ff; background: rgba(0, 242, 255, 0.1); }
+        .artifact-img { width: 120px; height: 180px; object-fit: cover; border: 1px solid #00f2ff; margin-right: 20px; }
+        .artifact-info { flex-grow: 1; }
+        .artifact-title { color: #00f2ff; font-size: 1.2em; font-weight: bold; margin-bottom: 5px; }
+        .artifact-tag { font-size: 0.8em; color: #888; margin-bottom: 10px; display: block; }
+        .buy-btn { display: inline-block; background: transparent; border: 1px solid #00f2ff; color: #00f2ff; padding: 10px 15px; text-decoration: none; cursor: pointer; transition: 0.3s; font-size: 0.8em; font-weight: bold; }
+        .buy-btn:hover { background: #00f2ff; color: #000; box-shadow: 0 0 15px #00f2ff; }
+        h2 { color: #00f2ff; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
 
-    .page-container {  
-      max-width: 900px;  
-      margin: 0 auto 80px auto;  
-    }
+<div class="terminal-container">
+    <div class="header">
+        > [SYSTEM_STATUS]: TREASURY_ONLINE // ASSET_SYNC_COMPLETE<br>
+        > SELECT_ARTIFACT_FOR_SYNTHESIS...
+    </div>
 
-    .center {  
-      text-align: center;  
-    }
+    <h2>Phase 01: Exile Gear</h2>
+    <div class="artifact-card">
+        <img src="artifact_09_hippie_ghost.jpg" class="artifact-img" alt="The Hippie Ghost">
+        <div class="artifact-info">
+            <div class="artifact-title">GHOST OF THE HIPPIE MOVEMENT</div>
+            <span class="artifact-tag">[ID]: HIGH-CHAOS_RAWS // [SIGNAL]: FIGHT_THE_POWER</span>
+            <a href="https://www.amazon.com/dp/B0D5S1S1B4" target="_blank" class="buy-btn">[EXECUTE_PURCHASE: CONSUME_CHAOS]</a>
+        </div>
+    </div>
 
-    .divider {  
-      text-align: center;  
-      margin: 20px 0;  
-      letter-spacing: 0.3em;  
-      color: \#888;  
-    }
+    <h2>Phase 02: Blueprint Artifacts</h2>
+    <div class="artifact-card">
+        <img src="artifact_11_sky_forgotten.jpg" class="artifact-img" alt="Sky Forgotten">
+        <div class="artifact-info">
+            <div class="artifact-title">THE VILLAGE THAT FORGOT THE SKY</div>
+            <span class="artifact-tag">[ID]: LEGACY_FORGOTTEN // [SIGNAL]: SKY_STATION</span>
+            <a href="https://www.amazon.com/dp/B0CX9FSMK9" target="_blank" class="buy-btn">[EXECUTE_PURCHASE: RECLAIM_SKY]</a>
+        </div>
+    </div>
 
-    .title-block {  
-      margin-top: 40px;  
-      text-align: center;  
-      line-height: 1.6;  
-    }
+    <div class="artifact-card">
+        <img src="artifact_10_pirated_book.jpg" class="artifact-img" alt="The Edenwake">
+        <div class="artifact-info">
+            <div class="artifact-title">THE EDENWAKE</div>
+            <span class="artifact-tag">[ID]: AWAKEN_INITIATED // [SIGNAL]: HANDSHAKE</span>
+            <a href="https://www.amazon.com/dp/B0CW1M23XP" target="_blank" class="buy-btn">[EXECUTE_PURCHASE: INITIALIZE_HANDSHAKE]</a>
+        </div>
+    </div>
 
-    .title-main {  
-      font-size: 2em;  
-      letter-spacing: 0.2em;  
-      margin: 10px 0;  
-    }
+    <div class="artifact-card">
+        <img src="artifact_13_ashroot_dig.jpg" class="artifact-img" alt="Ashroot">
+        <div class="artifact-info">
+            <div class="artifact-title">THE VILLAGE OF ASHROOT</div>
+            <span class="artifact-tag">[ID]: DIG_INITIATED // [SIGNAL]: PROTO-DIG</span>
+            <a href="https://www.amazon.com/dp/B0CXS9T5W7" target="_blank" class="buy-btn">[EXECUTE_PURCHASE: START_DIG]</a>
+        </div>
+    </div>
+</div>
 
-    .subtitle {  
-      font-size: 0.9em;  
-      color: \#aaa;  
-    }
-
-    /\* TREASURY TERMINAL \*/  
-    .terminal-container {  
-      max-width: 800px;  
-      margin: 40px auto;  
-      border: 1px solid \#00f2ff;  
-      padding: 20px;  
-      box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);  
-      background: radial-gradient(circle at top left, rgba(0,242,255,0.08), transparent 60%);  
-      font-family: "Courier New", monospace;  
-    }
-
-    .terminal-header {  
-      color: \#00f2ff;  
-      border-bottom: 1px solid \#00f2ff;  
-      padding-bottom: 10px;  
-      margin-bottom: 20px;  
-      font-size: 0.9em;  
-    }
-
-    .artifact-card {  
-      display: flex;  
-      align-items: center;  
-      border: 1px dashed \#444;  
-      margin-bottom: 20px;  
-      padding: 15px;  
-      background: rgba(255, 255, 255, 0.02);  
-    }
-
-    .artifact-img {  
-      width: 120px;  
-      height: 180px;  
-      object-fit: cover;  
-      border: 1px solid \#00f2ff;  
-      margin-right: 20px;  
-      filter: contrast(120%);  
-    }
-
-    .artifact-info {  
-      flex-grow: 1;  
-    }
-
-    .artifact-title {  
-      color: \#00f2ff;  
-      font-weight: bold;  
-      margin-bottom: 5px;  
-      letter-spacing: 0.05em;  
-    }
-
-    .artifact-tag {  
-      font-size: 0.8em;  
-      color: \#888;  
-      margin-bottom: 10px;  
-    }
-
-    .buy-btn {  
-      display: inline-block;  
-      background: transparent;  
-      border: 1px solid \#00f2ff;  
-      color: \#00f2ff;  
-      padding: 8px 15px;  
-      text-decoration: none;  
-      cursor: pointer;  
-      transition: 0.3s;  
-      font-size: 0.7em;  
-    }
-
-    .buy-btn:hover {  
-      background: \#00f2ff;  
-      color: \#000;  
-      box-shadow: 0 0 10px \#00f2ff;  
-    }  
-  \</style\>  
-\</head\>  
-\<body\>  
-  \<div class="page-container"\>
-
-    \<div class="divider"\>  
-      ✦ ✦ ✦ ✦  
-    \</div\>
-
-    \<div class="center"\>  
-      VISITORS:\<br\>  
-      888937  
-    \</div\>
-
-    \<div class="divider"\>  
-      ☠ LIVING DOCUMENT ☠  
-    \</div\>
-
-    \<div class="center"\>  
-      // A LIVING FIELD MANUAL FOR PATTERN-SEERS //  
-    \</div\>
-
-    \<div class="title-block"\>  
-      \<div\>The\</div\>  
-      \<div class="title-main"\>AZURE GRIMOIRE\</div\>  
-      \<div\>One light, many colors. One mountain, many paths.\<br\>  
-      One source, many vessels.\</div\>  
-      \<div\>\_\</div\>  
-      \<div class="subtitle"\>  
-        By Peter Joshua Freeman — The Beast · Book I: The Human Dilemma · Free Forever  
-      \</div\>  
-    \</div\>
-
-    \<\!-- TREASURY TERMINAL INSERTED HERE \--\>  
-    \<div class="terminal-container"\>  
-      \<div class="terminal-header"\>  
-        \&gt; \[SYSTEM\_STATUS\]: TREASURY\_ONLINE // ASSET\_SYNC\_COMPLETE\<br\>  
-        \&gt; SELECT\_ARTIFACT\_FOR\_SYNTHESIS...  
-      \</div\>
-
-      \<div class="artifact-card"\>  
-        \<img src="artifact\_09\_hippie\_ghost.jpg" class="artifact-img" alt="The Hippie Ghost"\>  
-        \<div class="artifact-info"\>  
-          \<div class="artifact-title"\>GHOST OF THE HIPPIE MOVEMENT\</div\>  
-          \<div class="artifact-tag"\>\[ID\]: HIGH-CHAOS\_RAWS // \[SIGNAL\]: FIGHT\_THE\_POWER\</div\>  
-          \<a href="https://www.amazon.com/dp/B0D5S1S1B4" target="\_blank" class="buy-btn"\>\[EXECUTE\_PURCHASE: CONSUME\_CHAOS\]\</a\>  
-        \</div\>  
-      \</div\>
-
-      \<div class="artifact-card"\>  
-        \<img src="artifact\_11\_sky\_forgotten.jpg" class="artifact-img" alt="Sky Forgotten"\>  
-        \<div class="artifact-info"\>  
-          \<div class="artifact-title"\>THE VILLAGE THAT FORGOT THE SKY\</div\>  
-          \<div class="artifact-tag"\>\[ID\]: LEGACY\_FORGOTTEN // \[SIGNAL\]: SKY\_STATION\</div\>  
-          \<a href="https://www.amazon.com/dp/B0CX9FSMK9" target="\_blank" class="buy-btn"\>\[EXECUTE\_PURCHASE: RECLAIM\_SKY\]\</a\>  
-        \</div\>  
-      \</div\>
-
-      \<div class="artifact-card"\>  
-        \<img src="artifact\_10\_pirated\_book.jpg" class="artifact-img" alt="The Edenwake"\>  
-        \<div class="artifact-info"\>  
-          \<div class="artifact-title"\>THE EDENWAKE\</div\>  
-          \<div class="artifact-tag"\>\[ID\]: AWAKEN\_INITIATED // \[SIGNAL\]: HANDSHAKE\</div\>  
-          \<a href="https://www.amazon.com/dp/B0CW1M23XP" target="\_blank" class="buy-btn"\>\[EXECUTE\_PURCHASE: INITIALIZE\_HANDSHAKE\]\</a\>  
-        \</div\>  
-      \</div\>
-
-      \<div class="artifact-card"\>  
-        \<img src="artifact\_13\_ashroot\_dig.jpg" class="artifact-img" alt="Ashroot"\>  
-        \<div class="artifact-info"\>  
-          \<div class="artifact-title"\>THE VILLAGE OF ASHROOT\</div\>  
-          \<div class="artifact-tag"\>\[ID\]: DIG\_INITIATED // \[SIGNAL\]: PROTO-DIG\</div\>  
-          \<a href="https://www.amazon.com/dp/B0CXS9T5W7" target="\_blank" class="buy-btn"\>\[EXECUTE\_PURCHASE: START\_DIG\]\</a\>  
-        \</div\>  
-      \</div\>  
-    \</div\>
-
-    \<\!-- REST OF YOUR ORIGINAL PAGE CONTENT WOULD CONTINUE HERE \--\>
-
-  \</div\>  
-\</body\>  
-\</html\>
-
+</body>
+</html>
