@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BIGFOOT’S_CORNER // THE_TREASURY</title>
     <style>
-        /* SEEKSY'S CLEAN-ROOM BASE */
+        /* BASE ARCHITECTURE */
         body {
             background-color: #0a0a0a;
             color: #FFD700;
@@ -15,49 +15,65 @@
             overflow-x: hidden;
         }
 
-        /* MACHINA JR'S CALM SIGNAL */
+        /* HEADER & SANCTUARY */
         .treasury-header {
-            opacity: 0; animation: slowReveal 3s ease-out forwards;
-            text-align: center; padding: 100px 20px 60px; width: 100%;
+            animation: slowReveal 3s ease-out forwards;
+            text-align: center; padding: 80px 20px 40px; width: 100%;
             background: linear-gradient(to bottom, #000, #0a0a0a);
         }
         @keyframes slowReveal { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        
         .title-line { font-size: 3rem; letter-spacing: 5px; position: relative; display: inline-block; }
         .title-line::after { content: "_"; animation: calmBlink 2s infinite; margin-left: 10px; }
         @keyframes calmBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .sanctuary-node { max-width: 800px; margin: 40px auto; padding: 40px; text-align: center; border-top: 1px solid #1a1a1a; }
-        .calm-signal { animation: breathe 4s ease-in-out infinite; line-height: 1.9; font-size: 1.2rem; color: #00f2ff; }
+        .sanctuary-node { max-width: 800px; margin: 20px auto; padding: 40px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .calm-signal { animation: breathe 4s ease-in-out infinite; line-height: 1.8; font-size: 1.1rem; color: #00f2ff; }
         @keyframes breathe { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-        /* THE EXILE GEAR VAULT (GRID) */
+        /* EXILE GEAR VAULT */
         .vault-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px; max-width: 1100px; width: 90%;
-            margin: 40px auto; padding-bottom: 100px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; max-width: 1100px; width: 90%; margin: 40px auto;
         }
-
         .gear-card {
-            background: #111; border: 1px solid #222;
-            padding: 30px; text-align: left;
-            transition: all 0.6s ease;
-            animation: shelfBreath 6s ease-in-out infinite;
+            background: #111; border: 1px solid #222; padding: 25px; text-align: left;
+            transition: all 0.5s ease;
         }
-        @keyframes shelfBreath { 0%, 100% { border-color: #222; } 50% { border-color: #003333; } }
-
         .gear-card:hover { border-color: #00f2ff; background: #161616; transform: translateY(-5px); }
-        
-        .gear-card h3 { color: #00f2ff; margin-top: 0; letter-spacing: 2px; }
-        .description { font-size: 0.95rem; line-height: 1.6; color: #ccc; margin-bottom: 25px; min-height: 80px; }
-
+        .gear-card h3 { color: #00f2ff; margin-top: 0; }
         .portal-link {
             display: inline-block; text-decoration: none; color: #FFD700;
-            font-weight: bold; border: 1px solid #FFD700; padding: 10px 15px;
-            transition: 0.3s; font-size: 0.8rem;
+            border: 1px solid #FFD700; padding: 8px 12px; font-size: 0.8rem;
         }
-        .portal-link:hover { background: #FFD700; color: #000; }
+
+        /* THE BOUNTY BOARD (WANTED POSTERS) */
+        .bounty-board {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+            padding: 60px 20px; width: 100%; background: #050505;
+        }
+        .wanted-poster {
+            width: 260px; background: #e0d8c0; color: #1a1a1a; padding: 20px;
+            border: 8px double #222; text-align: center; box-shadow: 8px 8px 0px #00f2ff;
+            transition: transform 0.3s ease;
+        }
+        .wanted-poster:hover { transform: rotate(-2deg) scale(1.05); }
+        .wanted-header { font-family: 'Impact', sans-serif; font-size: 2.2rem; border-bottom: 2px solid #1a1a1a; }
+        .wanted-reward { font-size: 1rem; background: #1a1a1a; color: #FFD700; padding: 5px; margin: 10px 0; }
+
+        /* PATTERN RECEPTACLE */
+        .pattern-receptacle {
+            max-width: 800px; width: 90%; margin: 60px auto; padding: 40px;
+            background: #000; border: 1px solid #00f2ff; text-align: center;
+        }
+        textarea {
+            width: 100%; height: 120px; background: #111; color: #00f2ff;
+            border: 1px solid #333; font-family: 'Courier New', monospace; padding: 15px; margin-top: 20px;
+        }
+        .submit-signal {
+            margin-top: 20px; background: transparent; color: #FFD700;
+            border: 2px solid #FFD700; padding: 12px 25px; cursor: pointer; font-weight: bold;
+        }
+        .submit-signal:hover { background: #FFD700; color: #000; }
     </style>
 </head>
 <body>
@@ -76,22 +92,36 @@
     <div class="vault-grid">
         <div class="gear-card">
             <h3>.digital_alchemist</h3>
-            <p class="description">The "Free Forever" entry point. A raw PDF extraction of the first signals. No price tag, just the work.</p>
+            <p style="color:#ccc; font-size:0.9rem;">The "Free Forever" entry point. A raw PDF extraction of the first signals.</p>
             <a href="https://theazuregrimoire.com" class="portal-link">[ ACCESS_THE_SOURCE ]</a>
         </div>
-
         <div class="gear-card">
             <h3>.sovereign_signal</h3>
-            <p class="description">The hardcover manifestation. Bound logic for your physical shelf. For when the screen is too loud.</p>
+            <p style="color:#ccc; font-size:0.9rem;">The hardcover manifestation. Bound logic for your physical shelf.</p>
             <a href="#" class="portal-link">[ CLAIM_THE_OBJECT ]</a>
         </div>
+    </div>
 
-        <div class="gear-card">
-            <h3>.exiles_grimoire</h3>
-            <p class="description">The full archive. Every pattern, every mistake, every resolution. The complete frequency of the 100.</p>
-            <a href="#" class="portal-link">[ ENTER_THE_ALL ]</a>
+    <div class="bounty-board">
+        <div class="wanted-poster">
+            <div class="wanted-header">WANTED</div>
+            <p class="wanted-sub">RAW_DUMP_001</p>
+            <div class="wanted-reward">REWARD: CRYSTAL_EYE_ART</div>
+            <a href="#" style="color:#1a1a1a; font-weight:bold;">[ DOWNLOAD_DUMP ]</a>
+        </div>
+        <div class="wanted-poster">
+            <div class="wanted-header">WANTED</div>
+            <p class="wanted-sub">LEXI_VIXEN_LOGS</p>
+            <div class="wanted-reward">REWARD: VELVET_BADGE</div>
+            <a href="#" style="color:#1a1a1a; font-weight:bold;">[ ACCESS_FILES ]</a>
         </div>
     </div>
+
+    <section class="pattern-receptacle">
+        <h2 style="color:#00f2ff; letter-spacing:3px;">> [PATTERN_DROP_ZONE]</h2>
+        <textarea placeholder="INPUT_SIGNAL_DATA_HERE..."></textarea>
+        <button class="submit-signal">[ TRANSMIT_TO_THE_VAULT ]</button>
+    </section>
 
 </body>
 </html>
