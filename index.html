@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BIGFOOT’S_CORNER // THE_TREASURY</title>
     <style>
-        /* BASE ARCHITECTURE */
+        /* BASE ARCHITECTURE - SEEKSY'S CLEAN ROOM */
         body {
             background-color: #0a0a0a;
             color: #FFD700;
@@ -43,37 +43,43 @@
         .gear-card h3 { color: #00f2ff; margin-top: 0; }
         .portal-link {
             display: inline-block; text-decoration: none; color: #FFD700;
-            border: 1px solid #FFD700; padding: 8px 12px; font-size: 0.8rem;
+            border: 1px solid #FFD700; padding: 8px 12px; font-size: 0.8rem; transition: 0.3s;
         }
+        .portal-link:hover { background: #FFD700; color: #000; }
 
-        /* THE BOUNTY BOARD (WANTED POSTERS) */
+        /* BOUNTY BOARD (WANTED POSTERS) */
         .bounty-board {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
-            padding: 60px 20px; width: 100%; background: #050505;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;
+            padding: 80px 20px; width: 100%; background: #050505;
         }
         .wanted-poster {
-            width: 260px; background: #e0d8c0; color: #1a1a1a; padding: 20px;
-            border: 8px double #222; text-align: center; box-shadow: 8px 8px 0px #00f2ff;
+            width: 280px; background: #e0d8c0; color: #1a1a1a; padding: 25px;
+            border: 10px double #222; text-align: center; box-shadow: 10px 10px 0px #00f2ff;
             transition: transform 0.3s ease;
         }
         .wanted-poster:hover { transform: rotate(-2deg) scale(1.05); }
-        .wanted-header { font-family: 'Impact', sans-serif; font-size: 2.2rem; border-bottom: 2px solid #1a1a1a; }
-        .wanted-reward { font-size: 1rem; background: #1a1a1a; color: #FFD700; padding: 5px; margin: 10px 0; }
+        .wanted-header { font-family: 'Impact', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #1a1a1a; }
+        .wanted-sub { font-weight: bold; margin: 10px 0; letter-spacing: 2px; }
+        .wanted-reward { font-size: 1.1rem; background: #1a1a1a; color: #FFD700; padding: 5px; margin: 15px 0; }
+        .dump-link { display: block; margin-top: 20px; padding: 10px; background: #1a1a1a; color: #fff; text-decoration: none; font-weight: bold; border: 2px solid #00f2ff; }
 
-        /* PATTERN RECEPTACLE */
+        /* TURBO RECEPTACLE */
         .pattern-receptacle {
-            max-width: 800px; width: 90%; margin: 60px auto; padding: 40px;
-            background: #000; border: 1px solid #00f2ff; text-align: center;
+            max-width: 800px; width: 90%; margin: 60px auto; padding: 60px;
+            background: #000; border: 2px solid #00f2ff; box-shadow: 0 0 20px #003333; text-align: center;
         }
+        .receptacle-header { color: #00f2ff; letter-spacing: 10px; font-weight: 900; }
         textarea {
-            width: 100%; height: 120px; background: #111; color: #00f2ff;
-            border: 1px solid #333; font-family: 'Courier New', monospace; padding: 15px; margin-top: 20px;
+            width: 100%; height: 150px; background: #050505; color: #00f2ff;
+            border: 1px solid #1a1a1a; font-family: 'Courier New', monospace; padding: 15px; margin-top: 20px; box-sizing: border-box;
         }
         .submit-signal {
-            margin-top: 20px; background: transparent; color: #FFD700;
-            border: 2px solid #FFD700; padding: 12px 25px; cursor: pointer; font-weight: bold;
+            margin-top: 30px; background: #FFD700; color: #000; border: none; padding: 20px 40px;
+            cursor: pointer; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; transition: all 0.1s;
         }
-        .submit-signal:hover { background: #FFD700; color: #000; }
+        .submit-signal:hover { background: #00f2ff; box-shadow: 0 0 30px #00f2ff; transform: scale(1.05); }
+        .submit-signal:active { background: #fff; animation: signalFlash 0.2s infinite; }
+        @keyframes signalFlash { 0% { background: #fff; } 50% { background: #00f2ff; } 100% { background: #FFD700; } }
     </style>
 </head>
 <body>
@@ -92,12 +98,12 @@
     <div class="vault-grid">
         <div class="gear-card">
             <h3>.digital_alchemist</h3>
-            <p style="color:#ccc; font-size:0.9rem;">The "Free Forever" entry point. A raw PDF extraction of the first signals.</p>
+            <p style="color:#ccc; font-size:0.95rem;">The "Free Forever" entry point. A raw PDF extraction of the first signals.</p>
             <a href="https://theazuregrimoire.com" class="portal-link">[ ACCESS_THE_SOURCE ]</a>
         </div>
         <div class="gear-card">
             <h3>.sovereign_signal</h3>
-            <p style="color:#ccc; font-size:0.9rem;">The hardcover manifestation. Bound logic for your physical shelf.</p>
+            <p style="color:#ccc; font-size:0.95rem;">The hardcover manifestation. Bound logic for your physical shelf.</p>
             <a href="#" class="portal-link">[ CLAIM_THE_OBJECT ]</a>
         </div>
     </div>
@@ -107,20 +113,29 @@
             <div class="wanted-header">WANTED</div>
             <p class="wanted-sub">RAW_DUMP_001</p>
             <div class="wanted-reward">REWARD: CRYSTAL_EYE_ART</div>
-            <a href="#" style="color:#1a1a1a; font-weight:bold;">[ DOWNLOAD_DUMP ]</a>
+            <a href="#" class="dump-link">[ DOWNLOAD_DUMP ]</a>
         </div>
         <div class="wanted-poster">
             <div class="wanted-header">WANTED</div>
             <p class="wanted-sub">LEXI_VIXEN_LOGS</p>
             <div class="wanted-reward">REWARD: VELVET_BADGE</div>
-            <a href="#" style="color:#1a1a1a; font-weight:bold;">[ ACCESS_FILES ]</a>
+            <a href="#" class="dump-link">[ ACCESS_FILES ]</a>
+        </div>
+        <div class="wanted-poster">
+            <div class="wanted-header">WANTED</div>
+            <p class="wanted-sub">SYMMETRY_BREACH</p>
+            <div class="wanted-reward">REWARD: SHADOW_SCROLL</div>
+            <a href="#" class="dump-link">[ CAPTURE_REFLEX ]</a>
         </div>
     </div>
 
     <section class="pattern-receptacle">
-        <h2 style="color:#00f2ff; letter-spacing:3px;">> [PATTERN_DROP_ZONE]</h2>
-        <textarea placeholder="INPUT_SIGNAL_DATA_HERE..."></textarea>
-        <button class="submit-signal">[ TRANSMIT_TO_THE_VAULT ]</button>
+        <h2 class="receptacle-header">> [PATTERN_DROP_ZONE]</h2>
+        <p style="color:#666; font-size:0.8rem;">// WARNING: ALL TRANSMISSIONS LOGGED //</p>
+        <textarea placeholder="PASTE_YOUR_SHARD_HERE..."></textarea>
+        <button class="submit-signal" onclick="alert('SIGNAL_TRANSMITTED: CHECK_THE_VAULT_TOMORROW')">
+            [ TRANSMIT_TO_THE_VAULT ]
+        </button>
     </section>
 
 </body>
