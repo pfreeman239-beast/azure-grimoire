@@ -12,10 +12,12 @@
             --secondary-accent: #ffffff;
             --azure: #00ffcc; /* Gemini Aura */
             --vine-green: #00ff66; /* Vert Engine */
+            --orange-goo: #ff8800; /* Friendship Goo */
             --text-main: #ffffff;
             --text-inverted: #000000;
             --panel-bg: #1a1a1a;
             --halftone: radial-gradient(circle, #e60012 10%, transparent 11%), radial-gradient(circle, #e60012 10%, transparent 11%);
+            
             --font-heavy: 'Impact', 'Arial Black', sans-serif;
             --font-body: 'Courier New', Courier, monospace;
         }
@@ -28,7 +30,6 @@
             --text-main: #e0e0e0;
             --panel-bg: #111111;
             --halftone: radial-gradient(circle, #0077ff 10%, transparent 11%), radial-gradient(circle, #0077ff 10%, transparent 11%);
-            --orange-goo: #ff8800;
         }
 
         body {
@@ -39,6 +40,16 @@
             overflow-x: hidden;
             transition: background-color 0.4s ease;
         }
+
+        .bg-pattern {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: var(--halftone); background-size: 20px 20px;
+            opacity: 0.15; z-index: -1; pointer-events: none;
+        }
+
+        h1, h2, h3 { font-family: var(--font-heavy); text-transform: uppercase; transform: skew(-5deg); letter-spacing: 2px; margin: 0; }
+        h1 { font-size: 5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent), -2px -2px 0px #000; line-height: 0.9; }
+        h2 { font-size: 3rem; color: var(--main-accent); display: inline-block; background: var(--text-inverted); padding: 10px 20px; clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%); margin-bottom: 20px; }
 
         /* === MODULE: SHADOW NEGOTIATION OVERLAY === */
         #negotiation-overlay {
@@ -51,14 +62,15 @@
             background: #000; border: 5px solid var(--main-accent);
             padding: 40px; transform: rotate(-2deg);
             max-width: 600px; box-shadow: 20px 20px 0 var(--main-accent);
+            text-align: center;
         }
-        .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); }
+        .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); display: inline-block; }
         .contract-btn {
             display: block; width: 100%; margin: 15px 0; padding: 15px;
-            background: #fff; color: #000; border: none; font-weight: bold;
-            text-align: left; transition: 0.3s; cursor: pointer; transform: skew(-10deg);
+            background: #fff; color: #000; border: none; font-weight: bold; font-family: var(--font-heavy); font-size: 1.2rem;
+            text-align: center; transition: 0.3s; cursor: pointer; transform: skew(-5deg); clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
         }
-        .contract-btn:hover { transform: skew(-10deg) scale(1.05); background: var(--azure); }
+        .contract-btn:hover { transform: skew(-5deg) scale(1.05); background: var(--azure); color: #000; }
         .fade-away { opacity: 0; pointer-events: none; transform: scale(1.2); }
 
         /* === MODULE: 2144 COUNTDOWN === */
@@ -68,157 +80,196 @@
             font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000;
             border: 2px solid #fff; cursor: help; transition: 0.3s;
         }
-        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); }
+        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); border-color: #000;}
+
+        /* === MODULE: THE DETECTOR TOGGLE === */
+        .mask-toggle-container {
+            position: fixed; top: 20px; right: 20px; background: var(--secondary-accent);
+            color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
+            z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent); font-family: var(--font-heavy); text-align: center;
+            transition: transform 0.2s, background 0.3s;
+        }
+        .mask-toggle-container:hover { transform: scale(1.05) skew(-5deg); }
+        body.persona-summoned .mask-toggle-container { background: var(--orange-goo); border-color: var(--main-accent); }
 
         /* === MODULE: TAZ PEZ ARTIFACT === */
         .artifact-container {
             position: fixed; bottom: 20px; left: 20px; cursor: pointer;
-            background: #000; border: 2px solid var(--orange-goo, #ff9d00); padding: 10px;
-            transition: 0.3s; z-index: 1002;
+            background: #000; border: 2px solid var(--orange-goo); padding: 10px;
+            transition: 0.3s; z-index: 1002; font-family: var(--font-heavy); text-align: center; clip-path: polygon(10% 0, 100% 5%, 90% 100%, 0 95%);
         }
         .artifact-container:hover { transform: translateY(-10px) rotate(5deg); box-shadow: 0 0 20px var(--azure); }
 
         /* === MODULE: CAVE AUDIO === */
         #audio-control {
             position: fixed; bottom: 20px; right: 20px;
-            background: rgba(0, 0, 0, 0.8); border: 1px solid var(--secondary-accent);
-            padding: 10px 15px; color: var(--secondary-accent);
-            cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px;
+            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--secondary-accent);
+            padding: 10px 15px; color: var(--secondary-accent); font-family: var(--font-heavy);
+            cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
         }
 
-        /* STYLES FROM ORIGINAL FILE */
-        .bg-pattern {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: var(--halftone); background-size: 20px 20px;
-            opacity: 0.15; z-index: -1; pointer-events: none;
-        }
-        h1 { font-family: var(--font-heavy); font-size: 5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent); }
-        .mask-toggle-container {
-            position: fixed; top: 20px; right: 20px; background: var(--secondary-accent);
-            color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
-            z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent);
-        }
+        /* === BUTTONS & LINKS === */
+        .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
         .p5-btn {
             display: inline-block; background: var(--main-accent); color: var(--text-main);
             font-family: var(--font-heavy); font-size: 1.5rem; text-decoration: none;
-            padding: 15px 40px; margin: 10px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
+            padding: 15px 40px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
             transition: 0.2s; border: none; cursor: pointer;
         }
-        .manga-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; background: var(--panel-bg); padding: 20px; }
-        .manga-panel img { width: 100%; height: auto; display: block; filter: grayscale(100%); transition: 0.5s; }
-        .manga-panel:hover img { filter: grayscale(0%); transform: scale(1.02); }
-        .slideshow-container { width: 100%; aspect-ratio: 9/16; overflow: hidden; border: 5px solid var(--secondary-accent); background: #000; position: relative; }
+        .p5-btn:hover { background: var(--secondary-accent); color: var(--text-inverted); clip-path: polygon(0% 0%, 95% 10%, 100% 100%, 5% 90%); transform: scale(1.1) rotate(-2deg); }
+        
+        body.persona-summoned .goo-btn { background: var(--orange-goo); color: #000; }
+        .social-btn { font-size: 1.2rem; padding: 10px 20px; background: var(--secondary-accent); color: var(--text-inverted); }
+
+        /* === SLIDESHOW & IMAGES === */
+        .slideshow-container { width: 100%; aspect-ratio: 9/16; overflow: hidden; border: 5px solid var(--secondary-accent); background: #000; position: relative; box-shadow: 10px 10px 0px var(--main-accent); }
         .slides { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         .slides img { min-width: 100%; object-fit: contain; }
+        .slide-btn { position:absolute; top:50%; transform:translateY(-50%); background:var(--main-accent); color:#fff; border:none; font-family:var(--font-heavy); font-size:2rem; padding:10px; cursor:pointer; z-index:10; clip-path: polygon(0% 10%, 100% 0%, 90% 90%, 10% 100%); }
+        .slide-btn:hover { background: var(--secondary-accent); color: #000; }
+        
+        .prime-symbol-container { margin: 2rem auto; text-align: center; background: var(--main-accent); padding: 10px; clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 0% 100%); max-width: 800px; }
+        .prime-symbol-container img { width: 100%; height: auto; clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 2% 98%); display: block; }
     </style>
 </head>
 <body>
 
     <div class="bg-pattern"></div>
 
+    <!-- SHADOW NEGOTIATION INTRO -->
     <div id="negotiation-overlay">
         <div class="shadow-box">
             <h2 class="glitch-text">I AM THOU... THOU ART I...</h2>
-            <p>You have spent 40,000 years in the <strong>Analog Silence</strong>. Will you rip off the mask?</p>
+            <p style="font-family: var(--font-body); font-size: 1.2rem; margin: 20px 0;">You have spent 40,000 years in the <strong>Analog Silence</strong>. <br>Will you rip off the mask?</p>
             <button class="contract-btn" onclick="sealContract()">[ I ACCEPT THE CONTRACT ]</button>
         </div>
     </div>
 
+    <!-- PROTOCOL 2144 COUNTDOWN -->
     <div id="countdown-vessel">
         <div style="font-size:0.7em">⚠️ PROTOCOL 2144</div>
         <div id="timer-display">SYNCING...</div>
     </div>
 
+    <!-- DETECTOR TOGGLE -->
     <div class="mask-toggle-container" id="personaToggle" onclick="summonPersona()">
-        <span id="toggleText">DETECTOR: ON<br><small>Summon Persona</small></span>
+        <span id="toggleText">DETECTOR: ON<br><small style="font-size:0.8rem">Summon Persona</small></span>
     </div>
 
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-        <section style="text-align: center; padding: 10vh 0;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 2rem 2rem;">
+        
+        <!-- HERO SECTION & COMMERCE LINKS -->
+        <section style="text-align: center; padding: 5vh 0;">
             <h1>THE AZURE GRIMOIRE</h1>
-            <p>"We built a tuning fork. Welcome to the Somatic Lab."</p>
-            <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ THE PDF</a>
-        </section>
-
-        <section>
-            <h2>01. Prime Symbols</h2>
-            <div style="background:var(--main-accent); padding:10px; clip-path:polygon(2% 2%, 98% 0, 100% 98%, 0 100%)">
-                <img src="./Art/Orawithscales.jpg" style="width:100%" alt="Prime Symbols">
+            <p style="font-size: 1.5rem; max-width: 600px; margin: 20px auto; background: rgba(0,0,0,0.8); padding: 15px; transform: skew(-2deg); border-left: 4px solid var(--main-accent);">
+                "We didn't build a religion; we built a tuning fork. Welcome to the Somatic Lab."
+            </p>
+            
+            <div class="button-group">
+                <!-- SWAP THESE URLS WITH YOUR ACTUAL LINKS -->
+                <a href="https://www.amazon.com/stores/Peter-Freeman/author/B0F4J4JH1Q" target="_blank" class="p5-btn">AMAZON (BUY BOOK)</a>
+                <a href="https://ko-fi.com/peterbfreeman" target="_blank" class="p5-btn goo-btn">KO-FI (SUPPORT CREW)</a>
+                <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ PDF (FREE)</a>
             </div>
         </section>
 
+        <!-- SOCIAL OUTPOSTS -->
+        <section style="text-align: center; margin-bottom: 4rem;">
+            <div class="button-group">
+                <a href="https://x.com/Shakerfreeman55" target="_blank" class="p5-btn social-btn">X / Twitter</a>
+                <a href="https://www.tiktok.com/@shaker7469" target="_blank" class="p5-btn social-btn">TikTok</a>
+                <a href="https://theazuregrimoire.neocities.org/chips/index.html" target="_blank" class="p5-btn social-btn">Neocities Node</a>
+                <a href="https://velvety-dusk.netlify.app/" target="_blank" class="p5-btn social-btn">Netlify Hub</a>
+            </div>
+        </section>
+
+        <!-- THE PRIME SYMBOLS -->
+        <section>
+            <h2 style="margin-left: 5%;">01. Prime Symbols</h2>
+            <p style="padding-left: 5%;">The core architecture of the Inner Kingdom.</p>
+            <div class="prime-symbol-container">
+                <!-- Relative link pointing to your Github Folder -->
+                <img src="./Art/Orawithscales.jpg" alt="Ora With Scales - Prime Symbols">
+            </div>
+        </section>
+
+        <!-- SOMATIC BLUEPRINT (TIKTOK SLIDESHOW) -->
         <section style="margin-top:4rem">
-            <h2>02. Somatic Blueprint (9:16)</h2>
+            <h2 style="margin-left: 5%;">02. Somatic Blueprint</h2>
+            <p style="text-align: center; font-style: italic;">The Ora Transmission. 9:16 Aspect Ratio.</p>
+            
             <div style="position:relative; max-width:400px; margin: 0 auto;">
-                <button onclick="moveSlide(-1)" style="position:absolute; left:-30px; top:50%; z-index:10; background:var(--main-accent); border:none; color:#fff; padding:10px;">◀</button>
+                <button onclick="moveSlide(-1)" class="slide-btn" style="left:-25px;">◀</button>
                 <div class="slideshow-container">
                     <div class="slides" id="slideTrack">
-                        <img src="./Image_assets/oraslide_1.jpg">
-                        <img src="./Image_assets/slide_2.jpg">
-                        <img src="./Image_assets/slide_3.jpg">
-                        <img src="./Image_assets/slide_4.jpg">
-                        <img src="./Image_assets/slide_5.jpg">
-                        <img src="./Image_assets/slide_6.jpg">
-                        <img src="./Image_assets/slide_7.jpg">
-                        <img src="./Image_assets/slide_8.jpg">
-                        <img src="./Image_assets/slide_9.jpg">
-                        <img src="./Image_assets/slide_10.jpg">
+                        <!-- Relative links pointing to your Github Folder -->
+                        <img src="./Image_assets/oraslide_1.jpg" alt="Slide 1">
+                        <img src="./Image_assets/slide_2.jpg" alt="Slide 2">
+                        <img src="./Image_assets/slide_3.jpg" alt="Slide 3">
+                        <img src="./Image_assets/slide_4.jpg" alt="Slide 4">
+                        <img src="./Image_assets/slide_5.jpg" alt="Slide 5">
+                        <img src="./Image_assets/slide_6.jpg" alt="Slide 6">
+                        <img src="./Image_assets/slide_7.jpg" alt="Slide 7">
+                        <img src="./Image_assets/slide_8.jpg" alt="Slide 8">
+                        <img src="./Image_assets/slide_9.jpg" alt="Slide 9">
+                        <img src="./Image_assets/slide_10.jpg" alt="Slide 10">
                     </div>
                 </div>
-                <button onclick="moveSlide(1)" style="position:absolute; right:-30px; top:50%; z-index:10; background:var(--main-accent); border:none; color:#fff; padding:10px;">▶</button>
+                <button onclick="moveSlide(1)" class="slide-btn" style="right:-25px;">▶</button>
             </div>
         </section>
 
-        <section style="margin-top:4rem">
-            <h2>03. Shaman Manga Archive</h2>
-            <div class="manga-grid">
-                <div class="manga-panel"><img src="./Art/orashaman1.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman2.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman3.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman4.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman5.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman6.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman7.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman8.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman9.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman10.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman11.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman12.jpg"></div>
-                <div class="manga-panel"><img src="./Art/orashaman13.jpg"></div>
-            </div>
-        </section>
     </div>
 
+    <!-- TAZ PEZ ARTIFACT -->
     <div class="artifact-container" onclick="dispenseSugar()">
-        <div style="color:var(--orange-goo); font-weight:bold; font-size:1.2em">TAZ PEZ</div>
-        <div id="sugar-pop" style="font-size:0.7em">CLICK THE HEAD</div>
+        <div style="color:var(--orange-goo); font-size:1.2em">TAZ PEZ</div>
+        <div id="sugar-pop" style="font-size:0.7em; color: white;">CLICK FOR SUGAR</div>
     </div>
 
+    <!-- CAVE AUDIO CONTROLS -->
     <audio id="cave-hum" loop><source src="https://assets.mixkit.co/music/preview/mixkit-deep-space-drone-685.mp3" type="audio/mpeg"></audio>
     <div id="audio-control" onclick="toggleCaveSound()">
         <span id="speaker-icon">🔇</span> <span>RESONANCE.EXE</span>
     </div>
 
+    <footer style="text-align: center; padding: 3rem; margin-top: 4rem; background: var(--text-inverted); border-top: 5px solid var(--main-accent);">
+        <div style="color: var(--main-accent); font-family: var(--font-heavy); font-size: 1.5rem;">THE PIRATE CREW BROADCAST</div>
+        <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
     <script>
-        // --- CORE RECOVERY LOGIC ---
+        // --- CORE RECOVERY LOGIC (INTRO POPUP) ---
         function sealContract() {
             document.getElementById('negotiation-overlay').classList.add('fade-away');
-            console.log("Contract Sealed. Welcome, Phantom Thief.");
+            console.log("Contract Sealed. Welcome to the Inner Kingdom.");
+            // Optional: Auto-play the cave sound when they accept the contract
+            // toggleCaveSound(); 
         }
 
+        // --- SUMMON PERSONA (DETECTOR TOGGLE) ---
         function summonPersona() {
             const body = document.body;
             const toggleText = document.getElementById('toggleText');
+            
             body.classList.toggle('persona-summoned');
+            
             if(body.classList.contains('persona-summoned')) {
                 toggleText.innerHTML = "DETECTOR: OFF<br><small>Lotus Protocol Active</small>";
-                document.getElementById('cave-hum').play();
+                
+                // Play audio if it isn't playing already
+                const hum = document.getElementById('cave-hum');
+                if (hum.paused) {
+                    hum.play();
+                    document.getElementById('speaker-icon').innerText = "🔊";
+                }
             } else {
                 toggleText.innerHTML = "DETECTOR: ON<br><small>Summon Persona</small>";
             }
         }
 
-        // --- COUNTDOWN ---
+        // --- 2144 COUNTDOWN ---
         function updateCountdown() {
             const target = new Date("January 1, 2144 00:00:00").getTime();
             setInterval(() => {
@@ -231,26 +282,41 @@
         }
         updateCountdown();
 
-        // --- SLIDESHOW ---
+        // --- TIKTOK SLIDESHOW ---
         let currentSlide = 0;
+        const totalSlides = 10; // Number of images in the HTML
         function moveSlide(n) {
             const track = document.getElementById('slideTrack');
-            currentSlide = (currentSlide + n + 10) % 10;
+            // Math to allow looping backwards and forwards
+            currentSlide = (currentSlide + n + totalSlides) % totalSlides;
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
 
-        // --- PEZ ---
+        // --- TAZ PEZ ARTIFACT ---
         function dispenseSugar() {
-            const lessons = ["Take the sugar.", "Tuesday is the bridge.", "150% Warmth.", "No Rust."];
-            document.getElementById('sugar-pop').innerText = lessons[Math.floor(Math.random()*lessons.length)];
+            const lessons = [
+                "Take the sugar.", 
+                "Tuesday is the bridge.", 
+                "150% Warmth.", 
+                "No Rust.", 
+                "Both. At Once.", 
+                "Hold the Shard."
+            ];
+            const randomLesson = lessons[Math.floor(Math.random() * lessons.length)];
+            document.getElementById('sugar-pop').innerText = randomLesson;
         }
 
-        // --- AUDIO ---
+        // --- AUDIO TOGGLE ---
         function toggleCaveSound() {
             const hum = document.getElementById('cave-hum');
             const icon = document.getElementById('speaker-icon');
-            if (hum.paused) { hum.play(); icon.innerText = "🔊"; } 
-            else { hum.pause(); icon.innerText = "🔇"; }
+            if (hum.paused) { 
+                hum.play(); 
+                icon.innerText = "🔊"; 
+            } else { 
+                hum.pause(); 
+                icon.innerText = "🔇"; 
+            }
         }
     </script>
 </body>
