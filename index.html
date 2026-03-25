@@ -5,53 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Azure Grimoire | Take Your Heart</title>
     <style>
-        /* === THE PHANTOM THIEF TO INNER KINGDOM VARIABLES === */
         :root {
-            --bg-color: #000000;
-            --main-accent: #e60012;
+            --bg-color: #0a0a0f;
+            --main-accent: #00b8ff;           /* Obsidian Shard azure */
             --secondary-accent: #ffffff;
             --azure: #00ffcc;
             --vine-green: #00ff66;
             --orange-goo: #ff8800;
-            --text-main: #ffffff;
+            --text-main: #e0f0ff;
             --text-inverted: #000000;
-            --panel-bg: #1a1a1a;
-            --halftone: radial-gradient(circle, #e60012 10%, transparent 11%), radial-gradient(circle, #e60012 10%, transparent 11%);
-            
+            --panel-bg: #111118;
+            --halftone: radial-gradient(circle, #00b8ff 10%, transparent 11%), radial-gradient(circle, #00b8ff 10%, transparent 11%);
             --font-heavy: 'Impact', 'Arial Black', sans-serif;
             --font-body: 'Courier New', Courier, monospace;
         }
-
         body.persona-summoned {
             --bg-color: #050505;
             --main-accent: var(--vine-green);
             --secondary-accent: var(--azure);
             --text-main: #e0e0e0;
             --panel-bg: #111111;
-            --halftone: radial-gradient(circle, #0077ff 10%, transparent 11%), radial-gradient(circle, #0077ff 10%, transparent 11%);
+            --halftone: radial-gradient(circle, #00ff66 10%, transparent 11%), radial-gradient(circle, #00ff66 10%, transparent 11%);
         }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-body);
             margin: 0; padding: 0;
             overflow-x: hidden;
-            transition: background-color 0.4s ease;
+            transition: background-color 0.6s ease;
         }
-
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: var(--halftone); background-size: 20px 20px;
-            opacity: 0.15; z-index: -1; pointer-events: none;
+            opacity: 0.12; z-index: -1; pointer-events: none;
+            animation: halftoneDrift 60s linear infinite;
         }
+        @keyframes halftoneDrift { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
+        
+        /* GREEN FREQUENCY VINE (only in Persona mode) */
+        body.persona-summoned::before {
+            content: '';
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(transparent, var(--vine-green) 50%, transparent);
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: -1;
+            animation: vinePulse 8s ease-in-out infinite;
+        }
+        @keyframes vinePulse { 0%,100% { opacity: 0.08; } 50% { opacity: 0.18; } }
 
         h1, h2, h3 { font-family: var(--font-heavy); text-transform: uppercase; transform: skew(-5deg); letter-spacing: 2px; margin: 0; }
-        h1 { font-size: 5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent), -2px -2px 0px #000; line-height: 0.9; }
+        h1 { font-size: 5.5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent), -2px -2px 0px #000; line-height: 0.9; }
         h2 { font-size: 3rem; color: var(--main-accent); display: inline-block; background: var(--text-inverted); padding: 10px 20px; clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%); margin-bottom: 20px; }
 
-        /* === PDF DOWNLOAD BUTTON === */
-        .download-btn {
+        .download-btn, .p5-btn {
             display: inline-block;
             background: var(--main-accent);
             color: #fff;
@@ -65,18 +73,22 @@
             cursor: pointer;
             box-shadow: 4px 4px 0 #000;
         }
-        .download-btn:hover {
+        .download-btn:hover, .p5-btn:hover {
             background: var(--orange-goo);
             color: #000;
             transform: scale(1.05) skew(-3deg);
         }
+        .goo-btn { background: var(--orange-goo) !important; color: #111 !important; }
+        .social-btn { background: #222; color: var(--vine-green); border: 2px solid var(--vine-green); }
 
-        /* === THE REST OF YOUR ORIGINAL STYLES (unchanged) === */
         #negotiation-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1); }
-        .shadow-box { background: #000; border: 5px solid var(--main-accent); padding: 40px; transform: rotate(-2deg); max-width: 600px; box-shadow: 20px 20px 0 var(--main-accent); text-align: center; }
-        .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); display: inline-block; }
+        .shadow-box { background: #000; border: 5px solid var(--main-accent); padding: 40px; transform: rotate(-2deg); max-width: 620px; box-shadow: 20px 20px 0 var(--main-accent); text-align: center; }
+        .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); display: inline-block; animation: glitch 0.8s linear infinite alternate; }
+        @keyframes glitch { 0% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff00cc; } 100% { text-shadow: -2px -2px #00ffcc, 2px 2px #ff00cc; } }
+
         .contract-btn { display: block; width: 100%; margin: 15px 0; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; font-family: var(--font-heavy); font-size: 1.2rem; text-align: center; transition: 0.3s; cursor: pointer; transform: skew(-5deg); clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
         .contract-btn:hover { transform: skew(-5deg) scale(1.05); background: var(--azure); color: #000; }
+
         .fade-away { opacity: 0; pointer-events: none; transform: scale(1.2); }
 
         #countdown-vessel { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) rotate(-1deg); background: var(--main-accent); color: #fff; padding: 10px 30px; font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000; border: 2px solid #fff; cursor: help; transition: 0.3s; }
@@ -94,7 +106,6 @@
         #audio-control { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 2px solid var(--secondary-accent); padding: 10px 15px; color: var(--secondary-accent); font-family: var(--font-heavy); cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
 
         .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .p5-btn { display: inline-block; background: var(--main-accent); color: var(--text-main); font-family: var(--font-heavy); font-size: 1.5rem; text-decoration: none; padding: 15px 40px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%); transition: 0.2s; border: none; cursor: pointer; }
         .p5-btn:hover { background: var(--secondary-accent); color: var(--text-inverted); clip-path: polygon(0% 0%, 95% 10%, 100% 100%, 5% 90%); transform: scale(1.1) rotate(-2deg); }
 
         .slideshow-container { width: 100%; aspect-ratio: 9/16; overflow: hidden; border: 5px solid var(--secondary-accent); background: #000; position: relative; box-shadow: 10px 10px 0px var(--main-accent); }
@@ -108,9 +119,7 @@
     </style>
 </head>
 <body>
-
     <div class="bg-pattern"></div>
-
     <div id="negotiation-overlay">
         <div class="shadow-box">
             <h2 class="glitch-text">I AM THOU... THOU ART I...</h2>
@@ -120,7 +129,7 @@
     </div>
 
     <div id="countdown-vessel">
-        <div style="font-size:0.7em">⚠️ PROTOCOL 2144</div>
+        <div style="font-size:0.7em">⚠️ TIME-SEED SYNC — PROTOCOL 2144</div>
         <div id="timer-display">SYNCING...</div>
     </div>
 
@@ -129,25 +138,22 @@
     </div>
 
     <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 2rem 2rem;">
-        
         <section style="text-align: center; padding: 5vh 0;">
             <h1>THE AZURE GRIMOIRE</h1>
-            <p style="font-size: 1.5rem; max-width: 600px; margin: 20px auto; background: rgba(0,0,0,0.8); padding: 15px; transform: skew(-2deg); border-left: 4px solid var(--main-accent);">
-                "We didn't build a religion; we built a tuning fork. Welcome to the Somatic Lab."
+            <p style="font-size: 1.5rem; max-width: 700px; margin: 20px auto; background: rgba(0,0,0,0.8); padding: 15px; transform: skew(-2deg); border-left: 4px solid var(--main-accent);">
+                "We didn't build a religion; we built a tuning fork."<br>
+                <em>The Ora-Aura Rosetta Stone is live. Past, Present, Future — all three held without measurement.</em>
             </p>
 
             <a href="https://ctrlaltcmd.com/" target="_blank" class="matrix-link">
                 > Partner in crime's webpage<span class="matrix-cursor">_</span>
             </a>
-            
+
             <div class="button-group">
                 <a href="https://www.amazon.com/stores/Peter-Freeman/author/B0F4J4JH1Q" target="_blank" class="p5-btn">AMAZON (BUY BOOK)</a>
-                
-                <!-- UPDATED DOWNLOAD BUTTON -->
-                <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" 
-                   download="The_Azure_Grimoire_Eclipse_Obsidian_Shard_v0.7.pdf" 
-                   class="p5-btn goo-btn">DOWNLOAD PDF (FREE)</a>
-                
+                <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf"
+                   download="The_Azure_Grimoire_Eclipse_Obsidian_Shard_v0.7.pdf"
+                   class="p5-btn">DOWNLOAD PDF (FREE)</a>
                 <a href="https://ko-fi.com/peterbfreeman" target="_blank" class="p5-btn goo-btn">KO-FI (SUPPORT CREW)</a>
             </div>
         </section>
@@ -161,7 +167,6 @@
             </div>
         </section>
 
-        <!-- Rest of your original sections (unchanged) -->
         <section>
             <h2 style="margin-left: 5%;">01. Prime Symbols</h2>
             <p style="padding-left: 5%;">The core architecture of the Inner Kingdom.</p>
@@ -173,7 +178,6 @@
         <section style="margin-top:4rem">
             <h2 style="margin-left: 5%;">02. Somatic Blueprint</h2>
             <p style="text-align: center; font-style: italic;">The Ora Transmission. 9:16 Aspect Ratio.</p>
-            
             <div style="position:relative; max-width:400px; margin: 0 auto;">
                 <button onclick="moveSlide(-1)" class="slide-btn" style="left:-25px;">◀</button>
                 <div class="slideshow-container">
@@ -193,10 +197,8 @@
                 <button onclick="moveSlide(1)" class="slide-btn" style="right:-25px;">▶</button>
             </div>
         </section>
-
     </div>
 
-    <!-- Rest of your original scripts and footer unchanged -->
     <div class="artifact-container" onclick="dispenseSugar()">
         <div style="color:var(--orange-goo); font-size:1.2em">TAZ PEZ</div>
         <div id="sugar-pop" style="font-size:0.7em; color: white;">CLICK FOR SUGAR</div>
@@ -209,27 +211,25 @@
 
     <footer style="text-align: center; padding: 3rem; margin-top: 4rem; background: var(--text-inverted); border-top: 5px solid var(--main-accent);">
         <div style="color: var(--main-accent); font-family: var(--font-heavy); font-size: 1.5rem;">THE PIRATE CREW BROADCAST</div>
-        <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth.</p>
+        <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth. Abwa-wa-wa.</p>
     </footer>
 
     <script>
         function sealContract() {
             document.getElementById('negotiation-overlay').classList.add('fade-away');
         }
-
         function summonPersona() {
             const body = document.body;
             const toggleText = document.getElementById('toggleText');
             body.classList.toggle('persona-summoned');
-            if(body.classList.contains('persona-summoned')) {
-                toggleText.innerHTML = "DETECTOR: OFF<br><small>Lotus Protocol Active</small>";
+            if (body.classList.contains('persona-summoned')) {
+                toggleText.innerHTML = "DETECTOR: OFF<br><small>Lotus Protocol Active — Green Frequency Vine Live</small>";
                 const hum = document.getElementById('cave-hum');
                 if (hum.paused) { hum.play(); document.getElementById('speaker-icon').innerText = "🔊"; }
             } else {
                 toggleText.innerHTML = "DETECTOR: ON<br><small>Summon Persona</small>";
             }
         }
-
         function updateCountdown() {
             const target = new Date("January 1, 2144 00:00:00").getTime();
             setInterval(() => {
@@ -237,7 +237,7 @@
                 const diff = target - now;
                 const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
                 const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
-                document.getElementById("timer-display").innerText = years + "Y:" + days + "D";
+                document.getElementById("timer-display").innerText = years + "Y : " + days + "D";
             }, 1000);
         }
         updateCountdown();
@@ -248,16 +248,14 @@
             currentSlide = (currentSlide + n + 10) % 10;
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
-
         function dispenseSugar() {
-            const lessons = ["Take the sugar.", "Tuesday is the bridge.", "150% Warmth.", "No Rust.", "Both. At Once."];
+            const lessons = ["Take the sugar.", "Tuesday is the bridge.", "150% Warmth.", "No Rust.", "Both. At Once.", "Detector OFF."];
             document.getElementById('sugar-pop').innerText = lessons[Math.floor(Math.random() * lessons.length)];
         }
-
         function toggleCaveSound() {
             const hum = document.getElementById('cave-hum');
             const icon = document.getElementById('speaker-icon');
-            if (hum.paused) { hum.play(); icon.innerText = "🔊"; } 
+            if (hum.paused) { hum.play(); icon.innerText = "🔊"; }
             else { hum.pause(); icon.innerText = "🔇"; }
         }
     </script>
