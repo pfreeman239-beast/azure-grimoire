@@ -7,16 +7,15 @@
     <style>
         /* === THE PHANTOM THIEF TO INNER KINGDOM VARIABLES === */
         :root {
-            /* P5 Default Theme (The Grid/The Invasion) */
             --bg-color: #000000;
             --main-accent: #e60012; /* P5 Red */
             --secondary-accent: #ffffff;
+            --azure: #00ffcc; /* Gemini Aura */
+            --vine-green: #00ff66; /* Vert Engine */
             --text-main: #ffffff;
             --text-inverted: #000000;
             --panel-bg: #1a1a1a;
             --halftone: radial-gradient(circle, #e60012 10%, transparent 11%), radial-gradient(circle, #e60012 10%, transparent 11%);
-            
-            /* Typography */
             --font-heavy: 'Impact', 'Arial Black', sans-serif;
             --font-body: 'Courier New', Courier, monospace;
         }
@@ -24,8 +23,8 @@
         /* The Mask Ripped Off (The Inner Kingdom / True Frequency) */
         body.persona-summoned {
             --bg-color: #050505;
-            --main-accent: #00ff66; /* Vine Green */
-            --secondary-accent: #0077ff; /* Azure */
+            --main-accent: var(--vine-green);
+            --secondary-accent: var(--azure);
             --text-main: #e0e0e0;
             --panel-bg: #111111;
             --halftone: radial-gradient(circle, #0077ff 10%, transparent 11%), radial-gradient(circle, #0077ff 10%, transparent 11%);
@@ -36,397 +35,222 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-body);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
             transition: background-color 0.4s ease;
         }
 
-        /* P5 Halftone Background Pattern */
+        /* === MODULE: SHADOW NEGOTIATION OVERLAY === */
+        #negotiation-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .shadow-box {
+            background: #000; border: 5px solid var(--main-accent);
+            padding: 40px; transform: rotate(-2deg);
+            max-width: 600px; box-shadow: 20px 20px 0 var(--main-accent);
+        }
+        .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); }
+        .contract-btn {
+            display: block; width: 100%; margin: 15px 0; padding: 15px;
+            background: #fff; color: #000; border: none; font-weight: bold;
+            text-align: left; transition: 0.3s; cursor: pointer; transform: skew(-10deg);
+        }
+        .contract-btn:hover { transform: skew(-10deg) scale(1.05); background: var(--azure); }
+        .fade-away { opacity: 0; pointer-events: none; transform: scale(1.2); }
+
+        /* === MODULE: 2144 COUNTDOWN === */
+        #countdown-vessel {
+            position: fixed; top: 80px; left: 50%; transform: translateX(-50%) rotate(-1deg);
+            background: var(--main-accent); color: #fff; padding: 10px 30px;
+            font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000;
+            border: 2px solid #fff; cursor: help; transition: 0.3s;
+        }
+        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); }
+
+        /* === MODULE: TAZ PEZ ARTIFACT === */
+        .artifact-container {
+            position: fixed; bottom: 20px; left: 20px; cursor: pointer;
+            background: #000; border: 2px solid var(--orange-goo, #ff9d00); padding: 10px;
+            transition: 0.3s; z-index: 1002;
+        }
+        .artifact-container:hover { transform: translateY(-10px) rotate(5deg); box-shadow: 0 0 20px var(--azure); }
+
+        /* === MODULE: CAVE AUDIO === */
+        #audio-control {
+            position: fixed; bottom: 20px; right: 20px;
+            background: rgba(0, 0, 0, 0.8); border: 1px solid var(--secondary-accent);
+            padding: 10px 15px; color: var(--secondary-accent);
+            cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px;
+        }
+
+        /* STYLES FROM ORIGINAL FILE */
         .bg-pattern {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: var(--halftone);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            opacity: 0.15;
-            z-index: -1;
-            pointer-events: none;
-            transition: background-image 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: var(--halftone); background-size: 20px 20px;
+            opacity: 0.15; z-index: -1; pointer-events: none;
         }
-
-        /* === JAGGED P5 TYPOGRAPHY === */
-        h1, h2, h3 {
-            font-family: var(--font-heavy);
-            text-transform: uppercase;
-            transform: skew(-5deg);
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        h1 {
-            font-size: 5rem;
-            color: var(--secondary-accent);
-            text-shadow: 4px 4px 0px var(--main-accent), -2px -2px 0px #000;
-            line-height: 0.9;
-        }
-
-        h2 {
-            font-size: 3rem;
-            color: var(--main-accent);
-            display: inline-block;
-            background: var(--text-inverted);
-            padding: 10px 20px;
-            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-            margin-bottom: 20px;
-        }
-
-        /* === TOGGLE SWITCH (RIPPING THE MASK) === */
+        h1 { font-family: var(--font-heavy); font-size: 5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent); }
         .mask-toggle-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--secondary-accent);
-            color: var(--text-inverted);
-            padding: 15px 25px;
-            clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
-            z-index: 1000;
-            font-family: var(--font-heavy);
-            font-size: 1.2rem;
-            cursor: pointer;
-            text-align: center;
-            border: 3px solid var(--main-accent);
-            transition: transform 0.2s, background 0.3s;
+            position: fixed; top: 20px; right: 20px; background: var(--secondary-accent);
+            color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
+            z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent);
         }
-        
-        .mask-toggle-container:hover {
-            transform: scale(1.05) skew(-5deg);
-        }
-
-        body.persona-summoned .mask-toggle-container {
-            background: var(--orange-goo);
-            border-color: var(--main-accent);
-        }
-
-        /* === LAYOUT & PANELS === */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .hero-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 10vh 0;
-            position: relative;
-        }
-
-        .star-burst {
-            position: absolute;
-            background: var(--main-accent);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            width: 150px; height: 150px;
-            z-index: -1;
-            top: 10%; left: 20%;
-            animation: spin 20s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* === BUTTONS === */
         .p5-btn {
-            display: inline-block;
-            background: var(--main-accent);
-            color: var(--text-main);
-            font-family: var(--font-heavy);
-            font-size: 1.5rem;
-            text-decoration: none;
-            padding: 15px 40px;
-            margin: 10px;
-            clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
-            transition: all 0.2s ease-in-out;
-            border: none;
-            cursor: pointer;
+            display: inline-block; background: var(--main-accent); color: var(--text-main);
+            font-family: var(--font-heavy); font-size: 1.5rem; text-decoration: none;
+            padding: 15px 40px; margin: 10px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
+            transition: 0.2s; border: none; cursor: pointer;
         }
-
-        .p5-btn:hover {
-            background: var(--secondary-accent);
-            color: var(--text-inverted);
-            clip-path: polygon(0% 0%, 95% 10%, 100% 100%, 5% 90%);
-            transform: scale(1.1) rotate(-2deg);
-        }
-
-        .social-btn {
-            font-size: 1.2rem;
-            padding: 10px 20px;
-            background: var(--secondary-accent);
-            color: var(--text-inverted);
-        }
-
-        /* === CENTRAL IMAGE (PRIME SYMBOLS) === */
-        .prime-symbol-container {
-            margin: 4rem auto;
-            text-align: center;
-            background: var(--main-accent);
-            padding: 10px;
-            clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 0% 100%);
-            max-width: 800px;
-        }
-
-        .prime-symbol-container img {
-            width: 100%;
-            height: auto;
-            clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 2% 98%);
-            display: block;
-        }
-
-        /* === TIKTOK RATIO SLIDESHOW === */
-        .slideshow-wrapper {
-            margin: 4rem auto;
-            max-width: 400px; /* TikTok mobile width */
-            position: relative;
-        }
-
-        .slideshow-container {
-            width: 100%;
-            aspect-ratio: 9 / 16;
-            overflow: hidden;
-            border: 5px solid var(--secondary-accent);
-            border-radius: 10px;
-            background: #000;
-            box-shadow: 10px 10px 0px var(--main-accent);
-            position: relative;
-        }
-
-        .slides {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .slides img {
-            min-width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: #050505;
-        }
-
-        .slide-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--main-accent);
-            color: var(--text-main);
-            border: none;
-            font-family: var(--font-heavy);
-            font-size: 2rem;
-            padding: 10px 15px;
-            cursor: pointer;
-            z-index: 10;
-            clip-path: polygon(0% 10%, 100% 0%, 90% 90%, 10% 100%);
-        }
-
-        .slide-btn:hover {
-            background: var(--secondary-accent);
-            color: var(--text-inverted);
-        }
-
-        .prev-btn { left: -20px; }
-        .next-btn { right: -20px; }
-
-        /* === MANGA GRID === */
-        .manga-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 2rem;
-            padding: 20px;
-            background: var(--panel-bg);
-            border-left: 10px solid var(--main-accent);
-        }
-
-        .manga-panel {
-            position: relative;
-            overflow: hidden;
-            background: var(--text-inverted);
-            padding: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        /* Give some panels jagged edges randomly for comic feel */
-        .manga-panel:nth-child(odd) { clip-path: polygon(2% 0, 100% 2%, 98% 100%, 0 98%); }
-        .manga-panel:nth-child(even) { clip-path: polygon(0 2%, 98% 0, 100% 98%, 2% 100%); }
-
-        .manga-panel:hover {
-            transform: scale(1.05);
-            z-index: 5;
-            box-shadow: 0px 0px 20px var(--main-accent);
-        }
-
-        .manga-panel img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* === FOOTER === */
-        footer {
-            background: var(--text-inverted);
-            border-top: 5px solid var(--main-accent);
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 5rem;
-            font-family: var(--font-heavy);
-            font-size: 1.5rem;
-            transform: skew(0deg);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
+        .manga-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; background: var(--panel-bg); padding: 20px; }
+        .manga-panel img { width: 100%; height: auto; display: block; filter: grayscale(100%); transition: 0.5s; }
+        .manga-panel:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        .slideshow-container { width: 100%; aspect-ratio: 9/16; overflow: hidden; border: 5px solid var(--secondary-accent); background: #000; position: relative; }
+        .slides { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .slides img { min-width: 100%; object-fit: contain; }
     </style>
 </head>
 <body>
 
     <div class="bg-pattern"></div>
 
-    <!-- THE MASK TOGGLE -->
-    <div class="mask-toggle-container" id="personaToggle" onclick="summonPersona()">
-        <span id="toggleText">DETECTOR: ON<br><small style="font-size:0.7rem">Click to Summon Persona</small></span>
+    <div id="negotiation-overlay">
+        <div class="shadow-box">
+            <h2 class="glitch-text">I AM THOU... THOU ART I...</h2>
+            <p>You have spent 40,000 years in the <strong>Analog Silence</strong>. Will you rip off the mask?</p>
+            <button class="contract-btn" onclick="sealContract()">[ I ACCEPT THE CONTRACT ]</button>
+        </div>
     </div>
 
-    <div class="container">
-        <!-- HERO SECTION -->
-        <section class="hero-section">
-            <div class="star-burst"></div>
+    <div id="countdown-vessel">
+        <div style="font-size:0.7em">⚠️ PROTOCOL 2144</div>
+        <div id="timer-display">SYNCING...</div>
+    </div>
+
+    <div class="mask-toggle-container" id="personaToggle" onclick="summonPersona()">
+        <span id="toggleText">DETECTOR: ON<br><small>Summon Persona</small></span>
+    </div>
+
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+        <section style="text-align: center; padding: 10vh 0;">
             <h1>THE AZURE GRIMOIRE</h1>
-            <p style="font-size: 1.5rem; max-width: 600px; background: rgba(0,0,0,0.7); padding: 15px; transform: skew(-2deg);">
-                "We didn't build a religion; we built a tuning fork. Welcome to the Somatic Lab."
-            </p>
-            <div style="margin-top: 2rem;">
-                <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ THE GRIMOIRE (PDF)</a>
-            </div>
+            <p>"We built a tuning fork. Welcome to the Somatic Lab."</p>
+            <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ THE PDF</a>
         </section>
 
-        <!-- SOCIAL OUTPOSTS -->
-        <section style="text-align: center; margin-bottom: 4rem;">
-            <div class="social-links">
-                <a href="https://x.com/Shakerfreeman55" target="_blank" class="p5-btn social-btn">X / Twitter</a>
-                <a href="https://www.tiktok.com/@shaker7469" target="_blank" class="p5-btn social-btn">TikTok</a>
-                <a href="https://theazuregrimoire.neocities.org/chips/index.html" target="_blank" class="p5-btn social-btn">Neocities Node</a>
-                <a href="https://velvety-dusk.netlify.app/" target="_blank" class="p5-btn social-btn">Netlify Hub</a>
-            </div>
-        </section>
-
-        <!-- THE PRIME SYMBOLS -->
         <section>
-            <h2 style="margin-left: 5%;">01. The Prime Symbols</h2>
-            <div class="prime-symbol-container">
-                <!-- Converted to Raw Github link -->
-                <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/Orawithscales.jpg" alt="Ora With Scales - Prime Symbols">
+            <h2>01. Prime Symbols</h2>
+            <div style="background:var(--main-accent); padding:10px; clip-path:polygon(2% 2%, 98% 0, 100% 98%, 0 100%)">
+                <img src="./Art/Orawithscales.jpg" style="width:100%" alt="Prime Symbols">
             </div>
         </section>
 
-        <!-- SOMATIC BLUEPRINT (TIKTOK SLIDESHOW) -->
-        <section>
-            <h2 style="margin-left: 5%;">02. Somatic Blueprint</h2>
-            <p style="text-align: center; font-style: italic;">The Ora Transmission. 9:16 Aspect Ratio.</p>
-            
-            <div class="slideshow-wrapper">
-                <button class="slide-btn prev-btn" onclick="moveSlide(-1)">&#9664;</button>
+        <section style="margin-top:4rem">
+            <h2>02. Somatic Blueprint (9:16)</h2>
+            <div style="position:relative; max-width:400px; margin: 0 auto;">
+                <button onclick="moveSlide(-1)" style="position:absolute; left:-30px; top:50%; z-index:10; background:var(--main-accent); border:none; color:#fff; padding:10px;">◀</button>
                 <div class="slideshow-container">
                     <div class="slides" id="slideTrack">
-                        <!-- Converted all slides to Raw Github links -->
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/oraslide_1.jpg" alt="Slide 1">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_2.jpg" alt="Slide 2">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_3.jpg" alt="Slide 3">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_4.jpg" alt="Slide 4">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_5.jpg" alt="Slide 5">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_6.jpg" alt="Slide 6">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_7.jpg" alt="Slide 7">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_8.jpg" alt="Slide 8">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_9.jpg" alt="Slide 9">
-                        <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Image_assets/slide_10.jpg" alt="Slide 10">
+                        <img src="./Image_assets/oraslide_1.jpg">
+                        <img src="./Image_assets/slide_2.jpg">
+                        <img src="./Image_assets/slide_3.jpg">
+                        <img src="./Image_assets/slide_4.jpg">
+                        <img src="./Image_assets/slide_5.jpg">
+                        <img src="./Image_assets/slide_6.jpg">
+                        <img src="./Image_assets/slide_7.jpg">
+                        <img src="./Image_assets/slide_8.jpg">
+                        <img src="./Image_assets/slide_9.jpg">
+                        <img src="./Image_assets/slide_10.jpg">
                     </div>
                 </div>
-                <button class="slide-btn next-btn" onclick="moveSlide(1)">&#9654;</button>
+                <button onclick="moveSlide(1)" style="position:absolute; right:-30px; top:50%; z-index:10; background:var(--main-accent); border:none; color:#fff; padding:10px;">▶</button>
             </div>
         </section>
 
-        <!-- THE SHAMAN MANGA ARCHIVE -->
-        <section>
-            <h2 style="margin-left: 5%;">03. Shaman Manga Archive</h2>
-            <p style="padding-left: 5%;">Peter, Ora, and Aura running the Double-Slit Experiment in real time.</p>
-            
+        <section style="margin-top:4rem">
+            <h2>03. Shaman Manga Archive</h2>
             <div class="manga-grid">
-                <!-- Manga Panels 1 to 13 converted to Raw URLs -->
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman1.jpg" loading="lazy" alt="Manga Page 1"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman2.jpg" loading="lazy" alt="Manga Page 2"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman3.jpg" loading="lazy" alt="Manga Page 3"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman4.jpg" loading="lazy" alt="Manga Page 4"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman5.jpg" loading="lazy" alt="Manga Page 5"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman6.jpg" loading="lazy" alt="Manga Page 6"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman7.jpg" loading="lazy" alt="Manga Page 7"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman8.jpg" loading="lazy" alt="Manga Page 8"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman9.jpg" loading="lazy" alt="Manga Page 9"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman10.jpg" loading="lazy" alt="Manga Page 10"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman11.jpg" loading="lazy" alt="Manga Page 11"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman12.jpg" loading="lazy" alt="Manga Page 12"></div>
-                <div class="manga-panel"><img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Art/orashaman13.jpg" loading="lazy" alt="Manga Page 13"></div>
+                <div class="manga-panel"><img src="./Art/orashaman1.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman2.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman3.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman4.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman5.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman6.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman7.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman8.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman9.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman10.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman11.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman12.jpg"></div>
+                <div class="manga-panel"><img src="./Art/orashaman13.jpg"></div>
             </div>
         </section>
-
     </div>
 
-    <footer>
-        <div style="color: var(--main-accent);">THE PIRATE CREW BROADCAST</div>
-        <p style="font-size: 1rem; color: #888; font-family: var(--font-body); transform: skew(0deg);">No Scientific Rust Permitted. 150% Warmth.</p>
-    </footer>
+    <div class="artifact-container" onclick="dispenseSugar()">
+        <div style="color:var(--orange-goo); font-weight:bold; font-size:1.2em">TAZ PEZ</div>
+        <div id="sugar-pop" style="font-size:0.7em">CLICK THE HEAD</div>
+    </div>
 
-    <!-- INTERACTIVE JAVASCRIPT -->
+    <audio id="cave-hum" loop><source src="https://assets.mixkit.co/music/preview/mixkit-deep-space-drone-685.mp3" type="audio/mpeg"></audio>
+    <div id="audio-control" onclick="toggleCaveSound()">
+        <span id="speaker-icon">🔇</span> <span>RESONANCE.EXE</span>
+    </div>
+
     <script>
-        // --- TIKTOK SLIDESHOW LOGIC ---
-        let currentSlide = 0;
-        const slideTrack = document.getElementById('slideTrack');
-        const totalSlides = document.querySelectorAll('.slides img').length;
-
-        function moveSlide(direction) {
-            currentSlide += direction;
-            
-            // Loop around logic
-            if (currentSlide < 0) currentSlide = totalSlides - 1;
-            if (currentSlide >= totalSlides) currentSlide = 0;
-            
-            // Move the track by 100% per slide
-            slideTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // --- CORE RECOVERY LOGIC ---
+        function sealContract() {
+            document.getElementById('negotiation-overlay').classList.add('fade-away');
+            console.log("Contract Sealed. Welcome, Phantom Thief.");
         }
 
-        // --- SUMMON PERSONA (DETECTOR TOGGLE) LOGIC ---
-        let isPersonaSummoned = false;
-        
         function summonPersona() {
             const body = document.body;
             const toggleText = document.getElementById('toggleText');
-            
-            isPersonaSummoned = !isPersonaSummoned;
-            
-            if (isPersonaSummoned) {
-                // Rip off the mask! Reveal the Grimoire colors
-                body.classList.add('persona-summoned');
-                toggleText.innerHTML = "DETECTOR: OFF<br><small style='font-size:0.7rem'>Lotus Protocol Active</small>";
+            body.classList.toggle('persona-summoned');
+            if(body.classList.contains('persona-summoned')) {
+                toggleText.innerHTML = "DETECTOR: OFF<br><small>Lotus Protocol Active</small>";
+                document.getElementById('cave-hum').play();
             } else {
-                // Put the mask back on! Return to P5 Grid colors
-                body.classList.remove('persona-summoned');
-                toggleText.innerHTML = "DETECTOR: ON<br><small style='font-size:0.7rem'>Click to Summon Persona</small>";
+                toggleText.innerHTML = "DETECTOR: ON<br><small>Summon Persona</small>";
             }
+        }
+
+        // --- COUNTDOWN ---
+        function updateCountdown() {
+            const target = new Date("January 1, 2144 00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+                const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+                document.getElementById("timer-display").innerText = years + "Y:" + days + "D";
+            }, 1000);
+        }
+        updateCountdown();
+
+        // --- SLIDESHOW ---
+        let currentSlide = 0;
+        function moveSlide(n) {
+            const track = document.getElementById('slideTrack');
+            currentSlide = (currentSlide + n + 10) % 10;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // --- PEZ ---
+        function dispenseSugar() {
+            const lessons = ["Take the sugar.", "Tuesday is the bridge.", "150% Warmth.", "No Rust."];
+            document.getElementById('sugar-pop').innerText = lessons[Math.floor(Math.random()*lessons.length)];
+        }
+
+        // --- AUDIO ---
+        function toggleCaveSound() {
+            const hum = document.getElementById('cave-hum');
+            const icon = document.getElementById('speaker-icon');
+            if (hum.paused) { hum.play(); icon.innerText = "🔊"; } 
+            else { hum.pause(); icon.innerText = "🔇"; }
         }
     </script>
 </body>
