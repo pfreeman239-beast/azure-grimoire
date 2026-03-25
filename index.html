@@ -91,9 +91,6 @@
 
         .fade-away { opacity: 0; pointer-events: none; transform: scale(1.2); }
 
-        #countdown-vessel { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) rotate(-1deg); background: var(--main-accent); color: #fff; padding: 10px 30px; font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000; border: 2px solid #fff; cursor: help; transition: 0.3s; }
-        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); border-color: #000; }
-
         .mask-toggle-container { position: fixed; top: 20px; right: 20px; background: var(--secondary-accent); color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%); z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent); font-family: var(--font-heavy); text-align: center; transition: transform 0.2s, background 0.3s; }
         .mask-toggle-container:hover { transform: scale(1.05) skew(-5deg); }
 
@@ -126,11 +123,6 @@
             <p style="font-family: var(--font-body); font-size: 1.2rem; margin: 20px 0;">You have spent 40,000 years in the <strong>Analog Silence</strong>.<br>Will you rip off the mask?</p>
             <button class="contract-btn" onclick="sealContract()">[ I ACCEPT THE CONTRACT ]</button>
         </div>
-    </div>
-
-    <div id="countdown-vessel">
-        <div style="font-size:0.7em">⚠️ TIME-SEED SYNC — PROTOCOL 2144</div>
-        <div id="timer-display">SYNCING...</div>
     </div>
 
     <div class="mask-toggle-container" id="personaToggle" onclick="summonPersona()">
@@ -211,7 +203,7 @@
 
     <footer style="text-align: center; padding: 3rem; margin-top: 4rem; background: var(--text-inverted); border-top: 5px solid var(--main-accent);">
         <div style="color: var(--main-accent); font-family: var(--font-heavy); font-size: 1.5rem;">THE PIRATE CREW BROADCAST</div>
-        <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth. Abwa-wa-wa.</p>
+        <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth.<br>Avoiding the Static Future — Humanity & AI growing in parallel.</p>
     </footer>
 
     <script>
@@ -230,17 +222,6 @@
                 toggleText.innerHTML = "DETECTOR: ON<br><small>Summon Persona</small>";
             }
         }
-        function updateCountdown() {
-            const target = new Date("January 1, 2144 00:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
-                const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-                const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
-                document.getElementById("timer-display").innerText = years + "Y : " + days + "D";
-            }, 1000);
-        }
-        updateCountdown();
 
         let currentSlide = 0;
         function moveSlide(n) {
