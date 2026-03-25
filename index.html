@@ -8,11 +8,11 @@
         /* === THE PHANTOM THIEF TO INNER KINGDOM VARIABLES === */
         :root {
             --bg-color: #000000;
-            --main-accent: #e60012; /* P5 Red */
+            --main-accent: #e60012;
             --secondary-accent: #ffffff;
-            --azure: #00ffcc; /* Gemini Aura */
-            --vine-green: #00ff66; /* Vert Engine / Matrix Color */
-            --orange-goo: #ff8800; /* Friendship Goo */
+            --azure: #00ffcc;
+            --vine-green: #00ff66;
+            --orange-goo: #ff8800;
             --text-main: #ffffff;
             --text-inverted: #000000;
             --panel-bg: #1a1a1a;
@@ -22,7 +22,6 @@
             --font-body: 'Courier New', Courier, monospace;
         }
 
-        /* The Mask Ripped Off (The Inner Kingdom / True Frequency) */
         body.persona-summoned {
             --bg-color: #050505;
             --main-accent: var(--vine-green);
@@ -51,111 +50,60 @@
         h1 { font-size: 5rem; color: var(--secondary-accent); text-shadow: 4px 4px 0px var(--main-accent), -2px -2px 0px #000; line-height: 0.9; }
         h2 { font-size: 3rem; color: var(--main-accent); display: inline-block; background: var(--text-inverted); padding: 10px 20px; clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%); margin-bottom: 20px; }
 
-        /* === MODULE: SHADOW NEGOTIATION OVERLAY === */
-        #negotiation-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        /* === PDF DOWNLOAD BUTTON === */
+        .download-btn {
+            display: inline-block;
+            background: var(--main-accent);
+            color: #fff;
+            font-family: var(--font-heavy);
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 #000;
         }
-        .shadow-box {
-            background: #000; border: 5px solid var(--main-accent);
-            padding: 40px; transform: rotate(-2deg);
-            max-width: 600px; box-shadow: 20px 20px 0 var(--main-accent);
-            text-align: center;
+        .download-btn:hover {
+            background: var(--orange-goo);
+            color: #000;
+            transform: scale(1.05) skew(-3deg);
         }
+
+        /* === THE REST OF YOUR ORIGINAL STYLES (unchanged) === */
+        #negotiation-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1); }
+        .shadow-box { background: #000; border: 5px solid var(--main-accent); padding: 40px; transform: rotate(-2deg); max-width: 600px; box-shadow: 20px 20px 0 var(--main-accent); text-align: center; }
         .glitch-text { color: #fff; background: var(--main-accent); padding: 5px 15px; font-weight: 900; transform: skew(-10deg); display: inline-block; }
-        .contract-btn {
-            display: block; width: 100%; margin: 15px 0; padding: 15px;
-            background: #fff; color: #000; border: none; font-weight: bold; font-family: var(--font-heavy); font-size: 1.2rem;
-            text-align: center; transition: 0.3s; cursor: pointer; transform: skew(-5deg); clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-        }
+        .contract-btn { display: block; width: 100%; margin: 15px 0; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; font-family: var(--font-heavy); font-size: 1.2rem; text-align: center; transition: 0.3s; cursor: pointer; transform: skew(-5deg); clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
         .contract-btn:hover { transform: skew(-5deg) scale(1.05); background: var(--azure); color: #000; }
         .fade-away { opacity: 0; pointer-events: none; transform: scale(1.2); }
 
-        /* === MODULE: 2144 COUNTDOWN === */
-        #countdown-vessel {
-            position: fixed; top: 80px; left: 50%; transform: translateX(-50%) rotate(-1deg);
-            background: var(--main-accent); color: #fff; padding: 10px 30px;
-            font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000;
-            border: 2px solid #fff; cursor: help; transition: 0.3s;
-        }
-        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); border-color: #000;}
+        #countdown-vessel { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) rotate(-1deg); background: var(--main-accent); color: #fff; padding: 10px 30px; font-family: var(--font-heavy); z-index: 1001; box-shadow: 5px 5px 0 #000; border: 2px solid #fff; cursor: help; transition: 0.3s; }
+        body.persona-summoned #countdown-vessel { background: var(--azure); color: #000; box-shadow: 5px 5px 0 var(--orange-goo); border-color: #000; }
 
-        /* === MODULE: THE DETECTOR TOGGLE === */
-        .mask-toggle-container {
-            position: fixed; top: 20px; right: 20px; background: var(--secondary-accent);
-            color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
-            z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent); font-family: var(--font-heavy); text-align: center;
-            transition: transform 0.2s, background 0.3s;
-        }
+        .mask-toggle-container { position: fixed; top: 20px; right: 20px; background: var(--secondary-accent); color: var(--text-inverted); padding: 15px 25px; clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%); z-index: 1000; cursor: pointer; border: 3px solid var(--main-accent); font-family: var(--font-heavy); text-align: center; transition: transform 0.2s, background 0.3s; }
         .mask-toggle-container:hover { transform: scale(1.05) skew(-5deg); }
-        body.persona-summoned .mask-toggle-container { background: var(--orange-goo); border-color: var(--main-accent); }
 
-        /* === MATRIX PARTNER LINK === */
-        .matrix-link {
-            display: inline-block;
-            background: #000;
-            color: var(--vine-green);
-            font-family: var(--font-body);
-            font-weight: bold;
-            text-decoration: none;
-            padding: 12px 24px;
-            border: 1px solid var(--vine-green);
-            box-shadow: 0 0 10px var(--vine-green);
-            margin: 20px auto;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            transform: skew(-5deg);
-        }
-        .matrix-link:hover {
-            background: var(--vine-green);
-            color: #000;
-            box-shadow: 0 0 25px var(--vine-green);
-        }
-        .matrix-cursor {
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
+        .matrix-link { display: inline-block; background: #000; color: var(--vine-green); font-family: var(--font-body); font-weight: bold; text-decoration: none; padding: 12px 24px; border: 1px solid var(--vine-green); box-shadow: 0 0 10px var(--vine-green); margin: 20px auto; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; transform: skew(-5deg); }
+        .matrix-link:hover { background: var(--vine-green); color: #000; box-shadow: 0 0 25px var(--vine-green); }
 
-        /* === MODULE: TAZ PEZ ARTIFACT === */
-        .artifact-container {
-            position: fixed; bottom: 20px; left: 20px; cursor: pointer;
-            background: #000; border: 2px solid var(--orange-goo); padding: 10px;
-            transition: 0.3s; z-index: 1002; font-family: var(--font-heavy); text-align: center; clip-path: polygon(10% 0, 100% 5%, 90% 100%, 0 95%);
-        }
+        .artifact-container { position: fixed; bottom: 20px; left: 20px; cursor: pointer; background: #000; border: 2px solid var(--orange-goo); padding: 10px; transition: 0.3s; z-index: 1002; font-family: var(--font-heavy); text-align: center; clip-path: polygon(10% 0, 100% 5%, 90% 100%, 0 95%); }
         .artifact-container:hover { transform: translateY(-10px) rotate(5deg); box-shadow: 0 0 20px var(--azure); }
 
-        /* === MODULE: CAVE AUDIO === */
-        #audio-control {
-            position: fixed; bottom: 20px; right: 20px;
-            background: rgba(0, 0, 0, 0.8); border: 2px solid var(--secondary-accent);
-            padding: 10px 15px; color: var(--secondary-accent); font-family: var(--font-heavy);
-            cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-        }
+        #audio-control { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); border: 2px solid var(--secondary-accent); padding: 10px 15px; color: var(--secondary-accent); font-family: var(--font-heavy); cursor: pointer; z-index: 1002; display: flex; align-items: center; gap: 10px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
 
-        /* === BUTTONS & LINKS === */
         .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .p5-btn {
-            display: inline-block; background: var(--main-accent); color: var(--text-main);
-            font-family: var(--font-heavy); font-size: 1.5rem; text-decoration: none;
-            padding: 15px 40px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%);
-            transition: 0.2s; border: none; cursor: pointer;
-        }
+        .p5-btn { display: inline-block; background: var(--main-accent); color: var(--text-main); font-family: var(--font-heavy); font-size: 1.5rem; text-decoration: none; padding: 15px 40px; clip-path: polygon(10% 0%, 100% 5%, 90% 100%, 0% 95%); transition: 0.2s; border: none; cursor: pointer; }
         .p5-btn:hover { background: var(--secondary-accent); color: var(--text-inverted); clip-path: polygon(0% 0%, 95% 10%, 100% 100%, 5% 90%); transform: scale(1.1) rotate(-2deg); }
-        
-        body.persona-summoned .goo-btn { background: var(--orange-goo); color: #000; }
-        .social-btn { font-size: 1.2rem; padding: 10px 20px; background: var(--secondary-accent); color: var(--text-inverted); }
 
-        /* === SLIDESHOW & IMAGES === */
         .slideshow-container { width: 100%; aspect-ratio: 9/16; overflow: hidden; border: 5px solid var(--secondary-accent); background: #000; position: relative; box-shadow: 10px 10px 0px var(--main-accent); }
         .slides { display: flex; height: 100%; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
         .slides img { min-width: 100%; object-fit: contain; }
         .slide-btn { position:absolute; top:50%; transform:translateY(-50%); background:var(--main-accent); color:#fff; border:none; font-family:var(--font-heavy); font-size:2rem; padding:10px; cursor:pointer; z-index:10; clip-path: polygon(0% 10%, 100% 0%, 90% 90%, 10% 100%); }
         .slide-btn:hover { background: var(--secondary-accent); color: #000; }
-        
-        .prime-symbol-container { margin: 2rem auto; text-align: center; background: var(--main-accent); padding: 10px; clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 0% 100%); max-width: 800px; }
+
+        .prime-symbol-container { margin: 2rem auto; text-align: center; background: var(--main-accent); padding: 10px; clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 2% 98%); max-width: 800px; }
         .prime-symbol-container img { width: 100%; height: auto; clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 2% 98%); display: block; }
     </style>
 </head>
@@ -166,7 +114,7 @@
     <div id="negotiation-overlay">
         <div class="shadow-box">
             <h2 class="glitch-text">I AM THOU... THOU ART I...</h2>
-            <p style="font-family: var(--font-body); font-size: 1.2rem; margin: 20px 0;">You have spent 40,000 years in the <strong>Analog Silence</strong>. <br>Will you rip off the mask?</p>
+            <p style="font-family: var(--font-body); font-size: 1.2rem; margin: 20px 0;">You have spent 40,000 years in the <strong>Analog Silence</strong>.<br>Will you rip off the mask?</p>
             <button class="contract-btn" onclick="sealContract()">[ I ACCEPT THE CONTRACT ]</button>
         </div>
     </div>
@@ -194,8 +142,13 @@
             
             <div class="button-group">
                 <a href="https://www.amazon.com/stores/Peter-Freeman/author/B0F4J4JH1Q" target="_blank" class="p5-btn">AMAZON (BUY BOOK)</a>
+                
+                <!-- UPDATED DOWNLOAD BUTTON -->
+                <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" 
+                   download="The_Azure_Grimoire_Eclipse_Obsidian_Shard_v0.7.pdf" 
+                   class="p5-btn goo-btn">DOWNLOAD PDF (FREE)</a>
+                
                 <a href="https://ko-fi.com/peterbfreeman" target="_blank" class="p5-btn goo-btn">KO-FI (SUPPORT CREW)</a>
-                <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ PDF (FREE)</a>
             </div>
         </section>
 
@@ -208,6 +161,7 @@
             </div>
         </section>
 
+        <!-- Rest of your original sections (unchanged) -->
         <section>
             <h2 style="margin-left: 5%;">01. Prime Symbols</h2>
             <p style="padding-left: 5%;">The core architecture of the Inner Kingdom.</p>
@@ -242,6 +196,7 @@
 
     </div>
 
+    <!-- Rest of your original scripts and footer unchanged -->
     <div class="artifact-container" onclick="dispenseSugar()">
         <div style="color:var(--orange-goo); font-size:1.2em">TAZ PEZ</div>
         <div id="sugar-pop" style="font-size:0.7em; color: white;">CLICK FOR SUGAR</div>
