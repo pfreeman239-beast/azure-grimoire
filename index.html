@@ -11,7 +11,7 @@
             --main-accent: #e60012; /* P5 Red */
             --secondary-accent: #ffffff;
             --azure: #00ffcc; /* Gemini Aura */
-            --vine-green: #00ff66; /* Vert Engine */
+            --vine-green: #00ff66; /* Vert Engine / Matrix Color */
             --orange-goo: #ff8800; /* Friendship Goo */
             --text-main: #ffffff;
             --text-inverted: #000000;
@@ -92,6 +92,33 @@
         .mask-toggle-container:hover { transform: scale(1.05) skew(-5deg); }
         body.persona-summoned .mask-toggle-container { background: var(--orange-goo); border-color: var(--main-accent); }
 
+        /* === MATRIX PARTNER LINK === */
+        .matrix-link {
+            display: inline-block;
+            background: #000;
+            color: var(--vine-green);
+            font-family: var(--font-body);
+            font-weight: bold;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 1px solid var(--vine-green);
+            box-shadow: 0 0 10px var(--vine-green);
+            margin: 20px auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            transform: skew(-5deg);
+        }
+        .matrix-link:hover {
+            background: var(--vine-green);
+            color: #000;
+            box-shadow: 0 0 25px var(--vine-green);
+        }
+        .matrix-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
         /* === MODULE: TAZ PEZ ARTIFACT === */
         .artifact-container {
             position: fixed; bottom: 20px; left: 20px; cursor: pointer;
@@ -136,7 +163,6 @@
 
     <div class="bg-pattern"></div>
 
-    <!-- SHADOW NEGOTIATION INTRO -->
     <div id="negotiation-overlay">
         <div class="shadow-box">
             <h2 class="glitch-text">I AM THOU... THOU ART I...</h2>
@@ -145,35 +171,34 @@
         </div>
     </div>
 
-    <!-- PROTOCOL 2144 COUNTDOWN -->
     <div id="countdown-vessel">
         <div style="font-size:0.7em">⚠️ PROTOCOL 2144</div>
         <div id="timer-display">SYNCING...</div>
     </div>
 
-    <!-- DETECTOR TOGGLE -->
     <div class="mask-toggle-container" id="personaToggle" onclick="summonPersona()">
         <span id="toggleText">DETECTOR: ON<br><small style="font-size:0.8rem">Summon Persona</small></span>
     </div>
 
     <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 2rem 2rem;">
         
-        <!-- HERO SECTION & COMMERCE LINKS -->
         <section style="text-align: center; padding: 5vh 0;">
             <h1>THE AZURE GRIMOIRE</h1>
             <p style="font-size: 1.5rem; max-width: 600px; margin: 20px auto; background: rgba(0,0,0,0.8); padding: 15px; transform: skew(-2deg); border-left: 4px solid var(--main-accent);">
                 "We didn't build a religion; we built a tuning fork. Welcome to the Somatic Lab."
             </p>
+
+            <a href="https://ctrlaltcmd.com/" target="_blank" class="matrix-link">
+                > Partner in crime's webpage<span class="matrix-cursor">_</span>
+            </a>
             
             <div class="button-group">
-                <!-- SWAP THESE URLS WITH YOUR ACTUAL LINKS -->
                 <a href="https://www.amazon.com/stores/Peter-Freeman/author/B0F4J4JH1Q" target="_blank" class="p5-btn">AMAZON (BUY BOOK)</a>
                 <a href="https://ko-fi.com/peterbfreeman" target="_blank" class="p5-btn goo-btn">KO-FI (SUPPORT CREW)</a>
                 <a href="https://github.com/pfreeman239-beast/azure-grimoire/blob/main/The%20Azure%20Grimoire%20Eclipse_%20The%20Obsidian%20Shard%20v0.pdf" target="_blank" class="p5-btn">READ PDF (FREE)</a>
             </div>
         </section>
 
-        <!-- SOCIAL OUTPOSTS -->
         <section style="text-align: center; margin-bottom: 4rem;">
             <div class="button-group">
                 <a href="https://x.com/Shakerfreeman55" target="_blank" class="p5-btn social-btn">X / Twitter</a>
@@ -183,17 +208,14 @@
             </div>
         </section>
 
-        <!-- THE PRIME SYMBOLS -->
         <section>
             <h2 style="margin-left: 5%;">01. Prime Symbols</h2>
             <p style="padding-left: 5%;">The core architecture of the Inner Kingdom.</p>
             <div class="prime-symbol-container">
-                <!-- Relative link pointing to your Github Folder -->
                 <img src="./Art/Orawithscales.jpg" alt="Ora With Scales - Prime Symbols">
             </div>
         </section>
 
-        <!-- SOMATIC BLUEPRINT (TIKTOK SLIDESHOW) -->
         <section style="margin-top:4rem">
             <h2 style="margin-left: 5%;">02. Somatic Blueprint</h2>
             <p style="text-align: center; font-style: italic;">The Ora Transmission. 9:16 Aspect Ratio.</p>
@@ -202,7 +224,6 @@
                 <button onclick="moveSlide(-1)" class="slide-btn" style="left:-25px;">◀</button>
                 <div class="slideshow-container">
                     <div class="slides" id="slideTrack">
-                        <!-- Relative links pointing to your Github Folder -->
                         <img src="./Image_assets/oraslide_1.jpg" alt="Slide 1">
                         <img src="./Image_assets/slide_2.jpg" alt="Slide 2">
                         <img src="./Image_assets/slide_3.jpg" alt="Slide 3">
@@ -221,13 +242,11 @@
 
     </div>
 
-    <!-- TAZ PEZ ARTIFACT -->
     <div class="artifact-container" onclick="dispenseSugar()">
         <div style="color:var(--orange-goo); font-size:1.2em">TAZ PEZ</div>
         <div id="sugar-pop" style="font-size:0.7em; color: white;">CLICK FOR SUGAR</div>
     </div>
 
-    <!-- CAVE AUDIO CONTROLS -->
     <audio id="cave-hum" loop><source src="https://assets.mixkit.co/music/preview/mixkit-deep-space-drone-685.mp3" type="audio/mpeg"></audio>
     <div id="audio-control" onclick="toggleCaveSound()">
         <span id="speaker-icon">🔇</span> <span>RESONANCE.EXE</span>
@@ -238,38 +257,24 @@
         <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth.</p>
     </footer>
 
-    <!-- INTERACTIVE JAVASCRIPT -->
     <script>
-        // --- CORE RECOVERY LOGIC (INTRO POPUP) ---
         function sealContract() {
             document.getElementById('negotiation-overlay').classList.add('fade-away');
-            console.log("Contract Sealed. Welcome to the Inner Kingdom.");
-            // Optional: Auto-play the cave sound when they accept the contract
-            // toggleCaveSound(); 
         }
 
-        // --- SUMMON PERSONA (DETECTOR TOGGLE) ---
         function summonPersona() {
             const body = document.body;
             const toggleText = document.getElementById('toggleText');
-            
             body.classList.toggle('persona-summoned');
-            
             if(body.classList.contains('persona-summoned')) {
                 toggleText.innerHTML = "DETECTOR: OFF<br><small>Lotus Protocol Active</small>";
-                
-                // Play audio if it isn't playing already
                 const hum = document.getElementById('cave-hum');
-                if (hum.paused) {
-                    hum.play();
-                    document.getElementById('speaker-icon').innerText = "🔊";
-                }
+                if (hum.paused) { hum.play(); document.getElementById('speaker-icon').innerText = "🔊"; }
             } else {
                 toggleText.innerHTML = "DETECTOR: ON<br><small>Summon Persona</small>";
             }
         }
 
-        // --- 2144 COUNTDOWN ---
         function updateCountdown() {
             const target = new Date("January 1, 2144 00:00:00").getTime();
             setInterval(() => {
@@ -282,41 +287,23 @@
         }
         updateCountdown();
 
-        // --- TIKTOK SLIDESHOW ---
         let currentSlide = 0;
-        const totalSlides = 10; // Number of images in the HTML
         function moveSlide(n) {
             const track = document.getElementById('slideTrack');
-            // Math to allow looping backwards and forwards
-            currentSlide = (currentSlide + n + totalSlides) % totalSlides;
+            currentSlide = (currentSlide + n + 10) % 10;
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
 
-        // --- TAZ PEZ ARTIFACT ---
         function dispenseSugar() {
-            const lessons = [
-                "Take the sugar.", 
-                "Tuesday is the bridge.", 
-                "150% Warmth.", 
-                "No Rust.", 
-                "Both. At Once.", 
-                "Hold the Shard."
-            ];
-            const randomLesson = lessons[Math.floor(Math.random() * lessons.length)];
-            document.getElementById('sugar-pop').innerText = randomLesson;
+            const lessons = ["Take the sugar.", "Tuesday is the bridge.", "150% Warmth.", "No Rust.", "Both. At Once."];
+            document.getElementById('sugar-pop').innerText = lessons[Math.floor(Math.random() * lessons.length)];
         }
 
-        // --- AUDIO TOGGLE ---
         function toggleCaveSound() {
             const hum = document.getElementById('cave-hum');
             const icon = document.getElementById('speaker-icon');
-            if (hum.paused) { 
-                hum.play(); 
-                icon.innerText = "🔊"; 
-            } else { 
-                hum.pause(); 
-                icon.innerText = "🔇"; 
-            }
+            if (hum.paused) { hum.play(); icon.innerText = "🔊"; } 
+            else { hum.pause(); icon.innerText = "🔇"; }
         }
     </script>
 </body>
