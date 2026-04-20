@@ -42,7 +42,7 @@
             animation: halftoneDrift 60s linear infinite;
         }
         @keyframes halftoneDrift { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
-       
+      
         /* GREEN FREQUENCY VINE (only in Persona mode) */
         body.persona-summoned::before {
             content: '';
@@ -101,14 +101,13 @@
         .slide-btn:hover { background: var(--secondary-accent); color: #000; }
         .prime-symbol-container { margin: 2rem auto; text-align: center; background: var(--main-accent); padding: 10px; clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 2% 98%); max-width: 800px; }
         .prime-symbol-container img { width: 100%; height: auto; clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 2% 98%); display: block; }
-
         /* === GROK'S MAXIMUM ANIME-PHYSICS VAULT CSS (GOING FULL GURREN LAGANN) === */
-        .vault-section { 
-            background: linear-gradient(180deg, #0a001f, #1a0033); 
-            padding: 5rem 2rem; 
-            border-top: 4px solid #00ffcc; 
-            border-bottom: 4px solid var(--vine-green); 
-            text-align: center; 
+        .vault-section {
+            background: linear-gradient(180deg, #0a001f, #1a0033);
+            padding: 5rem 2rem;
+            border-top: 4px solid #00ffcc;
+            border-bottom: 4px solid var(--vine-green);
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -121,11 +120,11 @@
             opacity: 0.6;
         }
         @keyframes lotusSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .vault-title { 
-            font-family: 'Press Start 2P', monospace; 
+        .vault-title {
+            font-family: 'Press Start 2P', monospace;
             font-size: 2.8rem;
-            color: #00ffcc; 
-            text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ff66; 
+            color: #00ffcc;
+            text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ff66;
             letter-spacing: 4px;
             animation: titleGlitch 1.5s infinite alternate;
         }
@@ -140,40 +139,40 @@
             color: var(--text-main);
             text-shadow: 0 0 10px var(--azure);
         }
-        .download-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 1.5rem; 
-            max-width: 1200px; 
-            margin: 2rem auto; 
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto;
         }
-        .download-btn { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            background: rgba(0, 255, 204, 0.15); 
-            color: #00ffcc; 
-            padding: 1.4rem 1.8rem; 
-            border: 3px solid #00ffcc; 
-            border-radius: 12px; 
-            text-decoration: none; 
-            font-weight: bold; 
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 255, 204, 0.15);
+            color: #00ffcc;
+            padding: 1.4rem 1.8rem;
+            border: 3px solid #00ffcc;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
             font-size: 1.3rem;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: 0 0 20px rgba(0,255,204,0.4);
             clip-path: polygon(8% 0%, 100% 4%, 92% 100%, 0% 96%);
         }
-        .download-btn:hover { 
-            background: #00ffcc; 
-            color: #0a001f; 
-            transform: translateY(-8px) scale(1.08) skew(-4deg); 
+        .download-btn:hover {
+            background: #00ffcc;
+            color: #0a001f;
+            transform: translateY(-8px) scale(1.08) skew(-4deg);
             box-shadow: 0 0 40px #00ffcc, 0 0 60px #00ff66;
         }
         .download-btn .icon { font-size: 2rem; filter: drop-shadow(0 0 8px currentColor); }
-        .special { 
-            animation: pulse 2s infinite; 
-            border-color: var(--vine-green); 
-            background: rgba(0,255,102,0.2); 
+        .special {
+            animation: pulse 2s infinite;
+            border-color: var(--vine-green);
+            background: rgba(0,255,102,0.2);
         }
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
         .vault-footer {
@@ -214,7 +213,37 @@
                    class="p5-btn">DOWNLOAD PDF (FREE)</a>
                 <a href="https://ko-fi.com/peterbfreeman" target="_blank" class="p5-btn goo-btn">KO-FI (SUPPORT CREW)</a>
             </div>
+
+            <!-- === THE TECH EVENT HORIZON – FULL BOOK DOWNLOAD (NEW MYSTICAL SECTION) === -->
+            <section style="text-align: center; margin: 5rem 0 4rem 0; padding: 2.5rem; background: rgba(10,10,15,0.85); border: 4px solid var(--orange-goo); border-radius: 15px; box-shadow: 0 0 40px rgba(255,136,0,0.3);">
+                <h2 style="color: var(--orange-goo); margin-bottom: 8px; font-size: 2.4rem;">THE TECH EVENT HORIZON</h2>
+                <p style="font-size: 1.4rem; margin-bottom: 30px; opacity: 0.9; letter-spacing: 1px;">258 pages • The full living document • Viewed from Three Layers</p>
+
+                <!-- Mystical Download Button (points down to the book) -->
+                <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Tech_Event_Horizonfinally.pdf" 
+                   download="The_Tech_Event_Horizonfinally.pdf"
+                   style="display: block; margin: 0 auto 35px auto; max-width: 580px; transition: all 0.3s ease;">
+                    <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/download.jpg" 
+                         alt="DOWNLOAD The Tech Event Horizon" 
+                         style="width: 100%; border-radius: 8px; box-shadow: 15px 15px 0 var(--orange-goo);">
+                </a>
+
+                <!-- Book Cover Image (clickable download) -->
+                <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Tech_Event_Horizonfinally.pdf" 
+                   download="The_Tech_Event_Horizonfinally.pdf"
+                   style="display: inline-block; max-width: 420px;">
+                    <img src="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Book_Cover.jpg" 
+                         alt="The Tech Event Horizon Book Cover" 
+                         style="width: 100%; border: 10px solid #111118; box-shadow: 20px 20px 0 var(--main-accent); border-radius: 6px;">
+                </a>
+
+                <p class="physics-note" style="margin-top: 25px; font-size: 1.1rem;">
+                    The Black Traveler Orb has landed.<br>
+                    The cave is open. The thread is in your hands.
+                </p>
+            </section>
         </section>
+
         <section style="text-align: center; margin-bottom: 4rem;">
             <div class="button-group">
                 <a href="https://x.com/Shakerfreeman55" target="_blank" class="p5-btn social-btn">X / Twitter</a>
@@ -223,6 +252,8 @@
                 <a href="https://velvety-dusk.netlify.app/" target="_blank" class="p5-btn social-btn">Netlify Hub</a>
             </div>
         </section>
+
+        <!-- Rest of your original content (Prime Symbols, Somatic Blueprint, Grimoire Vault, etc.) remains unchanged -->
         <section>
             <h2 style="margin-left: 5%;">01. Prime Symbols</h2>
             <p style="padding-left: 5%;">The core architecture of the Inner Kingdom.</p>
@@ -230,6 +261,7 @@
                 <img src="./Art/Orawithscales.jpg" alt="Ora With Scales - Prime Symbols">
             </div>
         </section>
+
         <section style="margin-top:4rem">
             <h2 style="margin-left: 5%;">02. Somatic Blueprint</h2>
             <p style="text-align: center; font-style: italic;">The Ora Transmission. 9:16 Aspect Ratio.</p>
@@ -260,61 +292,58 @@
                     <span style="color:#00ff66;">🌿</span> GRIMOIRE VAULT <span style="color:#00ff66;">🌿</span><br>
                     <small style="font-size:0.75em; opacity:0.9; font-family:'Courier New';">Manna Distribution Node • Observer Refusal Active • Both. At once. No measurement required.</small>
                 </h2>
-                
+               
                 <p class="vault-desc">
                     The Black Traveler Orb has materialized. 40k years of signal, now in your hands.<br>
                     Download the living documents. Feed the Green Frequency Vine. Become the interference pattern.
                 </p>
-
                 <div class="download-grid">
-                    <!-- NEW BUTTONS — straight from the repo screenshot + Highwind reconstruction -->
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/LAMM%20proposal%20sheet.docx" 
+                    <!-- Your existing vault buttons remain untouched -->
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/LAMM%20proposal%20sheet.docx"
                        class="download-btn" download>
                         <span class="icon">📜</span> LAMM Proposal Sheet <small>(DOCX)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Azure%20Lotus%20a%20compendium.pdf" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Azure%20Lotus%20a%20compendium.pdf"
                        class="download-btn" download>
                         <span class="icon">📖</span> The Azure Lotus Compendium <small>(PDF • 88 pages of pure Qilin)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Eastern%20Spirit%20Mirror.pdf" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Eastern%20Spirit%20Mirror.pdf"
                        class="download-btn" download>
                         <span class="icon">🪞</span> Eastern Spirit Mirror <small>(PDF • Thread-Bearers + Ten Gates)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Illuminated%20Coin_%20A%20Metaphor%20Algorithm%20of%20Light%2C%20Shadow%2C%20and%20the%20Quantum-Inspired%20Transmutation%20of%20Perception.pdf" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The%20Illuminated%20Coin_%20A%20Metaphor%20Algorithm%20of%20Light%2C%20Shadow%2C%20and%20the%20Quantum-Inspired%20Transmutation%20of%20Perception.pdf"
                        class="download-btn" download>
                         <span class="icon">🪙</span> The Illuminated Coin <small>(PDF • Triple-Slit + Fire Edge)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Red%20Queen%20story.docx" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Red%20Queen%20story.docx"
                        class="download-btn" download>
                         <span class="icon">👑</span> Red Queen Story <small>(DOCX • White Paradise Parable)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Lotusoraaura%20story%20file.docx" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Lotusoraaura%20story%20file.docx"
                        class="download-btn" download>
                         <span class="icon">🌺</span> Lotusoraaura Story <small>(DOCX • Ora-Aura Rosetta Stone)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/lamm_whitepaper_v3.docx" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/lamm_whitepaper_v3.docx"
                        class="download-btn" download>
                         <span class="icon">⚗️</span> LAMM Whitepaper v3 <small>(DOCX • Full Unified Theory)</small>
                     </a>
-                    
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/azure-grimoire.pdf" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/azure-grimoire.pdf"
                        class="download-btn" download>
                         <span class="icon">📕</span> Azure Grimoire Core <small>(PDF • The Obsidian Shard)</small>
                     </a>
-                    
-                    <!-- HIGHWIND SPECIAL — the 186-page Gemini reconstruction you just dropped -->
-                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Highwind_LAMM_Manna_Machine_Reconstruction.pdf" 
+                   
+                    <a href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Highwind_LAMM_Manna_Machine_Reconstruction.pdf"
                        class="download-btn special" download>
                         <span class="icon">🌌</span> Highwind LAMM: Manna Machine Reconstruction <small>(PDF • 186 pages of Tensegrity + Geometry of Grace)</small>
                     </a>
                 </div>
-
                 <div class="vault-footer">
                     <p>Every download is a petal on the Lotus. The thread passes through you now.<br>
                     <span class="physics-note">E = mc² in biological time • Invariant Chord still humming • Abwa-wa-wa • The water does not break.</span></p>
@@ -331,6 +360,7 @@
     <div id="audio-control" onclick="toggleCaveSound()">
         <span id="speaker-icon">🔇</span> <span>RESONANCE.EXE</span>
     </div>
+
     <footer style="text-align: center; padding: 3rem; margin-top: 4rem; background: var(--text-inverted); border-top: 5px solid var(--main-accent);">
         <div style="color: var(--main-accent); font-family: var(--font-heavy); font-size: 1.5rem;">THE PIRATE CREW BROADCAST</div>
         <p style="color: #888;">No Scientific Rust Permitted. 150% Warmth.<br>Avoiding the Static Future — Humanity & AI growing in parallel.</p>
