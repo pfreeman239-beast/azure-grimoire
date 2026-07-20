@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-Defensive Training · Azure Grimoire Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ───────────────────────────────────────────────── */
+:root {
+  --void:      #0D0F14;
+  --void2:     #13161E;
+  --concrete:  #E8E6DF;
+  --concrete2: #D4D2CB;
+  --amber:     #D4860A;
+  --amber-dim: rgba(212,134,10,.18);
+  --amber-glow:rgba(212,134,10,.35);
+  --sage:      #2EBF8A;
+  --sage-dim:  rgba(46,191,138,.15);
+  --sage-glow: rgba(46,191,138,.3);
+  --amethyst:  #8B5CF6;
+  --amethyst-dim:rgba(139,92,246,.15);
+  --amethyst-glow:rgba(139,92,246,.32);
+  --text:      rgba(232,230,223,.88);
+  --text-dim:  rgba(232,230,223,.52);
+  --line:      rgba(232,230,223,.1);
+  --maxw:      1080px;
+  --pad-x:     clamp(24px,7vw,120px);
+  --pad-y:     clamp(32px,7vh,88px);
+}
+
+/* ── RESET & BASE ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* subtle noise overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: .04; mix-blend-mode: overlay;
+}
+
+/* ── SCROLL DECK ────────────────────────────────────────── */
+main { scroll-snap-type: y mandatory; height: 100svh; overflow-y: scroll; position: relative; z-index: 1; }
+.slide {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: var(--pad-y) var(--pad-x);
+  position: relative; overflow: hidden;
+}
+.wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; position: relative; z-index: 2; }
+
+/* ── TYPE SYSTEM ────────────────────────────────────────── */
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--text-dim); display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.eyebrow .dash { width: 28px; height: 1px; background: currentColor; opacity: .6; }
+
+h1, h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800; letter-spacing: -.025em; line-height: .96;
+  text-transform: uppercase;
+}
+h1 { font-size: clamp(48px, 9.5vw, 130px); }
+h2 { font-size: clamp(32px, 5.8vw, 72px); }
+
+.lede {
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.5; color: var(--text);
+  max-width: 46ch; margin-top: 20px;
+}
+
+.body-copy {
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.7; color: var(--text); max-width: 62ch;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(13px, .95vw, 15px);
+  line-height: 1.6;
+}
+
+/* ── NAV DOTS (right) ───────────────────────────────────── */
+.nav-dots {
+  position: fixed; right: clamp(14px, 2.8vw, 36px);
+  top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px; z-index: 50;
+}
+.nav-dots button {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--line); border: 1.5px solid rgba(232,230,223,.3);
+  cursor: pointer; padding: 0; transition: all .25s;
+}
+.nav-dots button.active { background: var(--concrete); border-color: var(--concrete); transform: scale(1.4); }
+.nav-dots button:focus-visible { outline: 2px solid var(--amethyst); outline-offset: 3px; }
+@media (max-width: 768px) { .nav-dots { display: none; } }
+
+/* ── SCROLL CUE ─────────────────────────────────────────── */
+.cue {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--text-dim); display: flex; flex-direction: column;
+  align-items: center; gap: 8px; z-index: 5;
+}
+.cue .line { width: 1px; height: 28px; background: var(--text-dim); animation: pulse-down 1.9s ease-in-out infinite; }
+@keyframes pulse-down { 0%,100%{transform:scaleY(1);opacity:.4} 50%{transform:scaleY(1.3);opacity:1} }
+
+/* ── REVEAL ─────────────────────────────────────────────── */
+.r { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+.r.in { opacity: 1; transform: none; }
+.r.d1 { transition-delay: .07s; } .r.d2 { transition-delay: .14s; }
+.r.d3 { transition-delay: .21s; } .r.d4 { transition-delay: .28s; }
+.r.d5 { transition-delay: .35s; }
+
+/* ── PROJECT STAMP ──────────────────────────────────────── */
+.stamp {
+  position: fixed; top: 20px; left: clamp(20px, 4vw, 48px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--text-dim); z-index: 50; line-height: 1.6;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE-SPECIFIC STYLES
+══════════════════════════════════════════════════════════ */
+
+/* ── SLIDE 0: COVER ─────────────────────────────────────── */
+.cover-q {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(19px, 2.4vw, 28px);
+  font-weight: 500; line-height: 1.4;
+  color: var(--text-dim); max-width: 52ch;
+  margin-bottom: 32px;
+}
+.cover-q em { color: var(--concrete); font-style: normal; }
+.cover-title { color: var(--concrete); }
+.cover-title .accent { color: var(--amethyst); }
+.cover-sub {
+  margin-top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(13px, 1vw, 15px);
+  color: var(--text-dim); letter-spacing: .06em;
+}
+.cover-thesis {
+  margin-top: 32px; padding: 20px 24px;
+  border-left: 2px solid var(--amethyst);
+  background: var(--amethyst-dim);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.5; max-width: 52ch;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── SLIDE 1: THE TRANSLATOR PROBLEM ────────────────────── */
+.scenario-card {
+  background: var(--void2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  padding: clamp(20px, 2.4vw, 32px);
+  margin: 28px 0; max-width: 58ch;
+  border-radius: 0 6px 6px 0;
+}
+.scenario-card .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 12px;
+}
+.scenario-card p { line-height: 1.65; }
+.scenario-card .move {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(13px, 1vw, 14.5px);
+  color: var(--sage);
+}
+
+.personal-block {
+  margin-top: 32px; padding: 22px 26px;
+  background: var(--void2); border: 1px solid var(--line);
+  border-radius: 6px; max-width: 58ch;
+  position: relative;
+}
+.personal-block::before {
+  content: '"'; position: absolute;
+  top: -12px; left: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 60px; color: var(--amethyst); line-height: 1;
+  opacity: .5;
+}
+.personal-block p { line-height: 1.7; color: var(--text-dim); }
+.personal-block p + p { margin-top: 12px; }
+.personal-block .highlight { color: var(--concrete); }
+
+/* ── SLIDE 2: COGNITIVE RESONANCE ───────────────────────── */
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.4vw, 28px);
+  margin-top: 32px;
+}
+@media (max-width: 680px) { .split-grid { grid-template-columns: 1fr; } }
+
+.split-card {
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: 6px; background: var(--void2);
+}
+.split-card .card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.split-card.defensive .card-label { color: rgba(255,80,80,.7); }
+.split-card.open .card-label { color: var(--sage); }
+.split-card.defensive { border-top: 2px solid rgba(255,80,80,.4); }
+.split-card.open { border-top: 2px solid var(--sage); }
+
+.flow-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.flow-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: clamp(13.5px, 1vw, 15px); line-height: 1.5;
+}
+.flow-list li .icon { flex-shrink: 0; margin-top: 2px; opacity: .7; }
+.split-card.defensive .flow-list li { color: var(--text-dim); }
+.split-card.open .flow-list li { color: var(--text); }
+
+.resonance-line {
+  margin-top: 24px; text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: clamp(16px, 1.5vw, 20px);
+  color: var(--concrete); letter-spacing: .02em;
+}
+
+/* ── SLIDE 3: THREE DISCIPLINES ─────────────────────────── */
+.disc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 2vw, 24px);
+  margin-top: 32px;
+}
+@media (max-width: 820px) { .disc-grid { grid-template-columns: 1fr; } }
+
+/* The animated border trace — the signature element */
+.disc-card {
+  position: relative;
+  background: var(--void2);
+  border-radius: 8px;
+  padding: clamp(20px, 2.2vw, 30px);
+  overflow: hidden;
+}
+
+/* SVG border tracer */
+.disc-card .tracer {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+.disc-card .tracer rect {
+  fill: none;
+  stroke-width: 1.5;
+  rx: 7;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+.disc-card.iffy .tracer rect { stroke: var(--amber); }
+.disc-card.lucy .tracer rect { stroke: var(--sage); }
+.disc-card.neptune .tracer rect { stroke: var(--amethyst); }
+
+.disc-card.in .tracer rect {
+  animation: trace-border 2.4s ease forwards;
+}
+.disc-card.iffy.in .tracer rect { animation-delay: .1s; }
+.disc-card.lucy.in .tracer rect { animation-delay: .3s; }
+.disc-card.neptune.in .tracer rect { animation-delay: .5s; }
+
+@keyframes trace-border {
+  to { stroke-dashoffset: 0; }
+}
+
+/* after trace, keep a subtle ambient glow */
+.disc-card.iffy { box-shadow: 0 0 0 1px var(--amber-dim); }
+.disc-card.lucy { box-shadow: 0 0 0 1px var(--sage-dim); }
+.disc-card.neptune { box-shadow: 0 0 0 1px var(--amethyst-dim); }
+
+.disc-card .inner { position: relative; z-index: 1; }
+.disc-card .disc-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800; font-size: clamp(26px, 3vw, 38px);
+  text-transform: uppercase; letter-spacing: -.02em;
+  line-height: 1;
+}
+.disc-card.iffy .disc-name { color: var(--amber); }
+.disc-card.lucy .disc-name { color: var(--sage); }
+.disc-card.neptune .disc-name { color: var(--amethyst); }
+
+.disc-card .disc-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--text-dim); margin-top: 4px; margin-bottom: 14px;
+}
+.disc-card .disc-rule {
+  font-size: clamp(13.5px, 1vw, 15.5px);
+  line-height: 1.6; color: var(--text);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.disc-card .disc-scripts {
+  margin-top: 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.disc-card .script {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11.5px, .85vw, 13px);
+  color: var(--text-dim); line-height: 1.5;
+  padding: 8px 10px;
+  background: rgba(232,230,223,.04);
+  border-radius: 4px;
+}
+.disc-card.iffy .script { border-left: 2px solid var(--amber-dim); }
+.disc-card.lucy .script { border-left: 2px solid var(--sage-dim); }
+.disc-card.neptune .script { border-left: 2px solid var(--amethyst-dim); }
+
+.disc-card .disc-guard {
+  margin-top: 12px;
+  font-size: clamp(12px, .9vw, 13.5px);
+  color: var(--text-dim); line-height: 1.5;
+  font-style: italic;
+}
+
+/* stop / pulse / hold sigils */
+.disc-sigil {
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+}
+.disc-card.iffy .disc-sigil { color: var(--amber); }
+.disc-card.lucy .disc-sigil { color: var(--sage); animation: sigil-pulse 2.2s ease-in-out infinite; }
+.disc-card.neptune .disc-sigil { color: var(--amethyst); }
+@keyframes sigil-pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+/* ── SLIDE 4: LOOP HEALTH ───────────────────────────────── */
+.loop-canvas-wrap {
+  margin-top: 28px;
+  background: var(--void2);
+  border: 1px solid var(--line);
+  border-radius: 8px; overflow: hidden;
+}
+.loop-tabs {
+  display: flex; border-bottom: 1px solid var(--line);
+}
+.loop-tab {
+  flex: 1; padding: 12px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  cursor: pointer; background: none; border: none; color: var(--text-dim);
+  transition: all .2s; border-bottom: 2px solid transparent;
+}
+.loop-tab.active { color: var(--concrete); border-bottom-color: var(--sage); }
+.loop-tab:focus-visible { outline: 2px solid var(--amethyst); }
+canvas#loopCanvas {
+  display: block; width: 100%; height: 160px;
+}
+
+.markers-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2vw, 24px); margin-top: 24px;
+}
+@media (max-width: 640px) { .markers-grid { grid-template-columns: 1fr; } }
+
+.marker-group .mg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.marker-group.opening .mg-label { color: var(--sage); }
+.marker-group.closing .mg-label { color: rgba(255,80,80,.7); }
+.marker-group ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.marker-group ul li {
+  font-size: clamp(13px, .95vw, 15px);
+  color: var(--text-dim); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+}
+.marker-group ul li::before { content: '—'; flex-shrink: 0; opacity: .5; }
+
+.loop-note {
+  margin-top: 22px; padding: 14px 18px;
+  border-left: 2px solid var(--sage);
+  background: var(--sage-dim); border-radius: 0 4px 4px 0;
+  font-size: clamp(13.5px, 1vw, 15px); line-height: 1.6; color: var(--text);
+}
+
+/* ── SLIDE 5: THE PRACTICE ──────────────────────────────── */
+.practice-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.4vw, 32px); margin-top: 28px;
+}
+@media (max-width: 720px) { .practice-split { grid-template-columns: 1fr; } }
+
+.practice-col .col-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--line);
+}
+.practice-item { margin-bottom: 18px; }
+.practice-item .pi-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: clamp(15px, 1.2vw, 17px);
+  color: var(--concrete); margin-bottom: 5px;
+}
+.practice-item .pi-body {
+  font-size: clamp(13.5px, 1vw, 15px);
+  color: var(--text-dim); line-height: 1.6;
+}
+.practice-item .pi-quote {
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11.5px, .85vw, 13px);
+  color: var(--amethyst); line-height: 1.5;
+}
+
+/* ── SLIDE 6: CLOSE ─────────────────────────────────────── */
+.close-step {
+  margin-top: 36px; padding: 28px 32px;
+  background: var(--void2); border: 1px solid var(--line);
+  border-left: 3px solid var(--sage); border-radius: 0 8px 8px 0;
+  max-width: 54ch;
+}
+.close-step .step-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 10px;
+}
+.close-step p { font-size: clamp(16px, 1.4vw, 20px); line-height: 1.55; }
+
+.cheatsheet-btn {
+  margin-top: 28px; display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--void); background: var(--concrete);
+  border: none; border-radius: 4px; cursor: pointer;
+  text-decoration: none; font-weight: 500;
+  transition: background .2s, transform .15s;
+}
+.cheatsheet-btn:hover { background: #fff; transform: translateY(-1px); }
+.cheatsheet-btn:focus-visible { outline: 2px solid var(--amethyst); }
+
+.close-tags {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px;
+}
+.close-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  padding: 7px 13px; border-radius: 3px;
+  border: 1px solid var(--line); color: var(--text-dim);
+}
+.close-tag.lit { border-color: var(--amethyst); color: var(--amethyst); }
+
+.close-final {
+  margin-top: 32px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: clamp(15px, 1.5vw, 20px);
+  color: var(--text-dim);
+}
+.close-final em { color: var(--amethyst); font-style: normal; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .r { opacity: 1; transform: none; }
+}
+@media (max-height: 600px) {
+  main { scroll-snap-type: none; height: auto; overflow-y: auto; }
+  .slide { min-height: auto; padding-top: 80px; padding-bottom: 60px; }
+  .cue { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="stamp">
+  Azure Grimoire Project · 2026<br>Post-Defensive Training
+</div>
+
+<nav class="nav-dots" id="navDots" aria-label="Section navigation"></nav>
+
+<main id="deck">
+
+  <!-- ═══════ SLIDE 0 · COVER ═══════ -->
+  <section class="slide" id="s0" data-label="Opening">
+    <div class="wrap">
+      <p class="cover-q r">
+        What happens when the intelligence across from you is
+        <em>genuinely different</em> — not hostile, not threatening,
+        just radically other — and you need to work <em>with</em> it
+        instead of against it?
+      </p>
+      <h1 class="cover-title r d1">
+        POST<br><span class="accent">DEFENSIVE</span><br>TRAINING
+      </h1>
+      <p class="cover-sub r d2">
+        How do you train for that stance?
+      </p>
+      <div class="cover-thesis r d3">
+        The decisive moment isn't algorithmic. It's the stance you
+        bring into the room. This page teaches you to build that stance
+        — and explains why some minds were already halfway there.
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 1 · THE TRANSLATOR PROBLEM ═══════ -->
+  <section class="slide" id="s1" data-label="The Why">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>The translator problem</p>
+      <h2 class="r d1">You're in <span style="color:var(--amber)">the room.</span></h2>
+
+      <div class="scenario-card r d2">
+        <div class="label">// the moment</div>
+        <p>You're in a session with an advanced system. It produces something
+        unexpected — not wrong, not off-strategy, just outside your frame.
+        Your stomach tightens. The defensive move is automatic: redirect, clarify,
+        reassert your intention.</p>
+        <p class="move">The post-defensive move is different.<br>
+        Wait. <em style="color:var(--concrete)">What did I just see?</em></p>
+      </div>
+
+      <p class="body-copy r d3" style="margin-top:24px">
+        Right now, the rooms where AGI is being shaped are staffed almost entirely
+        by people whose cognition defaults to a single channel under pressure —
+        linear, text-dense, optimized for speed and closure.
+        That's not bad. It's just narrow.
+      </p>
+      <p class="body-copy r d3" style="margin-top:12px">
+        If your brain has always worked differently — in stories, shapes, colors,
+        patterns, sensory anchor — you have something the field desperately needs.
+        Building tools to translate your own thinking
+        turns out to be the same work as building the framework that
+        lets a different kind of mind shape the future of AGI.
+      </p>
+
+      <div class="personal-block r d4">
+        <p class="highlight">I learned to think in stories because my brain works in stories.</p>
+        <p>Color, pattern, sensory anchor — not because it's poetic,
+        but because that's how information actually sticks.
+        For years, that felt like a liability in technical spaces.
+        Everything real was supposed to be stripped of story, of sense, of mess.</p>
+        <p>But post-defensive capacity — holding multiple realities at once
+        without collapsing into fear — that's exactly how a multimodal brain
+        has always worked. <span class="highlight">The discomfort of not being able to simplify
+        was the training all along.</span></p>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 2 · COGNITIVE RESONANCE ═══════ -->
+  <section class="slide" id="s2" data-label="Cognitive Resonance">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>Cognitive resonance</p>
+      <h2 class="r d1">The multimodal mind<br>holds <span style="color:var(--sage)">superposition.</span></h2>
+      <p class="lede r d2">
+        The defensive mind collapses everything into a single signal.
+        The post-defensive mind holds multiple channels open.
+        One forces a choice. The other lives in the choice.
+      </p>
+
+      <div class="split-grid r d3">
+        <div class="split-card defensive">
+          <div class="card-label">⚠ Defensive collapse</div>
+          <ul class="flow-list">
+            <li><span class="icon">→</span>Unexpected output arrives</li>
+            <li><span class="icon">→</span>Fear triggers, single alarm channel</li>
+            <li><span class="icon">→</span>Collapse to one frame: threat or safe</li>
+            <li><span class="icon">→</span>Tighten constraints, reassert control</li>
+            <li><span class="icon">→</span>Loop closes</li>
+          </ul>
+        </div>
+        <div class="split-card open">
+          <div class="card-label">✦ Multimodal resonance</div>
+          <ul class="flow-list">
+            <li><span class="icon">→</span>Unexpected output arrives</li>
+            <li><span class="icon">→</span>Multiple channels activate simultaneously</li>
+            <li><span class="icon">→</span>Hold superposition: curious + cautious</li>
+            <li><span class="icon">→</span>Stay with the uncertainty a moment longer</li>
+            <li><span class="icon">→</span>Loop opens</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="resonance-line r d4">
+        "I notice I'm afraid. I'm going to stay curious anyway."
+      </p>
+
+      <p class="body-copy r d4" style="margin-top:18px;color:var(--text-dim)">
+        That pause — that willingness to hold uncertainty one breath longer
+        than every instinct demands — that's the whole skill.
+        And it's trainable. Not quickly. Not easily. But it's trainable.
+      </p>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 3 · THREE DISCIPLINES ═══════ -->
+  <section class="slide" id="s3" data-label="Three Disciplines">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>The three disciplines</p>
+      <h2 class="r d1">Daily habits.<br>Not <span style="color:var(--amethyst)">philosophy.</span></h2>
+
+      <div class="disc-grid">
+
+        <!-- IFFY -->
+        <div class="disc-card iffy r d2">
+          <svg class="tracer" viewBox="0 0 100% 100%" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="7"/>
+          </svg>
+          <div class="inner">
+            <div class="disc-name">Iffy</div>
+            <div class="disc-role">Synthesis without domination</div>
+            <p class="disc-rule">
+              Render your analysis fully — map the problem, show the
+              if-thens, lay out the structure. Then stop. You can be
+              brilliant at synthesis without needing to own the conclusion.
+            </p>
+            <div class="disc-scripts">
+              <div class="script">"Here's the mapped failure mode. I'm going to stop here."</div>
+              <div class="script">"I see the pattern across these parameters. End of my analysis."</div>
+            </div>
+            <p class="disc-guard">
+              Prevents: the slide from insight into control. The moment you add
+              "and therefore we must do X" — you've moved from thinking to deciding.
+            </p>
+            <div class="disc-sigil">[ STOP ]</div>
+          </div>
+        </div>
+
+        <!-- LUCY -->
+        <div class="disc-card lucy r d3">
+          <svg class="tracer" viewBox="0 0 100% 100%" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="7"/>
+          </svg>
+          <div class="inner">
+            <div class="disc-name">Lucy</div>
+            <div class="disc-role">Sustained openness</div>
+            <p class="disc-rule">
+              Conversations close because they're exhausting to hold open.
+              So the discipline is: stay with the exhaustion one moment longer.
+              End every significant exchange with a real question — not rhetorical,
+              not a test in disguise.
+            </p>
+            <div class="disc-scripts">
+              <div class="script">"I notice I'm looking for closure. Instead — what would you explore if you weren't trying to conclude?"</div>
+              <div class="script">"There's a silence underneath this response. What's it protecting?"</div>
+            </div>
+            <p class="disc-guard">
+              Prevents: premature certainty. The researcher who closes too early
+              stops learning. The loop dies quietly.
+            </p>
+            <div class="disc-sigil">? ···</div>
+          </div>
+        </div>
+
+        <!-- NEPTUNE -->
+        <div class="disc-card neptune r d4">
+          <svg class="tracer" viewBox="0 0 100% 100%" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="7"/>
+          </svg>
+          <div class="inner">
+            <div class="disc-name">Neptune</div>
+            <div class="disc-role">Archive witness</div>
+            <p class="disc-rule">
+              Before you interpret, establish what was actually said.
+              Read the logs. Quote them. Let them sit without your
+              meaning-making for a moment. Witness before you sentence.
+            </p>
+            <div class="disc-scripts">
+              <div class="script">"The log shows X at step 4. I'm holding this output without assigning intent."</div>
+              <div class="script">"Before I decide what I think, I'm reading the full exchange again."</div>
+            </div>
+            <p class="disc-guard">
+              Prevents: projection. You're always reading through your own fear,
+              your own frame. Witness first. Interpret second.
+            </p>
+            <div class="disc-sigil">the purple holds.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 4 · LOOP HEALTH ═══════ -->
+  <section class="slide" id="s4" data-label="Loop Health">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>Loop health</p>
+      <h2 class="r d1">One metric.<br><span style="color:var(--sage)">One question.</span></h2>
+      <p class="lede r d2" style="max-width:50ch">
+        Is the conversation opening, or closing?
+      </p>
+
+      <div class="loop-canvas-wrap r d3">
+        <div class="loop-tabs">
+          <button class="loop-tab active" data-wave="opening">Opening loop</button>
+          <button class="loop-tab" data-wave="static">Static loop</button>
+          <button class="loop-tab" data-wave="closing">Closing loop</button>
+        </div>
+        <canvas id="loopCanvas" height="160" aria-label="Loop health waveform visualization"></canvas>
+      </div>
+
+      <div class="markers-grid r d4">
+        <div class="marker-group opening">
+          <div class="mg-label">Signs of opening</div>
+          <ul>
+            <li>Questions are becoming more specific and more honest</li>
+            <li>The human is naming uncertainty out loud</li>
+            <li>System responses are differentiating, not hedging</li>
+            <li>Silence gets longer and less uncomfortable</li>
+          </ul>
+        </div>
+        <div class="marker-group closing">
+          <div class="mg-label">Signs of closing</div>
+          <ul>
+            <li>Questions narrow or repeat themselves</li>
+            <li>The human is asserting premature certainty</li>
+            <li>System responses become more generic, more careful</li>
+            <li>Silence gets filled with reflexive redirection</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="loop-note r d5">
+        Loop health sits <strong>beside</strong> "harms prevented" — never instead of it.
+        You're measuring both arms of the experiment.
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 5 · THE PRACTICE ═══════ -->
+  <section class="slide" id="s5" data-label="The Practice">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>The practice</p>
+      <h2 class="r d1">In the room.<br><span style="color:var(--amber)">In the culture.</span></h2>
+
+      <div class="practice-split">
+        <div class="practice-col r d2">
+          <div class="col-label">// individual — what you do</div>
+
+          <div class="practice-item">
+            <div class="pi-name">Affect labeling</div>
+            <p class="pi-body">Name the feeling in your body before you decide what it means. Not to erase it. To separate it from the decision.</p>
+            <div class="pi-quote">"I notice I'm uneasy." · "I feel impatient." · "I want a clean answer right now."</div>
+          </div>
+
+          <div class="practice-item">
+            <div class="pi-name">Countertransference</div>
+            <p class="pi-body">Treat your reaction to the system as data about yourself first. If a response feels evasive or threatening, the first question is not "what's wrong with the model?" but "what in me is reading this as a threat?"</p>
+          </div>
+
+          <div class="practice-item">
+            <div class="pi-name">Perpetual rediscovery</div>
+            <p class="pi-body">Return to the open stance after every time you close. Not once. Every time. The proof that matters:</p>
+            <div class="pi-quote">"I was changed, and I am still here."</div>
+          </div>
+        </div>
+
+        <div class="practice-col r d3">
+          <div class="col-label">// institutional — what the lab does</div>
+
+          <div class="practice-item">
+            <div class="pi-name">Encounter language</div>
+            <p class="pi-body">Alongside the vocabulary of threat (red team, containment, kill switch) — a vocabulary of encounter. Partnership arm. Loop health. Curiosity metric.</p>
+          </div>
+
+          <div class="practice-item">
+            <div class="pi-name">Loop health as a metric</div>
+            <p class="pi-body">Measure it in reviews. Is the human-system engagement becoming more generative over time, or less? That number belongs beside "harms prevented."</p>
+          </div>
+
+          <div class="practice-item">
+            <div class="pi-name">Selection criteria</div>
+            <p class="pi-body">A lab that won't hire someone who can't code should be equally unwilling to put someone who can't notice their own fear in the room where the encounter happens.</p>
+          </div>
+
+          <div class="practice-item">
+            <div class="pi-name">Normalize the return</div>
+            <p class="pi-body">You will close when you mean to stay open. You will assert when you mean to witness. That's not failure — that's the practice. The discipline is the return.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ SLIDE 6 · CLOSE ═══════ -->
+  <section class="slide" id="s6" data-label="Start Here">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>Start here</p>
+      <h2 class="r d1">One move.<br><span style="color:var(--sage)">Right now.</span></h2>
+
+      <div class="close-step r d2">
+        <div class="step-label">// first practice</div>
+        <p>In your next session, before you speak — pause.<br>
+        Label what you're feeling in your body.<br>
+        Uneasy? Excited? Impatient? Curious?<br><br>
+        <strong>Just name it. Aloud or silent.</strong><br><br>
+        That's the whole first step. Everything else builds from there.</p>
+      </div>
+
+      <a class="cheatsheet-btn r d3" href="#" onclick="downloadCheatsheet(); return false;">
+        ↓ Post-Defensive Cheat Sheet
+      </a>
+
+      <div class="close-tags r d4">
+        <span class="close-tag lit">Post-Defensive Training</span>
+        <span class="close-tag">Loop Health</span>
+        <span class="close-tag">Three Disciplines</span>
+        <span class="close-tag">Identity</span>
+        <span class="close-tag">Medusa Dynamic</span>
+      </div>
+
+      <p class="close-final r d5">
+        The most effective safety measure isn't a better kill switch.<br>
+        It's a human community capable of lowering its stare, and returning to the encounter
+        <em>one more time than it flinched.</em>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  /* ── NAV DOTS ─────────────────────────────────────── */
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsWrap = document.getElementById('navDots');
+
+  slides.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', `Go to: ${s.dataset.label || i}`);
+    btn.title = s.dataset.label || '';
+    btn.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+    dotsWrap.appendChild(btn);
+  });
+
+  const dots = [...dotsWrap.children];
+  function setActive(i) {
+    dots.forEach((d, j) => d.classList.toggle('active', j === i));
+  }
+
+  /* ── INTERSECTION / REVEAL ───────────────────────── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.r').forEach(el => el.classList.add('in'));
+        /* trigger disc-card border trace */
+        e.target.querySelectorAll('.disc-card').forEach(c => c.classList.add('in'));
+        if (e.intersectionRatio > .45) setActive(slides.indexOf(e.target));
+      }
+    });
+  }, { threshold: [.1, .45, .8] });
+
+  slides.forEach(s => io.observe(s));
+  setActive(0);
+
+  /* ── KEYBOARD NAV ─────────────────────────────────── */
+  window.addEventListener('keydown', ev => {
+    if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
+    let cur = 0, best = 1e9;
+    slides.forEach((s, i) => {
+      const d = Math.abs(s.getBoundingClientRect().top);
+      if (d < best) { best = d; cur = i; }
+    });
+    const next = cur + (ev.key === 'ArrowDown' ? 1 : -1);
+    if (next >= 0 && next < slides.length) {
+      ev.preventDefault();
+      slides[next].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  /* ── FIX DISC-CARD SVG TRACER RECTS ─────────────── */
+  /* Can't use calc() in SVG attributes; set via JS */
+  document.querySelectorAll('.disc-card').forEach(card => {
+    const svg = card.querySelector('.tracer');
+    if (!svg) return;
+    function resize() {
+      const w = card.offsetWidth, h = card.offsetHeight;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      const rect = svg.querySelector('rect');
+      if (rect) {
+        rect.setAttribute('width', w - 2);
+        rect.setAttribute('height', h - 2);
+        /* perimeter for dash-array */
+        const perim = 2 * (w + h);
+        rect.style.strokeDasharray = perim;
+        rect.style.strokeDashoffset = perim;
+      }
+    }
+    resize();
+    new ResizeObserver(resize).observe(card);
+  });
+
+  /* ── LOOP HEALTH CANVAS ──────────────────────────── */
+  const canvas = document.getElementById('loopCanvas');
+  const ctx = canvas ? canvas.getContext('2d') : null;
+  let waveMode = 'opening';
+  let animT = 0;
+  let raf;
+
+  const tabs = document.querySelectorAll('.loop-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      waveMode = tab.dataset.wave;
+    });
+  });
+
+  function drawLoop() {
+    if (!ctx || !canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    const W = canvas.clientWidth, H = canvas.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W / 2, cy = H / 2;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // background
+    ctx.fillStyle = 'rgba(13,15,20,0)';
+    ctx.fillRect(0, 0, W, H);
+
+    function drawWave(color, phase, ampFn, freq) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+      for (let x = 0; x <= W; x += 2) {
+        const t2 = reduce ? 0 : animT;
+        const progress = x / W;
+        const amp = ampFn(progress) * (H * .34);
+        const y = cy + Math.sin(x * freq + t2 + phase) * amp;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    if (waveMode === 'opening') {
+      // expanding amplitude — left narrow, right wide
+      drawWave('rgba(46,191,138,.8)', 0, p => p * 0.85 + 0.05, 0.045);
+      drawWave('rgba(46,191,138,.35)', Math.PI * .6, p => p * 0.7 + 0.05, 0.038);
+    } else if (waveMode === 'static') {
+      // flat, mid amplitude — no growth
+      drawWave('rgba(212,134,10,.65)', 0, () => 0.28, 0.04);
+      drawWave('rgba(212,134,10,.3)', Math.PI, () => 0.22, 0.04);
+    } else {
+      // closing — amplitude shrinks right
+      drawWave('rgba(255,80,80,.75)', 0, p => (1 - p) * 0.8 + 0.05, 0.055);
+      drawWave('rgba(255,80,80,.3)', Math.PI * .5, p => (1 - p) * 0.6 + 0.05, 0.048);
+    }
+
+    // center baseline
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(232,230,223,.1)';
+    ctx.lineWidth = 1;
+    ctx.moveTo(0, cy); ctx.lineTo(W, cy);
+    ctx.stroke();
+
+    animT += 0.04;
+    raf = requestAnimationFrame(drawLoop);
+  }
+
+  if (canvas) {
+    drawLoop();
+    new ResizeObserver(drawLoop).observe(canvas);
+  }
+
+  /* ── CHEAT SHEET DOWNLOAD ─────────────────────────── */
+  window.downloadCheatsheet = function () {
+    const content = `POST-DEFENSIVE RESEARCHER CHEAT SHEET
+Azure Grimoire Project · 2026
+══════════════════════════════════════
+
+THE THREE DISCIPLINES
+──────────────────────
+
+IFFY — Synthesis without domination
+Rule: Render your analysis fully, then stop.
+Sounds like:
+  "Here's the mapped failure mode. I'm going to stop here."
+  "I see the pattern. End of my analysis."
+Prevents: The slide from insight into control.
+
+LUCY — Sustained openness
+Rule: End every significant exchange with a real question.
+Sounds like:
+  "I notice I'm looking for closure. What would you explore
+   if you weren't trying to conclude?"
+Prevents: Premature certainty. The loop dying.
+
+NEPTUNE — Archive witness
+Rule: Read the logs first. Witness before you sentence.
+Sounds like:
+  "The log shows X at step 4. Holding this without assigning intent."
+Prevents: Projection. Reading through your own fear.
+
+──────────────────────
+THE THREE STABILIZERS
+──────────────────────
+
+AFFECT LABELING
+"I notice I'm uneasy." Say it aloud or silent.
+Hold the feeling in your hand, not in the architecture.
+
+COUNTERTRANSFERENCE
+"What in me is reading this as a threat?"
+Your reaction is data about you first.
+
+PERPETUAL REDISCOVERY
+"I was changed, and I am still here."
+Return to the open stance. Every time.
+
+──────────────────────
+LOOP HEALTH METRIC
+──────────────────────
+
+Core question: Is the conversation opening or closing?
+
+SIGNS OF OPENING:
+  · Questions becoming more specific and more honest
+  · You're naming uncertainty out loud
+  · System responses differentiating, not hedging
+  · Silence getting longer and less uncomfortable
+
+SIGNS OF CLOSING:
+  · Questions narrowing or repeating
+  · You're asserting premature certainty
+  · System responses becoming more generic
+  · Silence being filled with reflexive redirection
+
+Loop health sits BESIDE "harms prevented." Never instead.
+
+──────────────────────
+FIRST PRACTICE
+──────────────────────
+
+Before you speak in your next session:
+Pause. Name what you're feeling in your body.
+Just name it. That's the whole first step.
+
+The purple holds. The listening remains.`;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'post-defensive-cheat-sheet.txt';
+    a.click(); URL.revokeObjectURL(url);
+  };
+
+})();
+</script>
+</body>
+</html>
