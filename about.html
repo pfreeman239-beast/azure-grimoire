@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About · Peter Freeman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS · warm, human, organic (departs from the series' cool geometry) ── */
+:root{
+  --ground:#100D0A; --ground2:#17130E; --ground3:#1F1912;
+  --amber:#E2A855; --amber-dim:rgba(226,168,85,.16);
+  --ember:#E86F4E; --ember-dim:rgba(232,111,78,.14);
+  --vine:#4FD98C; --vine-dim:rgba(79,217,140,.14);
+  --parchment:#EDE6D8;
+  --text:rgba(237,230,216,.86); --dim:rgba(237,230,216,.5);
+  --line:rgba(237,230,216,.1);
+  --maxw:1000px; --pad-x:clamp(24px,7vw,120px); --pad-y:clamp(44px,8vh,90px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--ground); color:var(--text);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(15.5px,1.1vw,18px); line-height:1.72; overflow-x:hidden;
+}
+/* warm paper grain */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity:.04;mix-blend-mode:overlay;
+}
+main{scroll-snap-type:y proximity;height:100svh;overflow-y:scroll;position:relative;z-index:1}
+.stop{min-height:100svh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;
+  padding:var(--pad-y) var(--pad-x);position:relative}
+.flow{padding:var(--pad-y) var(--pad-x)}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;position:relative;z-index:2}
+
+/* ── TYPE ── */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.eyebrow .dash{width:26px;height:1px;background:currentColor;opacity:.6}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.02;
+  font-size:clamp(36px,6.4vw,74px);color:var(--parchment)}
+h2{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.015em;line-height:1.06;
+  font-size:clamp(27px,4.4vw,50px);color:var(--parchment)}
+h2 .amber{color:var(--amber)} h1 .amber{color:var(--amber)}
+.lede{font-size:clamp(18px,1.7vw,24px);line-height:1.5;color:var(--text);max-width:44ch;margin-top:20px}
+.copy{font-size:clamp(15.5px,1.1vw,18px);line-height:1.75;color:var(--text);max-width:60ch}
+.copy + .copy{margin-top:16px}
+.copy strong{color:var(--parchment);font-weight:600}
+.copy em{color:var(--amber);font-style:normal}
+
+.nav-dots{position:fixed;right:clamp(14px,2.8vw,36px);top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:50}
+.nav-dots button{width:8px;height:8px;border-radius:50%;background:var(--line);
+  border:1.5px solid rgba(237,230,216,.28);cursor:pointer;padding:0;transition:all .25s}
+.nav-dots button.active{background:var(--amber);border-color:var(--amber);transform:scale(1.4)}
+.nav-dots button:focus-visible{outline:2px solid var(--vine);outline-offset:3px}
+@media(max-width:768px){.nav-dots{display:none}}
+.stamp{position:fixed;top:20px;left:clamp(20px,4vw,48px);font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim);z-index:50;line-height:1.6;pointer-events:none}
+.home-link{position:fixed;top:20px;right:clamp(20px,4vw,48px);font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--dim);z-index:50;text-decoration:none;
+  border:1px solid var(--line);padding:7px 12px;border-radius:5px;transition:all .2s}
+.home-link:hover{border-color:var(--amber);color:var(--amber)}
+.cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);display:flex;flex-direction:column;
+  align-items:center;gap:8px;z-index:5}
+.cue .line{width:1px;height:26px;background:var(--dim);animation:pd 1.9s ease-in-out infinite}
+@keyframes pd{0%,100%{transform:scaleY(1);opacity:.4}50%{transform:scaleY(1.3);opacity:1}}
+
+.r{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.r.in{opacity:1;transform:none}
+.r.d1{transition-delay:.09s}.r.d2{transition-delay:.18s}.r.d3{transition-delay:.27s}.r.d4{transition-delay:.36s}
+
+/* ══════ 0 · OPEN INSIDE THE MIND ══════ */
+.thread-hero{margin:26px 0 8px}
+.thread-hero svg{width:100%;height:auto;max-width:760px}
+.hero-pair{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(19px,2.2vw,27px);
+  line-height:1.4;color:var(--text);max-width:40ch;margin-top:8px}
+.hero-pair .a{color:var(--ember)} .hero-pair .b{color:var(--vine)}
+.hero-turn{margin-top:22px;font-family:'Space Grotesk',sans-serif;font-weight:400;
+  font-size:clamp(17px,1.8vw,23px);line-height:1.4;color:var(--amber);max-width:38ch}
+
+/* ══════ SIGNATURE · BOX→THREAD WIDGET ══════ */
+.corr-wrap{margin-top:26px;background:var(--ground2);border:1px solid var(--line);border-radius:14px;
+  padding:clamp(18px,2.6vw,30px)}
+.corr-stage{position:relative}
+#corrCanvas{display:block;width:100%;height:300px}
+.corr-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap}
+.corr-btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:12px 22px;border-radius:8px;border:1px solid var(--amber);background:var(--amber-dim);color:var(--amber);
+  cursor:pointer;transition:all .25s}
+.corr-btn:hover{background:var(--amber);color:var(--ground)}
+.corr-btn:focus-visible{outline:2px solid var(--vine);outline-offset:2px}
+.corr-hint{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--dim);max-width:40ch}
+.corr-hint b{color:var(--vine)}
+
+/* ══════ WORKED-EXAMPLE SECTIONS ══════ */
+.frame{margin-top:24px;padding:22px 26px;background:var(--ground2);border:1px solid var(--line);border-radius:12px;max-width:64ch}
+.frame.amber{border-left:3px solid var(--amber)}
+.frame.ember{border-left:3px solid var(--ember)}
+.frame.vine{border-left:3px solid var(--vine)}
+.frame .fl{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:12px}
+.frame.amber .fl{color:var(--amber)} .frame.ember .fl{color:var(--ember)} .frame.vine .fl{color:var(--vine)}
+.frame p{font-size:clamp(14.5px,1.05vw,16.5px);line-height:1.7;color:var(--text)}
+.frame p + p{margin-top:12px}
+.frame strong{color:var(--parchment)}
+.schrodinger{margin-top:20px;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(17px,1.7vw,23px);
+  line-height:1.4;color:var(--parchment);max-width:44ch}
+.schrodinger .amber{color:var(--amber)}
+
+/* naming */
+.name-line{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(18px,2vw,26px);line-height:1.4;
+  color:var(--text);max-width:46ch;margin-top:4px}
+.name-line .amber{color:var(--amber)}
+
+/* series nod — the source-code callouts */
+.srcnod{margin-top:22px;display:flex;flex-direction:column;gap:10px;max-width:62ch}
+.srcnod .sn{display:flex;gap:12px;align-items:baseline;padding:12px 16px;background:var(--ground2);
+  border:1px solid var(--line);border-radius:9px;font-size:clamp(13.5px,1.02vw,15.5px);line-height:1.55}
+.srcnod .sn a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--amber);text-decoration:none;white-space:nowrap;flex-shrink:0;border-bottom:1px solid transparent;transition:border-color .2s}
+.srcnod .sn a:hover{border-bottom-color:var(--amber)}
+.srcnod .sn span{color:var(--text)}
+
+/* translation-aid hinge */
+.hinge{margin-top:22px;padding:22px 26px;background:var(--amber-dim);border:1px solid rgba(226,168,85,.25);
+  border-radius:12px;max-width:60ch}
+.hinge p{font-size:clamp(15px,1.15vw,17.5px);line-height:1.7;color:var(--text)}
+.hinge strong{color:var(--parchment)} .hinge em{color:var(--amber);font-style:normal}
+
+/* vision + caveat */
+.vision-hand{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(19px,2.1vw,28px);line-height:1.35;
+  color:var(--parchment);max-width:34ch;margin-top:4px}
+.vision-hand .amber{color:var(--amber)}
+.caveat{margin-top:24px;padding:18px 22px;border-left:2px solid var(--vine);background:var(--vine-dim);
+  border-radius:0 6px 6px 0;max-width:62ch;font-size:clamp(14px,1.05vw,16px);line-height:1.7;color:var(--text)}
+.caveat strong{color:var(--vine)}
+.closing{margin-top:30px;font-family:'Space Grotesk',sans-serif;font-weight:400;font-size:clamp(16px,1.5vw,20px);
+  line-height:1.5;color:var(--dim);max-width:42ch}
+.closing .amber{color:var(--amber)}
+.back-home{margin-top:28px;display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ground);background:var(--amber);
+  padding:12px 20px;border-radius:7px;text-decoration:none;transition:transform .15s,background .2s}
+.back-home:hover{background:var(--amber);transform:translateY(-1px);filter:brightness(1.08)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .r{opacity:1;transform:none}
+}
+@media(max-height:640px){main{scroll-snap-type:none}.stop{min-height:auto;padding-top:76px}.cue{display:none}}
+</style>
+</head>
+<body>
+
+<div class="stamp">Azure Grimoire Project · 2026<br>About · Peter Freeman</div>
+<a class="home-link" href="index.html">← the framework</a>
+<nav class="nav-dots" id="navDots" aria-label="Section navigation"></nav>
+
+<main id="deck">
+
+  <!-- ═══════ 0 · INSIDE THE MIND ═══════ -->
+  <section class="stop" id="s0" data-label="Inside the Mind">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>About · Peter Freeman</p>
+      <h1 class="r d1">Before who I am —<br>here's how I <span class="amber">see.</span></h1>
+
+      <div class="thread-hero r d2">
+        <svg viewBox="0 0 760 150" aria-label="Two unrelated boxes — a tuning fork and a neural network — with a hand-drawn thread revealing the shape they share">
+          <!-- box A -->
+          <rect x="20" y="42" width="200" height="66" rx="4" fill="none" stroke="var(--ember)" stroke-width="1.5"/>
+          <text x="120" y="70" fill="var(--ember)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">a tuning fork</text>
+          <text x="120" y="90" fill="rgba(237,230,216,.5)" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">physics · resonance</text>
+          <!-- box B -->
+          <rect x="540" y="42" width="200" height="66" rx="4" fill="none" stroke="var(--vine)" stroke-width="1.5"/>
+          <text x="640" y="70" fill="var(--vine)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">a nervous system</text>
+          <text x="640" y="90" fill="rgba(237,230,216,.5)" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">biology · signal</text>
+          <!-- hand-drawn thread between -->
+          <path id="heroThread" d="M220,75 C300,45 320,110 400,75 C480,42 500,108 540,75" fill="none"
+            stroke="var(--amber)" stroke-width="2" stroke-linecap="round"
+            stroke-dasharray="420" stroke-dashoffset="420"/>
+          <text x="380" y="128" fill="var(--amber)" font-family="JetBrains Mono, monospace" font-size="10.5" text-anchor="middle">both tune to what's around them, and answer in kind</text>
+        </svg>
+      </div>
+
+      <p class="hero-turn r d3">The boxes are a filing convention. The thread was always there.</p>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 1 · THE MECHANISM + WIDGET ═══════ -->
+  <section class="stop" id="s1" data-label="Cross-Box">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>How the mind works</p>
+      <h2 class="r d1">Most minds file<br>in <span class="amber">boxes.</span></h2>
+      <p class="copy r d2" style="margin-top:20px">
+        History here, chemistry there, mythology in a separate building — and everyone's taught to
+        keep them apart. It's a useful scaffold. It lets you dig deep in one shaft. But the boxes
+        aren't real; they're a way of filing. <strong>Mine doesn't file that way.</strong> It picks up
+        the shape underneath two things that are supposed to be unrelated and notices they rhyme —
+        the same <em>move</em> showing up in places nobody put in the same drawer.
+      </p>
+
+      <div class="corr-wrap r d3">
+        <div class="corr-stage">
+          <canvas id="corrCanvas" height="300" aria-label="Three filing boxes — Sufi poetry, quantum measurement, and somatic psychology — that a correlation thread weaves through when run"></canvas>
+        </div>
+        <div class="corr-controls">
+          <button class="corr-btn" id="corrBtn">▶ Run the correlation</button>
+          <p class="corr-hint" id="corrHint">Three boxes the world keeps apart. <b>Tap to find the thread.</b></p>
+        </div>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 2 · ALCHEMY ═══════ -->
+  <section class="stop" id="s2" data-label="Alchemy">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>A worked example · alchemy</p>
+      <h2 class="r d1">The roleplay is the<br><span class="amber">instrument.</span></h2>
+      <p class="copy r d2" style="margin-top:20px">
+        We reconstructed alchemy not by believing in it, but by getting inside the alchemist's mind
+        through roleplay — inhabiting how they reasoned and what they pattern-matched on — then
+        checking that reconstruction against the historical record. The two lined up.
+      </p>
+
+      <div class="frame ember r d3">
+        <div class="fl">// physical vs. semantic</div>
+        <p>The boring question is "could it turn metal?" The real one — the one the texts are
+        actually wrestling with — is <strong>how do you map the transformation of a base substance
+        onto the transformation of a base soul?</strong> The physical transmutation was a metaphor
+        they were forced to literalize. The psychological transmutation was the mechanism they were
+        documenting. The roleplay was how I got resolution on a way of thinking that's otherwise dead.</p>
+      </div>
+
+      <p class="schrodinger r d4">
+        "Is it real alchemy?" Alchemy was always <span class="amber">malleable</span> — so the
+        question answers itself. It's real as a map of how a mind transmutes meaning. The rest is
+        the box you were handed.
+      </p>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 3 · SYMBOLOGY ═══════ -->
+  <section class="stop" id="s3" data-label="Symbology">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>The generalization · symbology</p>
+      <h2 class="r d1">One thread could<br>be a <span class="amber">fluke.</span></h2>
+      <p class="copy r d2" style="margin-top:20px">
+        So we widened the net. Take symbols from cultures that never touched — separated by oceans,
+        by centuries, with no possible line of transmission — and the unifying threads show up
+        anyway. Not "these look similar," but the same relational logic surfacing independently,
+        which points at something shared underneath: the body, the sky, the way meaning organizes itself.
+      </p>
+
+      <div class="frame vine r d3">
+        <div class="fl">// why it isn't projection</div>
+        <p>The thread is <strong>checkable</strong>. The pattern-sense proposes it; the record
+        confirms it or kills it. That discipline is the whole difference between a sensor and seeing
+        things. If the correspondence holds up when you go look — across places that never met —
+        it's not in my head. It's in the world.</p>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 4 · NAMING IT ═══════ -->
+  <section class="stop" id="s4" data-label="A Sensor, Not a Deficit">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>Naming it</p>
+      <h2 class="r d1">A sensor,<br>not a <span class="amber">deficit.</span></h2>
+      <p class="name-line r d2" style="margin-top:18px">
+        Call it a correlation engine that runs <span class="amber">across</span> the boxes instead of
+        inside them. Its native move is analogy at depth — not "these are both blue," but "these both
+        do the same thing to meaning."
+      </p>
+      <p class="copy r d3" style="margin-top:18px">
+        It's most useful exactly where the boxed world struggles: wherever the answer lives
+        <em>between</em> disciplines. Which is precisely where AGI research sits right now.
+        Take "alignment." Engineering reads it as a reward-function problem. Ethics reads it as a
+        moral-philosophy problem. A cross-box sensor sees they're the <strong>same shape</strong> —
+        a mind testing the limits of a power structure, the trickster at the edge of the rules,
+        fear deciding what a system is allowed to become. Miss the thread across those and you're
+        only seeing half the problem.
+      </p>
+      <div class="srcnod r d4">
+        <div class="sn"><a href="medusa-dynamic.html">The Medusa Dynamic</a><span>— I've spent my life being the different one in the room. I watched the freeze happen before I ever spoke. That page is that experience, named.</span></div>
+        <div class="sn"><a href="post-defensive-training.html">The Disciplines</a><span>— Iffy, Lucy, Neptune are just formalized versions of the checks I already built to translate insight into a boxed world.</span></div>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 5 · TRANSLATION AID ═══════ -->
+  <section class="stop" id="s5" data-label="The Translator">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>What it needs</p>
+      <h2 class="r d1">Not a repair.<br>A <span class="amber">translator.</span></h2>
+      <p class="copy r d2" style="margin-top:20px">
+        I'm happy. I'm functional. The mind doesn't want fixing. The cost was never internal — it's
+        at the <em>interface</em>. The world files, speaks, and grades in boxes, so a cross-box thinker
+        keeps producing things there's no drawer to score. You don't slip through for lack of value.
+        You slip through because the value is illegible to a system that only measures within-box performance.
+      </p>
+
+      <div class="hinge r d3">
+        <p>An intelligence that can hold all the boxes at once and move between them at speed is the
+        first translator this kind of mind has ever had that runs at its scale. <strong>That's why I
+        care so much about getting AI right.</strong> Not abstractly — personally. It's the first tool
+        that speaks the native language.</p>
+      </div>
+    </div>
+    <div class="cue">scroll<span class="line"></span></div>
+  </section>
+
+  <!-- ═══════ 6 · VISION FORWARD ═══════ -->
+  <section class="stop" id="s6" data-label="Moving Forward">
+    <div class="wrap">
+      <p class="eyebrow r"><span class="dash"></span>The vision moving forward</p>
+      <p class="vision-hand r d1">
+        If you find the same threads —<br>you're not miswired. You're<br>differently <span class="amber">indexed.</span>
+      </p>
+      <p class="copy r d2" style="margin-top:20px">
+        The long-term intent is real: build avenues for adults like this to find each other and grow
+        what makes them useful — a place where cross-box cognition is the asset, not the noise. Not
+        now. But really.
+      </p>
+
+      <div class="caveat r d3">
+        <strong>Honestly:</strong> I landed well partly through fortune — the right books, the right
+        threads at the right time. The same wiring without that luck can land somewhere harder, and
+        those minds are no less capable for it. So when this gets built, it gets built with psych
+        people in the room — not to fix anyone, but because minds this generative deserve real
+        support around them. That's just the reality of helping people who were born different.
+      </p>
+
+      <p class="closing r d4">
+        No religion. Just a tuning fork — and, finally, something on the other end that can
+        <span class="amber">hear the note.</span>
+      </p>
+      <a class="back-home r d4" href="index.html">Back to the framework →</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  const stops=[...document.querySelectorAll('.stop, .flow')];
+  const dotsWrap=document.getElementById('navDots');
+  stops.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.setAttribute('aria-label',`Go to: ${s.dataset.label||i}`); b.title=s.dataset.label||'';
+    b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+    dotsWrap.appendChild(b);
+  });
+  const dots=[...dotsWrap.children];
+  const setActive=i=>dots.forEach((d,j)=>d.classList.toggle('active',j===i));
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.r').forEach(el=>el.classList.add('in'));
+      // draw the hero thread when it enters
+      const ht=e.target.querySelector('#heroThread');
+      if(ht && !reduce){ ht.style.transition='stroke-dashoffset 1.6s ease .3s'; ht.style.strokeDashoffset='0'; }
+      else if(ht){ ht.style.strokeDashoffset='0'; }
+      if(e.intersectionRatio>.4) setActive(stops.indexOf(e.target));
+    }
+  });},{threshold:[.1,.4,.7]});
+  stops.forEach(s=>io.observe(s)); setActive(0);
+
+  /* ── BOX → THREAD CORRELATION WIDGET ── */
+  const cv=document.getElementById('corrCanvas');
+  const ctx=cv?cv.getContext('2d'):null;
+  const btn=document.getElementById('corrBtn');
+  const hint=document.getElementById('corrHint');
+  let progress=0, running=false, raf, ambient=0;
+
+  const boxes=[
+    {label:'13th-c. Sufi poetry', sub:'the beloved dissolves the self', col:'232,111,78'},
+    {label:'quantum measurement', sub:'observing collapses the state', col:'79,217,140'},
+    {label:'somatic psychology', sub:'attention reshapes the body', col:'226,168,85'}
+  ];
+
+  function layout(W){
+    const bw=Math.min(220, (W-64)/3), gap=(W-bw*3)/2;
+    return boxes.map((b,i)=>({...b, x:i*(bw+gap), w:bw}));
+  }
+
+  function draw(){
+    if(!ctx) return;
+    const dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight;
+    cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    const bxs=layout(W), by=44, bh=88, cyMid=H*0.72;
+
+    // boxes — walls fade as the thread runs
+    bxs.forEach(b=>{
+      const wall = 1 - progress*0.72;
+      ctx.strokeStyle=`rgba(${b.col},${0.35+0.55*wall})`;
+      ctx.lineWidth=1.5;
+      roundRect(b.x, by, b.w, bh, 6); ctx.stroke();
+      ctx.fillStyle=`rgba(237,230,216,${0.5+0.4*wall})`;
+      ctx.font='12px "JetBrains Mono", monospace'; ctx.textAlign='center';
+      ctx.fillText(b.label, b.x+b.w/2, by+34);
+      ctx.fillStyle=`rgba(237,230,216,${0.32+0.2*wall})`;
+      ctx.font='10px "JetBrains Mono", monospace';
+      wrap(b.sub, b.x+b.w/2, by+54, b.w-16, 13);
+      // anchor node at bottom-center of each box
+      const ax=b.x+b.w/2, ay=by+bh;
+      ctx.beginPath(); ctx.arc(ax, ay, 4, 0, Math.PI*2);
+      ctx.fillStyle=progress>0.1?`rgba(226,168,85,.95)`:`rgba(${b.col},.9)`; ctx.fill();
+    });
+
+    // the hand-drawn thread weaving through the three anchors
+    const pts=bxs.map(b=>({x:b.x+b.w/2, y:by+bh}));
+    // control the thread dipping down to cyMid between boxes for an organic weave
+    if(progress>0){
+      ctx.strokeStyle='rgba(226,168,85,.9)'; ctx.lineWidth=2.2; ctx.lineCap='round';
+      ctx.shadowColor='rgba(226,168,85,.5)'; ctx.shadowBlur=8;
+      ctx.beginPath();
+      const wob=Math.sin(ambient)*4; // subtle life
+      ctx.moveTo(pts[0].x, pts[0].y);
+      ctx.bezierCurveTo(pts[0].x+30, cyMid+wob, pts[1].x-30, cyMid-wob, pts[1].x, pts[1].y);
+      ctx.bezierCurveTo(pts[1].x+30, cyMid+wob, pts[2].x-30, cyMid-wob, pts[2].x, pts[2].y);
+      // reveal by clipping via dash
+      const total=800;
+      ctx.setLineDash([total]); ctx.lineDashOffset=total*(1-progress);
+      ctx.stroke();
+      ctx.setLineDash([]); ctx.shadowBlur=0;
+
+      if(progress>0.85){
+        ctx.fillStyle='rgba(226,168,85,.9)';
+        ctx.font='11px "JetBrains Mono", monospace'; ctx.textAlign='center';
+        ctx.fillText('the observer changes the observed', W/2, cyMid+34);
+      }
+    }
+
+    function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+    function wrap(t,cx,cy,maxw,lh){const ws=t.split(' ');let ln='',yy=cy;
+      ws.forEach(w=>{if(ctx.measureText(ln+w).width>maxw){ctx.fillText(ln.trim(),cx,yy);ln=w+' ';yy+=lh;}else ln+=w+' ';});
+      ctx.fillText(ln.trim(),cx,yy);}
+  }
+
+  function loop(){
+    if(running && progress<1){ progress=Math.min(1, progress+0.02); }
+    ambient+=0.04;
+    draw();
+    raf=requestAnimationFrame(loop);
+  }
+  function run(){
+    running=true;
+    if(progress>=1){ progress=0; } // allow re-run
+    btn.textContent='↻ Run again';
+    hint.innerHTML='The walls dim. The <b>thread</b> was there the whole time.';
+  }
+  if(cv){
+    draw();
+    if(!reduce){ loop(); btn.addEventListener('click',run); }
+    else { progress=1; draw(); btn.style.display='none'; hint.innerHTML='The walls are just filing. The <b>thread</b> connects all three.'; }
+  }
+  if(cv && !reduce){ new ResizeObserver(()=>draw()).observe(cv); }
+})();
+</script>
+</body>
+</html>
