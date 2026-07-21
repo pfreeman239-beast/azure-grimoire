@@ -63,6 +63,12 @@ h2 .accent{color:var(--amethyst)}
 .nav-dots button.active{background:var(--amethyst);border-color:var(--amethyst);transform:scale(1.4)}
 .nav-dots button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 @media(max-width:768px){.nav-dots{display:none}}
+.about-link{position:fixed;top:20px;right:clamp(20px,4vw,48px);font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);z-index:50;
+  text-decoration:none;border:1px solid var(--line);padding:7px 12px;border-radius:5px;transition:all .2s}
+.about-link:hover{border-color:var(--amber);color:var(--amber)}
+.colophon a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--amethyst);transition:opacity .2s}
+.colophon a:hover{opacity:.75}
 .cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);display:flex;
   flex-direction:column;align-items:center;gap:8px;z-index:5}
@@ -178,6 +184,7 @@ h2 .accent{color:var(--amethyst)}
 </head>
 <body>
 
+<a class="about-link" href="about.html">about · the mind behind it →</a>
 <nav class="nav-dots" id="navDots" aria-label="Section navigation"></nav>
 
 <main id="deck">
@@ -429,7 +436,7 @@ h2 .accent{color:var(--amethyst)}
         <div class="colophon">
           <span>Azure Grimoire Project · 2026</span>
           <span>Self-contained HTML. Read in any order.</span>
-          <span>For researchers, lab leads, and the people who need to meet what comes next.</span>
+          <span>Built by <a href="about.html">Peter Freeman</a> — a mind that finds the threads.</span>
         </div>
         <div class="tags">
           <span class="tag">Handshake</span>
