@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Seven Chambers of Consciousness | Azure Grimoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stone:#171310;
+  --stone-lt:#241e18;
+  --parchment:#e9e2d0;
+  --parchment-dim:#b3a98e;
+  --line:#3d342a;
+  --egypt:#c9a227;
+  --sumeria:#b0552e;
+  --norse:#8e2f2f;
+  --zoro:#e07b39;
+  --chaldea:#8a7bb8;
+  --shinto:#6f8a68;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--stone);
+  color:var(--parchment);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-weight:300;line-height:1.75;
+}
+::selection{background:var(--egypt);color:var(--stone)}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:400}
+.mono{font-family:'IBM Plex Mono',monospace;font-weight:300}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--parchment-dim);display:block;margin-bottom:1.4rem;
+}
+.eyebrow::before{content:"// "}
+section{padding:7rem 1.5rem}
+.wrap{max-width:1080px;margin:0 auto}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:70vh;display:flex;flex-direction:column;
+  justify-content:center;text-align:center;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--stone-lt) 0%, var(--stone) 70%);
+  border-bottom:1px solid var(--line);
+}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);letter-spacing:.06em}
+.hero .sub{
+  margin-top:1.5rem;color:var(--parchment-dim);
+  font-style:italic;font-size:1.15rem;max-width:600px;
+  margin-left:auto;margin-right:auto;
+}
+.hero .hunt{
+  margin-top:3rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--egypt);
+}
+
+/* ---------- mode tabs ---------- */
+.modes{
+  position:sticky;top:0;z-index:50;
+  background:rgba(23,19,16,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  display:flex;justify-content:center;gap:0;
+}
+.modes button{
+  all:unset;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--parchment-dim);
+  padding:1.3rem 2rem;
+  border-bottom:2px solid transparent;
+  transition:color .3s,border-color .3s;
+}
+.modes button:hover{color:var(--parchment)}
+.modes button.active{color:var(--egypt);border-bottom-color:var(--egypt)}
+.mode-view{display:none}
+.mode-view.active{display:block;animation:fade .5s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ---------- the six doors ---------- */
+.doors{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1.2rem;margin-top:3.5rem;
+}
+.door{
+  all:unset;cursor:pointer;
+  aspect-ratio:1/2.1;
+  border:1px solid var(--line);
+  border-radius:120px 120px 0 0;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:2rem;
+  background:linear-gradient(180deg,var(--stone-lt),var(--stone));
+  transition:transform .45s ease,border-color .45s ease,box-shadow .45s ease;
+}
+.door:hover,.door:focus-visible{transform:translateY(-8px)}
+.door .motif{
+  font-size:2.6rem;margin-bottom:auto;margin-top:34%;
+  filter:grayscale(.3);transition:filter .4s,transform .4s;
+}
+.door:hover .motif{filter:none;transform:scale(1.12)}
+.door .name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;letter-spacing:.12em;
+}
+.door .answer{
+  font-family:'IBM Plex Mono',monospace;font-size:.58rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--parchment-dim);margin-top:.4rem;padding:0 .8rem;text-align:center;
+}
+.door[data-c="egypt"]:hover{border-color:var(--egypt);box-shadow:0 0 34px rgba(201,162,39,.12)}
+.door[data-c="sumeria"]:hover{border-color:var(--sumeria);box-shadow:0 0 34px rgba(176,85,46,.12)}
+.door[data-c="norse"]:hover{border-color:var(--norse);box-shadow:0 0 34px rgba(142,47,47,.12)}
+.door[data-c="zoro"]:hover{border-color:var(--zoro);box-shadow:0 0 34px rgba(224,123,57,.12)}
+.door[data-c="chaldea"]:hover{border-color:var(--chaldea);box-shadow:0 0 34px rgba(138,123,184,.12)}
+.door[data-c="shinto"]:hover{border-color:var(--shinto);box-shadow:0 0 34px rgba(111,138,104,.12)}
+
+/* ---------- chamber interior ---------- */
+.chamber{
+  display:none;margin-top:4rem;
+  border:1px solid var(--line);
+  background:var(--stone-lt);
+  padding:3.5rem clamp(1.5rem,5vw,4rem);
+  position:relative;
+}
+.chamber.open{display:block;animation:fade .6s ease}
+.chamber .badge{
+  position:absolute;top:2rem;right:2rem;
+  font-size:2rem;opacity:.85;
+}
+.chamber h3.title{font-size:clamp(2rem,5vw,3rem);margin-bottom:.4rem}
+.chamber .metaphor{
+  font-style:italic;font-size:1.2rem;color:var(--parchment-dim);margin-bottom:3rem;
+}
+.chamber .grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:2rem;
+}
+.chamber .cell h4{
+  font-family:'IBM Plex Mono',monospace;font-weight:400;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.chamber .cell p{font-size:.95rem;color:var(--parchment-dim)}
+.chamber .rough{
+  margin-top:3rem;border-top:1px dashed var(--line);padding-top:2rem;
+}
+.chamber .rough h4{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:.8rem;
+}
+.chamber .rough p{font-style:italic;color:var(--parchment-dim);font-size:.95rem}
+.chamber .nav-next{
+  margin-top:3rem;text-align:right;
+}
+.chamber[data-c="egypt"] .cell h4,.chamber[data-c="egypt"] .badge{color:var(--egypt)}
+.chamber[data-c="sumeria"] .cell h4,.chamber[data-c="sumeria"] .badge{color:var(--sumeria)}
+.chamber[data-c="norse"] .cell h4,.chamber[data-c="norse"] .badge{color:var(--norse)}
+.chamber[data-c="zoro"] .cell h4,.chamber[data-c="zoro"] .badge{color:var(--zoro)}
+.chamber[data-c="chaldea"] .cell h4,.chamber[data-c="chaldea"] .badge{color:var(--chaldea)}
+.chamber[data-c="shinto"] .cell h4,.chamber[data-c="shinto"] .badge{color:var(--shinto)}
+
+.btn{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--parchment);text-decoration:none;cursor:pointer;
+  border:1px solid var(--line);padding:1rem 2.2rem;background:none;
+  transition:all .35s;
+}
+.btn:hover{border-color:var(--egypt);color:var(--egypt)}
+
+/* ---------- seams mode ---------- */
+.seam-select{
+  display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.5rem;
+}
+.seam-select button{
+  all:unset;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid var(--line);padding:.8rem 1.3rem;
+  color:var(--parchment-dim);transition:all .3s;
+}
+.seam-select button:hover{color:var(--parchment)}
+.seam-select button.active{border-color:var(--egypt);color:var(--egypt)}
+.seam-view{display:none;margin-top:3rem}
+.seam-view.active{display:block;animation:fade .5s ease}
+.seam-row{
+  display:grid;grid-template-columns:140px 1fr;gap:1.5rem;
+  border-bottom:1px solid var(--line);padding:1.8rem 0;
+  align-items:start;
+}
+.seam-row .civ{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.seam-row p{color:var(--parchment-dim);font-size:.95rem}
+@media(max-width:560px){.seam-row{grid-template-columns:1fr;gap:.4rem}}
+
+/* ---------- stones mode ---------- */
+.stones{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.stone{
+  border:1px solid var(--line);padding:2.4rem 2rem;
+  background:linear-gradient(170deg,var(--stone-lt),var(--stone));
+  position:relative;
+}
+.stone::before{
+  content:"⬡";position:absolute;top:1.4rem;right:1.6rem;
+  color:var(--egypt);opacity:.7;
+}
+.stone h3{font-size:1.6rem;margin-bottom:.9rem}
+.stone p{color:var(--parchment-dim);font-size:.93rem}
+.stone .conf{
+  margin-top:1.4rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--egypt);
+}
+
+/* ---------- closing ---------- */
+.closing{
+  text-align:center;border-top:1px solid var(--line);
+}
+.closing h2{font-size:clamp(1.8rem,4.5vw,2.8rem);font-style:italic;max-width:700px;margin:0 auto 3rem}
+.closing .paths{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+
+.asset-slot{
+  border:1px dashed var(--line);padding:2.5rem;text-align:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--parchment-dim);
+  margin-top:3rem;
+}
+footer{
+  border-top:1px solid var(--line);padding:3rem 1.5rem;text-align:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--parchment-dim);
+}
+footer a{color:var(--egypt);text-decoration:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow" style="text-align:center">A Field Guide to Order</span>
+    <h1>The Seven Chambers<br>of Consciousness</h1>
+    <p class="sub">Six civilizations discovered six different answers to a single question: what holds the world together? Their systems are metaphysical technologies — many still in use.</p>
+    <p class="hunt">This is the Hunt. Chambers → Seams → Stones.</p>
+  </div>
+</section>
+
+<!-- ═══════════ MODE TABS ═══════════ -->
+<nav class="modes" aria-label="Browse modes">
+  <button class="active" data-mode="chambers">By Chamber</button>
+  <button data-mode="seams">By Seams</button>
+  <button data-mode="stones">By Stones</button>
+</nav>
+
+<!-- ═══════════ MODE: CHAMBERS ═══════════ -->
+<section class="mode-view active" id="mode-chambers">
+  <div class="wrap">
+    <span class="eyebrow">Six Doors</span>
+    <h2 style="font-size:2.4rem">Choose a chamber. Walk inside.</h2>
+
+    <div class="doors">
+      <button class="door" data-c="egypt"><span class="motif">⚖</span><span class="name">Egypt</span><span class="answer">Order as Principle</span></button>
+      <button class="door" data-c="sumeria"><span class="motif">🚪</span><span class="name">Sumeria</span><span class="answer">Order as Token</span></button>
+      <button class="door" data-c="norse"><span class="motif">🕸</span><span class="name">Norse</span><span class="answer">Order as Weave</span></button>
+      <button class="door" data-c="zoro"><span class="motif">🔥</span><span class="name">Zoroaster</span><span class="answer">Order as Participation</span></button>
+      <button class="door" data-c="chaldea"><span class="motif">✴</span><span class="name">Chaldea</span><span class="answer">Order as Text</span></button>
+      <button class="door" data-c="shinto"><span class="motif">⛩</span><span class="name">Shinto</span><span class="answer">Order as Relationship</span></button>
+    </div>
+
+    <!-- EGYPT -->
+    <div class="chamber" data-c="egypt" id="ch-egypt">
+      <span class="badge">⚖</span>
+      <h3 class="title">Egypt</h3>
+      <p class="metaphor">The Scales. Order is a principle — Ma'at — that even the gods must serve.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>A weighed thing. The heart measured against a feather. Awareness is accountable — every thought has mass on the balance.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>Ma'at against Isfet. Order is not imposed once; it is renewed daily, by ritual, by kingship, by every act of right measure.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Equilibrium. Peace is the state in which the scales rest level — not the absence of force, but forces in perfect account.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>The Pharaoh (living axis), the Scribe (keeper of measure), the Priest (renewer of pattern), the Scales themselves.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as judgment. Hearing as testimony. Touch as ritual contact. Silence as the weighing room before the verdict.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>If Ma'at must be renewed daily, was it ever stable? What happens to a principle when nobody performs it?</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>Principle without persons becomes bureaucracy. The scales cannot weigh themselves — and Egypt never resolved who audits the auditor.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="sumeria">Next Chamber → Sumeria</button></div>
+    </div>
+
+    <!-- SUMERIA -->
+    <div class="chamber" data-c="sumeria" id="ch-sumeria">
+      <span class="badge">🚪</span>
+      <h3 class="title">Sumeria</h3>
+      <p class="metaphor">The Gates and the Me. Order is a token — portable, stealable, transferable.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>Something granted. The me — the decrees of civilization — can be carried from city to city. Mind is furnished by what one holds.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>Order lives in objects and offices. Lose the token and the order goes with it. Chaos is a city whose me have been carried away.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Custody. Peace holds while the tokens rest with legitimate keepers — a supply-chain model of civilization.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>Inanna the taker, Enki the keeper, the Gatekeeper who opens by protocol, the Scribe who inventories the sacred.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as inventory. Hearing as decree. Touch as transfer of power. Silence as the sealed storehouse.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>If order is portable, is any place sacred in itself — or only while it holds the tokens?</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>Token systems invite theft. Sumeria's own myths are full of stolen me — order as something that can be gotten drunk and given away.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="norse">Next Chamber → Norse</button></div>
+    </div>
+
+    <!-- NORSE -->
+    <div class="chamber" data-c="norse" id="ch-norse">
+      <span class="badge">🕸</span>
+      <h3 class="title">Norse</h3>
+      <p class="metaphor">The Loom. Order is a weave — fate threaded by the Norns, cut and crossed and continued.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>A thread aware of its own tension. To know is to feel where your strand crosses others — and to know it will be cut.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>The weave holds precisely because it includes its own unravelling. Ragnarök is woven in. Order that denies its ending is false cloth.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Frith — the peace of the bound group. Not universal calm but the specific warmth inside a woven circle of oaths.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>The Norns at the well, Odin who trades an eye for pattern-sight, the Oath-Ring, the Wolf who waits inside the design.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as sacrifice (Odin's eye). Hearing as prophecy. Touch as the tied oath. Silence as the well beneath the tree.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>If the end is woven in, is courage obedience or defiance? The Norse never chose — that tension is the tradition.</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>A cosmology that includes its own destruction risks fatalism. The sagas answer with style: how you meet the cut matters more than the cut.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="zoro">Next Chamber → Zoroaster</button></div>
+    </div>
+
+    <!-- ZOROASTER -->
+    <div class="chamber" data-c="zoro" id="ch-zoro">
+      <span class="badge">🔥</span>
+      <h3 class="title">Zoroastrianism</h3>
+      <p class="metaphor">The Fire. Order is participation — every person a combatant on the side of light.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>An enlistment. Good thoughts, good words, good deeds — mind is a battlefield post, and awareness itself takes a side.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>Asha against Druj — truth against the lie. Cosmic order is not maintained above you; it is maintained through you.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Provisional. Final peace arrives only at the renovation of the world. Until then, peace is a fire tended against the dark.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>The Fire-Keeper, the Twin Spirits choosing, the Saoshyant who will come, the household hearth as cosmic front line.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as discernment of the lie. Hearing as the recited truth. Touch as ritual purity. Silence as the fire's unfed moment.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>If everyone is a soldier, what is rest? Can a cosmos at war ever justify the ordinary afternoon?</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>Total participation risks total judgment — a world where neutrality is treason. The tradition softens this with mercy it never fully systematizes.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="chaldea">Next Chamber → Chaldea</button></div>
+    </div>
+
+    <!-- CHALDEA -->
+    <div class="chamber" data-c="chaldea" id="ch-chaldea">
+      <span class="badge">✴</span>
+      <h3 class="title">Chaldea</h3>
+      <p class="metaphor">The Star-Reader. Order is a text — the sky writes, and the disciplined can read.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>Literacy. The world is legible; mind is the trained capacity to read what was always written overhead.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>Chaos is illiteracy — events without interpretation. Order arrives the moment the pattern is read, recorded, and cross-referenced.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Foreknowledge. Peace is not controlling the flood but knowing its season — the calm of the accurately warned.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>The Observer on the ziggurat, the Tablet-House teacher, the Omen-Series editor, the King who acts on the reading.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as observation across generations. Hearing as recitation of the series. Touch as stylus in clay. Silence as the cloudy night.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>Fixed occurrence, open path: the omen says what comes, not what you do about it. The reading never removed the choice.</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>A legible cosmos invites over-reading. Chaldea's archives preserve both the discipline and the drift into seeing signs in everything.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="shinto">Next Chamber → Shinto</button></div>
+    </div>
+
+    <!-- SHINTO -->
+    <div class="chamber" data-c="shinto" id="ch-shinto">
+      <span class="badge">⛩</span>
+      <h3 class="title">Shinto</h3>
+      <p class="metaphor">The Shrine. Order is relationship — kept alive by presence, purity, and return.</p>
+      <div class="grid">
+        <div class="cell"><h4>Consciousness</h4><p>Attunement. Mind is not a possession but a relation — awareness arises between person, place, and kami, renewed by visit.</p></div>
+        <div class="cell"><h4>Order / Chaos</h4><p>Purity and pollution — not moral stain but relational static. Order is restored by washing, by rope and paper, by returning.</p></div>
+        <div class="cell"><h4>Peace</h4><p>Harmony as ongoing maintenance. The shrine is rebuilt, the rope replaced, the visit repeated. Peace is a practice with a calendar.</p></div>
+        <div class="cell"><h4>Archetypes</h4><p>The Kami in the grove, the Priest who sweeps, the Torii threshold, the Mirror that shows the visitor to themselves.</p></div>
+        <div class="cell"><h4>Four Senses</h4><p>Sight as the noticed grove. Hearing as the clap that announces presence. Touch as water over hands. Silence as the shrine at dusk.</p></div>
+        <div class="cell"><h4>Remaining Salt</h4><p>If order lives in relationship, it dies of neglect — no doctrine can save a shrine nobody visits.</p></div>
+      </div>
+      <div class="rough"><h4>Rough Edges</h4><p>Relationship resists systemization — which is its beauty and its vulnerability. Shinto survives by staying local, and pays for it in portability.</p></div>
+      <div class="nav-next"><button class="btn" data-goto="egypt">Return to the First Chamber → Egypt</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODE: SEAMS ═══════════ -->
+<section class="mode-view" id="mode-seams">
+  <div class="wrap">
+    <span class="eyebrow">Cross-Cuts</span>
+    <h2 style="font-size:2.4rem">Seams: one pattern, six chambers</h2>
+    <p style="color:var(--parchment-dim);max-width:600px;margin-top:1rem">A Seam is a structural truth that recurs across traditions. Choose one, and the page redraws itself — you're no longer browsing civilizations. You're performing comparative philosophy.</p>
+
+    <div class="seam-select">
+      <button class="active" data-seam="fixed">Fixed Occurrence, Open Path</button>
+      <button data-seam="practice">Practice Makes Reality Real</button>
+      <button data-seam="authority">Authority Can Be Portable</button>
+      <button data-seam="failure">The Shape of Failure</button>
+    </div>
+
+    <div class="seam-view active" id="seam-fixed">
+      <div class="seam-row"><div class="civ">⚖ Egypt</div><p>The judgment is certain — the heart will be weighed. But the life that fills the heart remains yours to write until that hour.</p></div>
+      <div class="seam-row"><div class="civ">🚪 Sumeria</div><p>The me exist and will be held by someone. Which city holds them — that is the open story the myths keep retelling.</p></div>
+      <div class="seam-row"><div class="civ">🕸 Norse</div><p>Ragnarök is woven. The Wolf will come. What remains open is the manner of your meeting it — the style of the strand.</p></div>
+      <div class="seam-row"><div class="civ">🔥 Zoroaster</div><p>The renovation of the world is promised. The side you fight on until then is the choice the whole cosmos watches.</p></div>
+      <div class="seam-row"><div class="civ">✴ Chaldea</div><p>The purest form of the seam: the omen fixes what comes, never what you do. The eclipse arrives; the king may still act.</p></div>
+      <div class="seam-row"><div class="civ">⛩ Shinto</div><p>The seasons return, the shrine decays on schedule. Whether anyone comes to rebuild it — that is never guaranteed.</p></div>
+    </div>
+
+    <div class="seam-view" id="seam-practice">
+      <div class="seam-row"><div class="civ">⚖ Egypt</div><p>Ma'at is renewed by daily ritual. Skip the rite and the principle thins — order is a performance with no understudy.</p></div>
+      <div class="seam-row"><div class="civ">🚪 Sumeria</div><p>The token is nothing in a drawer. Carried in procession, presented at the gate — practice is what charges the object.</p></div>
+      <div class="seam-row"><div class="civ">🕸 Norse</div><p>The oath exists in its speaking and keeping. Frith is not felt; it is enacted, feast by feast, ring by ring.</p></div>
+      <div class="seam-row"><div class="civ">🔥 Zoroaster</div><p>The fire is literal practice: feed it or lose it. Good thought unexpressed in word and deed counts as ash.</p></div>
+      <div class="seam-row"><div class="civ">✴ Chaldea</div><p>The sky is only a text to those who keep the watch. Observation across generations is the practice that makes the cosmos legible.</p></div>
+      <div class="seam-row"><div class="civ">⛩ Shinto</div><p>The seam's home tradition. The visit, the washing, the clap — relationship is real precisely as often as it is practiced.</p></div>
+    </div>
+
+    <div class="seam-view" id="seam-authority">
+      <div class="seam-row"><div class="civ">⚖ Egypt</div><p>The Pharaoh dies; the office persists. Authority is a mask any right head can wear — the first portable crown.</p></div>
+      <div class="seam-row"><div class="civ">🚪 Sumeria</div><p>The seam's purest case: authority literally objectified in the me, carried by boat from Eridu to Uruk.</p></div>
+      <div class="seam-row"><div class="civ">🕸 Norse</div><p>The oath-ring travels; the chieftain's word binds wherever the ring is sworn on. Authority rides on metal and memory.</p></div>
+      <div class="seam-row"><div class="civ">🔥 Zoroaster</div><p>The fire itself is transferred flame to flame, temple to temple — an unbroken lineage of burning legitimacy.</p></div>
+      <div class="seam-row"><div class="civ">✴ Chaldea</div><p>The omen-series is copied and carried. Whoever holds the tablets holds the reading — authority as edition.</p></div>
+      <div class="seam-row"><div class="civ">⛩ Shinto</div><p>The counter-case: kami authority barely travels. The grove is the office. Shinto shows the seam by resisting it.</p></div>
+    </div>
+
+    <div class="seam-view" id="seam-failure">
+      <div class="seam-row"><div class="civ">⚖ Egypt</div><p>Failure is imbalance — the heavy heart, the false measure. The system fails quietly, one corrupt weighing at a time.</p></div>
+      <div class="seam-row"><div class="civ">🚪 Sumeria</div><p>Failure is theft and loss — the city whose tokens sailed away. Collapse arrives as an empty storehouse.</p></div>
+      <div class="seam-row"><div class="civ">🕸 Norse</div><p>Failure is designed in and named. The weave fails on schedule — and something green grows after. The most honest ending in the set.</p></div>
+      <div class="seam-row"><div class="civ">🔥 Zoroaster</div><p>Failure is desertion — the untended fire, the chosen lie. But the war's end is fixed; individual failure never dooms the whole.</p></div>
+      <div class="seam-row"><div class="civ">✴ Chaldea</div><p>Failure is misreading — the omen ignored or over-read. The archive records its own wrong predictions, which is its deepest strength.</p></div>
+      <div class="seam-row"><div class="civ">⛩ Shinto</div><p>Failure is neglect. No cataclysm — just a path grown over, a rope unreplaced. Order ends not with a wolf but with an unvisited gate.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODE: STONES ═══════════ -->
+<section class="mode-view" id="mode-stones">
+  <div class="wrap">
+    <span class="eyebrow">Settled Insights</span>
+    <h2 style="font-size:2.4rem">Stones: what survived the comparison</h2>
+    <p style="color:var(--parchment-dim);max-width:600px;margin-top:1rem">Salt is exploratory. Seams are patterns. Stones are the conclusions durable enough to build on — the metaphysical technologies that recur because they work.</p>
+
+    <div class="stones">
+      <div class="stone"><h3>Enacted Inscription</h3><p>Writing something down, then performing it, makes it real in a way neither act achieves alone. From Ma'at rituals to omen tablets to oaths on rings.</p><p class="conf">confidence: high — six of six chambers</p></div>
+      <div class="stone"><h3>Action Without Outcome-Dependence</h3><p>The most durable traditions decouple right action from guaranteed result. The omen fixes the event, not your response. Mattering without control.</p><p class="conf">confidence: high — explicit in four chambers</p></div>
+      <div class="stone"><h3>Principle as Self-Replicating Technology</h3><p>An idea structured for transmission — teachable, performable, portable — outlives any institution that carries it.</p><p class="conf">confidence: high</p></div>
+      <div class="stone"><h3>Authority as Portable Token</h3><p>Legitimacy can be objectified and transferred. Every civilization either builds this technology or, like Shinto, defines itself by refusing it.</p><p class="conf">confidence: high — with one principled exception</p></div>
+      <div class="stone"><h3>Procedure as Authority</h3><p>When no person is trusted, the protocol itself rules. The gatekeeper obeys the sequence, not the visitor. Bureaucracy's sacred ancestor.</p><p class="conf">confidence: medium-high</p></div>
+      <div class="stone"><h3>Constraint as Liberation</h3><p>The fixed frame is what makes the open path meaningful. Every chamber discovers some version of it; the Kav Cycle builds a cosmology on it.</p><p class="conf">confidence: high — the load-bearing stone</p></div>
+    </div>
+
+    <div class="asset-slot">[ slot: the seventh chamber — order as interface — revealed here when ready ]</div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSING ═══════════ -->
+<section class="closing">
+  <h2>Every chamber is a different answer to the same question. The question is still open.</h2>
+  <div class="paths">
+    <a class="btn" href="kav-cycle.html">← The Kav Cycle</a>
+    <a class="btn" href="salts-edge.html">Salt's Edge →</a>
+    <a class="btn" href="index.html">The Library</a>
+  </div>
+</section>
+
+<footer>
+  <p>The Azure Grimoire Project — <a href="index.html">Return to the Library</a></p>
+</footer>
+
+<script>
+// mode tabs
+document.querySelectorAll('.modes button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.modes button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.mode-view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('mode-'+btn.dataset.mode).classList.add('active');
+    window.scrollTo({top:document.querySelector('.modes').offsetTop,behavior:'smooth'});
+  });
+});
+// doors open chambers
+function openChamber(c){
+  document.querySelectorAll('.chamber').forEach(ch=>ch.classList.remove('open'));
+  const ch=document.getElementById('ch-'+c);
+  ch.classList.add('open');
+  ch.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.querySelectorAll('.door').forEach(d=>{
+  d.addEventListener('click',()=>openChamber(d.dataset.c));
+});
+document.querySelectorAll('[data-goto]').forEach(b=>{
+  b.addEventListener('click',()=>openChamber(b.dataset.goto));
+});
+// seams
+document.querySelectorAll('.seam-select button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.seam-select button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.seam-view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('seam-'+btn.dataset.seam).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

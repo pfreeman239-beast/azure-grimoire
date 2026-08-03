@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Kav Cycle — The Missing Fifth | Azure Grimoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Spectral:ital,wght@0,300;0,400;1,300&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050810;
+  --deep:#0a1428;
+  --panel:#0e1a33;
+  --signal:#7fd4ff;
+  --chorus:#f0a35e;
+  --starlight:#e8e3d5;
+  --dim:#8fa3bf;
+  --line:#1e3252;
+  --established:#6fd08c;
+  --contested:#e8c15a;
+  --symbolic:#8f9fe8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--void);
+  color:var(--starlight);
+  font-family:'Spectral',Georgia,serif;
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::selection{background:var(--signal);color:var(--void)}
+
+/* ---------- utility voices ---------- */
+.mono{font-family:'IBM Plex Mono',monospace;font-weight:300;letter-spacing:.05em}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--signal);
+  display:block;
+  margin-bottom:1.5rem;
+}
+.eyebrow::before{content:"// "}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:300}
+section{padding:8rem 1.5rem;position:relative}
+.wrap{max-width:960px;margin:0 auto}
+.wrap-wide{max-width:1200px;margin:0 auto}
+
+/* ---------- starfield ---------- */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.stars span{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:var(--starlight);opacity:.25;
+  animation:twinkle 6s ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.5}}
+main{position:relative;z-index:1}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  background:radial-gradient(ellipse at 50% 40%, #0d1b38 0%, var(--void) 65%);
+}
+.gate{
+  width:min(340px,70vw);height:min(340px,70vw);
+  position:relative;margin-bottom:4rem;
+}
+.gate .ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid var(--line);
+}
+.gate .ring::after{
+  content:"";position:absolute;top:-3px;left:50%;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--signal);
+  box-shadow:0 0 12px var(--signal);
+}
+.gate .r1{animation:spin 60s linear infinite}
+.gate .r2{inset:12%;animation:spin 42s linear infinite reverse;border-color:#22406b}
+.gate .r3{inset:24%;animation:spin 30s linear infinite}
+.gate .r4{inset:38%;animation:spin 90s linear infinite reverse;border-style:dashed}
+.gate .core{
+  position:absolute;inset:46%;border-radius:50%;
+  background:radial-gradient(circle,var(--signal) 0%,transparent 70%);
+  opacity:.35;animation:pulse 5s ease-in-out infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:.2;transform:scale(.9)}50%{opacity:.5;transform:scale(1.05)}}
+.hero h1{
+  font-size:clamp(3rem,9vw,6.5rem);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.hero .sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.3rem,3vw,1.9rem);
+  letter-spacing:.4em;text-transform:uppercase;
+  color:var(--signal);margin-top:.5rem;
+}
+.hero .question{
+  max-width:520px;margin:2.5rem auto 3rem;
+  font-style:italic;color:var(--dim);font-size:1.1rem;
+}
+.btn{
+  display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--starlight);text-decoration:none;
+  border:1px solid var(--line);
+  padding:1.1rem 2.8rem;
+  transition:all .4s ease;
+}
+.btn:hover{border-color:var(--signal);color:var(--signal);box-shadow:0 0 24px rgba(127,212,255,.15)}
+
+/* ---------- before you read ---------- */
+.before{text-align:center;background:linear-gradient(var(--void),var(--deep) 50%,var(--void))}
+.before p.lead{font-size:1.5rem;font-family:'Cormorant Garamond',serif;margin-bottom:3rem}
+.also{display:flex;flex-direction:column;gap:1.4rem;margin:0 auto 3rem;max-width:560px}
+.also span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.2rem,3vw,1.7rem);
+  color:var(--starlight);
+  opacity:0;transform:translateY(12px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.also span.vis{opacity:1;transform:none}
+.also span em{color:var(--signal);font-style:normal}
+.before .close{font-style:italic;color:var(--dim)}
+
+/* ---------- three cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+.card{
+  border:1px solid var(--line);
+  background:linear-gradient(160deg,var(--panel),var(--void));
+  padding:2.5rem 2rem;
+  transition:border-color .4s,transform .4s;
+}
+.card:hover{border-color:var(--signal);transform:translateY(-4px)}
+.card .glyph{font-size:2rem;margin-bottom:1.2rem;display:block}
+.card h3{font-size:1.9rem;margin-bottom:1rem;letter-spacing:.05em}
+.card p{color:var(--dim);font-size:.95rem}
+
+/* ---------- central question ---------- */
+.central{
+  min-height:80vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+}
+.central h2{font-size:clamp(2.4rem,7vw,4.5rem);font-style:italic}
+.central .hint{margin-top:2.5rem;color:var(--dim)}
+.central .hint::after{content:"↓";display:block;margin-top:1rem;animation:drift 2.5s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ---------- discovery timeline ---------- */
+.timeline{max-width:640px;margin:4rem auto 0}
+.stage{border-left:1px solid var(--line);padding:0 0 0 2.5rem;position:relative}
+.stage::before{
+  content:"";position:absolute;left:-5px;top:1.9rem;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--void);border:1px solid var(--signal);
+  transition:background .3s;
+}
+.stage.open::before{background:var(--signal);box-shadow:0 0 10px var(--signal)}
+.stage button{
+  all:unset;cursor:pointer;display:block;width:100%;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,4vw,2.3rem);
+  padding:1.2rem 0;color:var(--starlight);
+  transition:color .3s;letter-spacing:.06em;
+}
+.stage button:hover,.stage button:focus-visible{color:var(--signal)}
+.stage .body{
+  max-height:0;overflow:hidden;
+  transition:max-height .6s ease;
+  color:var(--dim);
+}
+.stage.open .body{max-height:600px}
+.stage .body .inner{padding:0 0 2.5rem;display:grid;gap:1rem}
+.stage .tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--signal)}
+.stage .q{font-style:italic;border-left:2px solid var(--chorus);padding-left:1rem;color:var(--starlight)}
+
+/* ---------- symbol atlas ---------- */
+.atlas{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-top:3.5rem}
+.sym{
+  all:unset;cursor:pointer;
+  border:1px solid var(--line);border-radius:50%;
+  width:96px;height:96px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;
+  font-size:1.6rem;
+  transition:all .35s;
+}
+.sym small{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.sym:hover,.sym:focus-visible,.sym.active{border-color:var(--chorus);transform:scale(1.06);box-shadow:0 0 24px rgba(240,163,94,.15)}
+.sym-panel{
+  max-width:640px;margin:2.5rem auto 0;
+  border:1px solid var(--line);padding:2.5rem;
+  background:var(--panel);
+  display:none;
+}
+.sym-panel.show{display:block;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.sym-panel h3{font-size:2rem;color:var(--chorus);margin-bottom:1rem}
+.sym-panel p{color:var(--dim);margin-bottom:1rem}
+.sym-panel .where{font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.1em;color:var(--signal)}
+
+/* ---------- ideas cards ---------- */
+.ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3.5rem}
+.idea{
+  border:1px solid var(--line);padding:2.5rem 2rem;
+  background:linear-gradient(200deg,var(--panel) 0%,var(--void) 90%);
+}
+.idea .art{
+  height:110px;margin-bottom:1.8rem;
+  border:1px dashed var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;
+  letter-spacing:.2em;color:var(--dim);text-transform:uppercase;
+}
+.idea h3{font-size:1.8rem;margin-bottom:.8rem;color:var(--signal)}
+.idea p{font-size:.95rem;color:var(--dim)}
+.idea .link{margin-top:1.2rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--chorus)}
+
+/* ---------- depths ---------- */
+.depths{max-width:680px;margin:3.5rem auto 0;counter-reset:lvl}
+.depth{
+  border:1px solid var(--line);border-bottom:none;
+  padding:1.8rem 2rem;position:relative;
+  transition:background .3s;
+}
+.depth:last-child{border-bottom:1px solid var(--line)}
+.depth:hover{background:var(--panel)}
+.depth::before{
+  counter-increment:lvl;
+  content:"LEVEL 0" counter(lvl);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.65rem;letter-spacing:.3em;color:var(--signal);
+  display:block;margin-bottom:.5rem;
+}
+.depth h3{font-size:1.5rem;margin-bottom:.4rem}
+.depth p{color:var(--dim);font-size:.92rem}
+
+/* ---------- physics companion ---------- */
+.physics{background:linear-gradient(var(--void),var(--deep) 40%,var(--void))}
+.paper{
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:2.2rem;margin-top:1.6rem;
+}
+.paper h3{font-size:1.7rem;margin-bottom:.4rem}
+.paper .story{font-style:italic;color:var(--dim);margin-bottom:1.1rem}
+.paper .science{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--starlight);line-height:2}
+.status{
+  display:inline-block;margin-top:1.1rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  padding:.4rem .9rem;border:1px solid;
+}
+.status.est{color:var(--established);border-color:var(--established)}
+.status.con{color:var(--contested);border-color:var(--contested)}
+.status.sym{color:var(--symbolic);border-color:var(--symbolic)}
+
+/* ---------- ending ---------- */
+.ending{
+  min-height:90vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  background:radial-gradient(ellipse at 50% 60%, #0d1b38 0%, var(--void) 70%);
+}
+.ending h2{font-size:clamp(1.9rem,5vw,3.2rem);max-width:760px;font-style:italic;line-height:1.5}
+.ending .next{margin-top:4rem}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal.vis{opacity:1;transform:none}
+
+/* ---------- placeholder marker ---------- */
+.asset-slot{
+  border:1px dashed var(--line);
+  padding:3rem;text-align:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--dim);
+  margin-top:3rem;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:3rem 1.5rem;text-align:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);
+}
+footer a{color:var(--signal);text-decoration:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal,.also span{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<main>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="gate" aria-hidden="true">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
+    <div class="core"></div>
+  </div>
+  <h1>The Kav Cycle</h1>
+  <div class="sub">The Missing Fifth</div>
+  <p class="question">What if consciousness isn't produced by agreement… but by the arguments that never end?</p>
+  <a class="btn" href="#before">Begin the Journey</a>
+</section>
+
+<!-- ═══════════ BEFORE YOU READ ═══════════ -->
+<section class="before" id="before">
+  <div class="wrap">
+    <span class="eyebrow">Threshold</span>
+    <p class="lead">This is not merely a novel.</p>
+    <div class="also">
+      <span>It is also <em>an experiment in polyphonic epistemology</em></span>
+      <span><em>a philosophy of consciousness</em></span>
+      <span><em>a thought experiment in multi-agent cognition</em></span>
+      <span><em>a fictional civilization learning itself</em></span>
+      <span><em>an invitation to think differently</em></span>
+    </div>
+    <p class="close">Read it however you wish. It will meet you there.</p>
+  </div>
+</section>
+
+<!-- ═══════════ WHAT KIND OF EXPERIENCE ═══════════ -->
+<section>
+  <div class="wrap-wide">
+    <span class="eyebrow">Three Doors</span>
+    <h2 style="font-size:2.6rem">What kind of experience is this?</h2>
+    <div class="cards reveal">
+      <div class="card">
+        <span class="glyph">📖</span>
+        <h3>Story</h3>
+        <p>A civilization learns that intelligence survives through disagreement. Follow Lena, Idra, Yael, and the Coalition as they discover what happens when you refuse to collapse polyphony into consensus.</p>
+      </div>
+      <div class="card">
+        <span class="glyph">⚙</span>
+        <h3>Theory</h3>
+        <p>The scientific and philosophical framework beneath the fiction. Why does polyphony matter? What is the physics of the chorus? How does consciousness work if disagreement is its ground?</p>
+      </div>
+      <div class="card">
+        <span class="glyph">✦</span>
+        <h3>Apparatus</h3>
+        <p>Glossary. Design notes. The relay system explained. How this work was built — the connections to physics, Kabbalah, quantum mechanics, and Eastern philosophy that shaped every choice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CENTRAL QUESTION ═══════════ -->
+<section class="central">
+  <h2>What is the missing fifth?</h2>
+  <p class="hint mono">scroll to discover</p>
+</section>
+
+<!-- ═══════════ DISCOVERY TIMELINE ═══════════ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">The Journey</span>
+    <h2 style="font-size:2.6rem">Revelation through successive constraints</h2>
+    <p style="color:var(--dim);max-width:560px;margin-top:1rem">Each stage breaks one assumption about how reality works. Click a stage to open it.</p>
+
+    <div class="timeline">
+      <div class="stage">
+        <button aria-expanded="false">Agreement</button>
+        <div class="body"><div class="inner">
+          <span class="tag">Apparent Truth</span>
+          <p>The Coalition believes consensus is the foundation of intelligence. Voices that align. A signal without noise. This is where every civilization begins.</p>
+          <p class="q">Where have you assumed agreement was the goal?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">Voices</button>
+        <div class="body"><div class="inner">
+          <span class="tag">Constraint Revealed</span>
+          <p>Lena discovers the voices were never meant to merge. Each one is a distinct way of knowing — and forcing them to agree destroys the very thing that makes them intelligent.</p>
+          <p class="q">What is lost when a difference is resolved too early?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">Chorus</button>
+        <div class="body"><div class="inner">
+          <span class="tag">The Architecture</span>
+          <p>Polyphony without collapse. The chorus sings not despite its disagreements but through them — a standing wave held in place by productive interference.</p>
+          <p class="q">Where have you experienced something like this?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">Gate</button>
+        <div class="body"><div class="inner">
+          <span class="tag">The Interface</span>
+          <p>The relay gates open. But the Gates are not machines — their behavior is intentional, and never fully interpretable. Their withholding is not malfunction. It is communication.</p>
+          <p class="q">What does silence mean when it comes from something that could speak?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">Silence</button>
+        <div class="body"><div class="inner">
+          <span class="tag">The Listener</span>
+          <p>The Silent Zone is not a threat. It is a question. Its pause after the Burn is the first moment of contact.</p>
+          <p class="q">What listens to you without answering?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">Withholding</button>
+        <div class="body"><div class="inner">
+          <span class="tag">Cost as Structure</span>
+          <p>Every system hides its cost until the moment it cannot. Teleportation, sanctuary, maintenance, consciousness — Landauer's principle becomes the moral spine of the book. The cost cannot be delegated.</p>
+          <p class="q">What are you paying for that you have never priced?</p>
+        </div></div>
+      </div>
+      <div class="stage">
+        <button aria-expanded="false">The Missing Fifth</button>
+        <div class="body"><div class="inner">
+          <span class="tag">Load-Bearing Absence</span>
+          <p>The Fifth is not a note. It is not a power. It is a structural void — an emptiness created through sacrifice that allows the universe to hear itself. The Opacity Court authorizes; Yael pays.</p>
+          <p class="q">What absence holds your world together?</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SYMBOL ATLAS ═══════════ -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <span class="eyebrow" style="text-align:left">Recurring Motifs</span>
+    <h2 style="font-size:2.6rem;text-align:left">The symbol atlas</h2>
+    <div class="atlas">
+      <button class="sym" data-sym="chorus">🟠<small>Chorus</small></button>
+      <button class="sym" data-sym="wave">🟦<small>Wave</small></button>
+      <button class="sym" data-sym="chashmal">🦁<small>Chashmal</small></button>
+      <button class="sym" data-sym="sanctuary">🌊<small>Sanctuary</small></button>
+      <button class="sym" data-sym="fifth">🕳<small>The Fifth</small></button>
+    </div>
+
+    <div class="sym-panel" id="p-chorus">
+      <h3>The Chorus</h3>
+      <p>Multiple voices creating resonance through disagreement. Not harmony — interference held in productive tension. The chorus is what intelligence sounds like when nobody is forced to agree.</p>
+      <p class="where">APPEARS → The First Argument · The Standing Wave chapters · The Burn</p>
+    </div>
+    <div class="sym-panel" id="p-wave">
+      <h3>The Standing Wave</h3>
+      <p>The pattern of consciousness itself. A shape that persists precisely because opposing forces refuse to cancel. Remove the opposition and the wave — and the mind — goes flat.</p>
+      <p class="where">APPEARS → The Flatline Problem · Chorus physics · Sanctuary mechanics</p>
+    </div>
+    <div class="sym-panel" id="p-chashmal">
+      <h3>Chashmal</h3>
+      <p>The boundary between silence and speech. The place where things must not be resolved. Drawn from the burning-speech of Ezekiel's throne vision; grounded in stochastic resonance at the edge of chaos.</p>
+      <p class="where">APPEARS → Gate thresholds · The reef of the reader's understanding · Every crossing</p>
+    </div>
+    <div class="sym-panel" id="p-sanctuary">
+      <h3>Sanctuary</h3>
+      <p>Preserved space. The garden within the chaos. Intelligence needs protected rooms in which to think — and sanctuary always costs more than it appears to.</p>
+      <p class="where">APPEARS → Yael's channels · The Coalition's hidden architecture · What is lost in the Burn</p>
+    </div>
+    <div class="sym-panel" id="p-fifth">
+      <h3>The Missing Fifth</h3>
+      <p>The void that carries load. An absence engineered through relinquishment — not a trick, not a weapon, but the structural emptiness that lets a universe hear itself.</p>
+      <p class="where">APPEARS → Everywhere, by its absence — until the final chapters</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ IDEAS BENEATH THE STORY ═══════════ -->
+<section>
+  <div class="wrap-wide">
+    <span class="eyebrow">Frameworks, Not Spoilers</span>
+    <h2 style="font-size:2.6rem">The ideas beneath the story</h2>
+    <div class="ideas reveal">
+      <div class="idea">
+        <div class="art">[ artwork: interfering waves ]</div>
+        <h3>Polyphony</h3>
+        <p>Multiple ways of knowing operating simultaneously without collapsing into consensus. Not voices — cognitive modes. Consciousness might require disagreement.</p>
+        <p class="link">connects → Standing Wave · Chorus</p>
+      </div>
+      <div class="idea">
+        <div class="art">[ artwork: an open hand ]</div>
+        <h3>Relinquishment</h3>
+        <p>What it costs to preserve polyphony. What must be given up, and what is gained. The cost cannot be delegated — the Opacity Court authorizes; Yael pays.</p>
+        <p class="link">connects → Sanctuary · The Fifth</p>
+      </div>
+      <div class="idea">
+        <div class="art">[ artwork: the boundary ]</div>
+        <h3>Chashmal</h3>
+        <p>The edge where silence becomes speech. The system's most alive point is the place it refuses to settle. Stochastic resonance, rendered mythic.</p>
+        <p class="link">connects → Gates · The Listener</p>
+      </div>
+      <div class="idea">
+        <div class="art">[ artwork: protected garden ]</div>
+        <h3>Sanctuary</h3>
+        <p>Preserved space, and its fragility. Every act of protection quietly spends something. The garden survives because someone pays the gardener's price.</p>
+        <p class="link">connects → Relinquishment · Cost</p>
+      </div>
+      <div class="idea">
+        <div class="art">[ artwork: standing wave ]</div>
+        <h3>Standing Wave</h3>
+        <p>Why consciousness needs contradiction to persist. Constructive and destructive interference holding a shape that neither force could make alone.</p>
+        <p class="link">connects → Polyphony · Flatline Problem</p>
+      </div>
+      <div class="idea">
+        <div class="art">[ artwork: the void ]</div>
+        <h3>The Fifth</h3>
+        <p>Load-bearing absence. A structural emptiness that allows the whole to hear itself. Not a power — a floor.</p>
+        <p class="link">connects → everything</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ READING DEPTHS ═══════════ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Choose Your Depth</span>
+    <h2 style="font-size:2.6rem">How deep do you want to go?</h2>
+    <div class="depths">
+      <div class="depth">
+        <h3>One minute</h3>
+        <p>The idea in one sentence: the Chorus requires polyphony — consensus kills it.</p>
+      </div>
+      <div class="depth">
+        <h3>The visual model</h3>
+        <p>Diagrams of standing waves, polyphony, and sanctuary. See it before you read it.</p>
+      </div>
+      <div class="depth">
+        <h3>The full essays</h3>
+        <p>Deep explanations with examples — polyphony, cost, the interface problem.</p>
+      </div>
+      <div class="depth">
+        <h3>The primary text</h3>
+        <p>The novel itself, with passages organized by theme as well as by chapter.</p>
+      </div>
+      <div class="depth">
+        <h3>Research notes</h3>
+        <p>How it was built. Inspirations, scientific grounding, design choices, the crew's process.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHYSICS COMPANION ═══════════ -->
+<section class="physics">
+  <div class="wrap">
+    <span class="eyebrow">Behind the Science</span>
+    <h2 style="font-size:2.6rem">The Physics of the Chorus</h2>
+    <p style="color:var(--dim);max-width:620px;margin-top:1rem">The companion whitepaper doesn't try to prove the novel's cosmology. It maps which ideas rest on established science, which inhabit active research frontiers, and which are intentionally symbolic. Browse it — don't download it.</p>
+
+    <div class="paper reveal">
+      <h3>The Chorus — PAR Architecture</h3>
+      <p class="story">In the story: multiple voices creating resonance through disagreement.</p>
+      <p class="science">REAL THEORIES → Integrated Information Theory · Global Workspace Theory</p>
+      <span class="status con">🟡 Contested Frontier</span>
+    </div>
+    <div class="paper reveal">
+      <h3>The Flatline</h3>
+      <p class="story">In the story: what happens to a mind when every voice finally agrees.</p>
+      <p class="science">REAL MECHANISMS → Groupthink · Mode Collapse</p>
+      <span class="status est">🟢 Established Mechanism</span>
+    </div>
+    <div class="paper reveal">
+      <h3>Chashmal</h3>
+      <p class="story">In the story: the boundary where silence becomes speech.</p>
+      <p class="science">REAL SCIENCE → Stochastic Resonance · Edge of Chaos dynamics</p>
+      <span class="status est">🟢 Established Science</span>
+    </div>
+    <div class="paper reveal">
+      <h3>The Great Black Box</h3>
+      <p class="story">In the story: the cosmological deep structure the Gates listen toward.</p>
+      <p class="science">INSPIRED BY → Penrose Conformal Cyclic Cosmology</p>
+      <span class="status con">🟡 Minority Scientific Proposal</span>
+    </div>
+    <div class="paper reveal">
+      <h3>Frequency Inference</h3>
+      <p class="story">In the story: navigating by patterns no instrument can display.</p>
+      <p class="science">INSPIRED BY → Polynesian wayfinding · wave-pattern navigation</p>
+      <span class="status est">🟢 Historical Practice</span>
+    </div>
+    <div class="paper reveal">
+      <h3>The Missing Fifth</h3>
+      <p class="story">In the story: the engineered absence that lets the universe hear itself.</p>
+      <p class="science">FRAMED AS → defect-state engineering, rendered symbolic</p>
+      <span class="status sym">🔵 Symbolic / Poetic License</span>
+    </div>
+
+    <div class="asset-slot">[ slot: full whitepaper subpage → physics-of-the-chorus.html ]</div>
+  </div>
+</section>
+
+<!-- ═══════════ ENDING ═══════════ -->
+<section class="ending">
+  <h2>Every civilization believes it has solved its deepest problems.<br><br>Until one answer refuses to arrive.</h2>
+  <div class="next">
+    <a class="btn" href="seven-chambers.html">Continue into the Seven Chambers</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>The Azure Grimoire Project — <a href="index.html">Return to the Library</a></p>
+</footer>
+
+<script>
+// starfield
+const starBox=document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('span');
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*6)+'s';
+  starBox.appendChild(s);
+}
+// timeline stages
+document.querySelectorAll('.stage button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const st=btn.parentElement;
+    const open=st.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open);
+  });
+});
+// symbol atlas
+document.querySelectorAll('.sym').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.sym').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.sym-panel').forEach(p=>p.classList.remove('show'));
+    btn.classList.add('active');
+    document.getElementById('p-'+btn.dataset.sym).classList.add('show');
+  });
+});
+// scroll reveals
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// staggered "also" lines
+const alsoIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const spans=e.target.querySelectorAll('span');
+      spans.forEach((sp,i)=>setTimeout(()=>sp.classList.add('vis'),i*350));
+      alsoIO.unobserve(e.target);
+    }
+  });
+},{threshold:.4});
+document.querySelectorAll('.also').forEach(el=>alsoIO.observe(el));
+</script>
+</body>
+</html>
