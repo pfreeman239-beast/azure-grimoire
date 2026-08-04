@@ -50,7 +50,7 @@ body{
 /* ambient starfield — the whole page sits under the same sky */
 .sky{
   position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url('ChatGPT_Image_Aug_3__2026__03_32_38_PM.png') center/cover no-repeat;
+  background:url('starfield.png') center/cover no-repeat;
   opacity:.055;mix-blend-mode:screen;
 }
 .vignette{
@@ -352,6 +352,69 @@ body{
   border:1px solid var(--rule);color:var(--vellum-faint);
 }
 
+
+/* ══ CONTRAST TABLE — the norm, dimmed; the practice, lit ══════════ */
+.contrast{margin-top:clamp(2rem,5vh,3rem);border:1px solid var(--rule)}
+.crow{display:grid;grid-template-columns:8.5rem 1fr 1fr;gap:0;border-bottom:1px solid var(--rule)}
+.crow:last-child{border-bottom:0}
+.crow>*{padding:1.05rem 1.3rem}
+.ckey{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-deep);align-self:center}
+.cnorm{color:rgba(232,230,223,.34);font-size:.9rem;line-height:1.55;
+  border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.chere{color:rgba(232,230,223,.86);font-size:.9rem;line-height:1.55}
+.crow--head>*{padding-block:.8rem;font-family:'IBM Plex Mono',monospace;font-size:.6rem;
+  letter-spacing:.18em;text-transform:uppercase}
+.crow--head .cnorm{color:var(--vellum-faint)}
+.crow--head .chere{color:var(--gold)}
+
+/* ══ THE CIRCUIT ═══════════════════════════════════════════════════ */
+.circuit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;margin-top:clamp(2rem,5vh,3rem);background:var(--rule);border:1px solid var(--rule)}
+@media (max-width:1000px){.circuit{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.circuit{grid-template-columns:1fr}}
+.stage{background:var(--ink);padding:1.5rem 1.4rem;display:flex;flex-direction:column;gap:.55rem}
+.stage-n{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold-deep)}
+.stage-t{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.3rem;
+  letter-spacing:.06em;text-transform:uppercase;color:#F4F2EC}
+.stage-d{font-size:.87rem;line-height:1.6;color:var(--vellum-dim)}
+.stage-d b{color:rgba(232,230,223,.86);font-weight:400;font-style:italic}
+.loop{text-align:center;margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vellum-faint)}
+
+/* ══ PULL QUOTE ════════════════════════════════════════════════════ */
+.pull{margin:clamp(2.5rem,6vh,4rem) auto;max-width:44ch;text-align:center;
+  font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;
+  font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1.35;color:rgba(232,230,223,.78)}
+.pull b{font-style:normal;font-weight:500;color:var(--gold)}
+
+/* ══ DISCARD GATES ═════════════════════════════════════════════════ */
+.gatelist{display:grid;gap:.6rem;margin-top:clamp(1.75rem,4vh,2.5rem)}
+.gateitem{display:grid;grid-template-columns:11rem 1fr;gap:.3rem 1.5rem;align-items:baseline;
+  padding:1rem 1.2rem;border-left:2px solid rgba(189,142,76,.35);background:rgba(18,21,28,.42)}
+.gateitem b{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.08rem;
+  letter-spacing:.04em;color:#F4F2EC}
+.gateitem span{font-size:.88rem;line-height:1.55;color:var(--vellum-dim)}
+
+/* ══ PAPER LINK ════════════════════════════════════════════════════ */
+.paper{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(2rem,5vh,2.75rem);
+  padding:.95rem 1.5rem;border:1px solid rgba(217,168,92,.4);text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);transition:background .3s ease,transform .25s ease}
+.paper:hover{background:rgba(217,168,92,.08);transform:translateY(-2px)}
+.paper:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+@media (max-width:760px){
+  .crow{grid-template-columns:1fr}
+  .crow>*{padding:.7rem 1.1rem}
+  .ckey{padding-top:1.1rem;padding-bottom:.2rem}
+  .cnorm{border-left:0;border-right:0;padding-bottom:.35rem}
+  .cnorm::before{content:'usual: ';color:var(--vellum-faint);font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase}
+  .chere::before{content:'here: ';color:var(--gold-deep);font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase}
+  .crow--head{display:none}
+  .gateitem{grid-template-columns:1fr;gap:.35rem}
+}
+
 /* ══ RESPONSIVE ══════════════════════════════════════════════════ */
 @media (max-width:820px){
   .thread{grid-template-columns:1fr;gap:.4rem;padding:1.2rem 1.25rem}
@@ -387,14 +450,19 @@ body{
   <div class="shell">
     <div class="hero-grid">
       <div>
-        <p class="mark rise">Azure Grimoire Project · 2026</p>
-        <h1 class="display rise" data-d="1">The decisive<br>variable isn't<br>the <em>model.</em></h1>
+        <p class="mark rise">Azure Grimoire Project &middot; 2026</p>
+        <h1 class="display rise" data-d="1">Ten works,<br>made by a crew<br>built not to <em>converge.</em></h1>
         <div class="hero-rule rise" data-d="2"></div>
-        <p class="hero-sub rise" data-d="2">It's the mind on the other side of the table.</p>
-        <p class="hero-tag rise" data-d="3">The ethics and psychology of effective AGI research.</p>
+        <p class="hero-sub rise" data-d="2">A research program that develops conceptual
+          frameworks by writing fiction &mdash; with instruments differentiated by
+          epistemology rather than persona, and blocked from reading each other before
+          delivery.</p>
+        <p class="hero-tag rise" data-d="3">What the method reliably produces is
+          cognitively dense books. Whether it produces anything beyond that has not yet
+          been established by anyone outside the program.</p>
       </div>
       <div class="crystal-stage rise" data-d="2">
-        <img class="crystal" src="ChatGPT_Image_Aug_3__2026__03_15_43_PM.png" alt="" aria-hidden="true" />
+        <img class="crystal" src="crystal.png" alt="" aria-hidden="true" />
       </div>
     </div>
   </div>
@@ -408,10 +476,10 @@ body{
     <div class="shell">
       <h2 id="reel-h" class="mark rise">The reel</h2>
       <div class="plate rise" data-d="1">
-        <img class="plate-corner tl" src="ChatGPT_Image_Aug_3__2026__03_28_57_PM.png" alt="" aria-hidden="true" />
-        <img class="plate-corner tr" src="ChatGPT_Image_Aug_3__2026__03_28_57_PM.png" alt="" aria-hidden="true" />
-        <img class="plate-corner bl" src="ChatGPT_Image_Aug_3__2026__03_28_57_PM.png" alt="" aria-hidden="true" />
-        <img class="plate-corner br" src="ChatGPT_Image_Aug_3__2026__03_28_57_PM.png" alt="" aria-hidden="true" />
+        <img class="plate-corner tl" src="corner.png" alt="" aria-hidden="true" />
+        <img class="plate-corner tr" src="corner.png" alt="" aria-hidden="true" />
+        <img class="plate-corner bl" src="corner.png" alt="" aria-hidden="true" />
+        <img class="plate-corner br" src="corner.png" alt="" aria-hidden="true" />
         <p class="plate-note"><b>The crew, in their own words</b>Films arriving shortly</p>
       </div>
     </div>
@@ -420,40 +488,74 @@ body{
   <!-- ══════════════ THE PREMISE ══════════════ -->
   <section class="premise" aria-labelledby="premise-h">
     <div class="vine vine--a rise">
-      <img src="ChatGPT_Image_Aug_3__2026__03_31_05_PM.png" alt="" aria-hidden="true" />
+      <img src="vine-a.png" alt="" aria-hidden="true" />
     </div>
 
     <div class="shell">
-      <div class="premise-body">
-        <div>
-          <p class="mark rise">The premise</p>
-          <h2 id="premise-h" class="display rise" data-d="1">Number-crunching<br>is the <em>easy part.</em></h2>
-        </div>
-        <div>
-          <p class="prose rise" data-d="1">
-            We are likely approaching a moment when a genuinely new form of intelligence
-            emerges. At that threshold, algorithmic skill stops being the bottleneck.
-            <strong>The decisive skill becomes the psychology of the people in the room</strong>
-            — their capacity to meet an unlike mind without collapsing into fear, control,
-            or premature certainty.
-          </p>
-          <p class="prose rise" data-d="2">
-            This work treats that capacity as the real work of AI safety. Not a replacement
-            for technical rigor — the missing arm of it. Ethics here isn't a rulebook bolted
-            on at the end; it follows from stance. The way you look at what you're building
-            shapes what it becomes.
-          </p>
-          <p class="prose rise" data-d="3" style="color:var(--vellum-dim)">
-            The argument is made twice over: four long-form works that think it through in
-            narrative, and five short pages that state it plainly. Neither is a summary of
-            the other.
-          </p>
-        </div>
+
+      <!-- how it differs -->
+      <p class="mark rise">How it differs</p>
+      <h2 id="premise-h" class="display rise" data-d="1">Not better.<br><em>Different.</em></h2>
+      <p class="prose rise" data-d="1" style="margin-top:1.2rem">
+        Difference is only legible against a baseline, so the baseline is stated first.
+        Nothing below is a claim of superiority; no comparison has been measured.
+      </p>
+
+      <div class="contrast rise" data-d="2">
+        <div class="crow crow--head"><span class="ckey"></span><span class="cnorm">Common practice</span><span class="chere">This program</span></div>
+        <div class="crow"><span class="ckey">Differentiation</span><span class="cnorm">By persona &mdash; &ldquo;act as a critic,&rdquo; &ldquo;act as an optimist&rdquo;</span><span class="chere">By epistemology &mdash; what an instrument is permitted to claim, and how it must mark what it knows</span></div>
+        <div class="crow"><span class="ckey">Briefing</span><span class="cnorm">The same prompt to each model</span><span class="chere">Non-overlapping briefs; each instrument answers a different question about the same material</span></div>
+        <div class="crow"><span class="ckey">Visibility</span><span class="cnorm">Models read prior turns and each other</span><span class="chere">Blind drafting &mdash; instruments do not read each other before delivery</span></div>
+        <div class="crow"><span class="ckey">Resolution</span><span class="cnorm">Best output selected, or outputs merged</span><span class="chere">Contradiction kept side by side, unresolved</span></div>
+        <div class="crow"><span class="ckey">The human</span><span class="cnorm">Prompt author and editor</span><span class="chere">Operator and curator, who declines to average</span></div>
+        <div class="crow"><span class="ckey">Output</span><span class="cnorm">A single artifact</span><span class="chere">Several incompatible readings, and the artifact</span></div>
       </div>
+
+      <p class="pull rise">Hunt the quiet thing every room already has. <b>The dragon was
+        loaded to capacity by every civilisation that ever told a story</b> &mdash; there is
+        no room left in it.</p>
+
+      <!-- the circuit -->
+      <p class="mark rise">The circuit</p>
+      <h2 class="display rise" data-d="1">Six stages.<br>The sixth feeds <em>the first.</em></h2>
+
+      <div class="circuit">
+        <div class="stage rise"><span class="stage-n">01</span><span class="stage-t">The Hunt</span>
+          <span class="stage-d">What have you noticed more than once that nobody has explained to your satisfaction? Mark it and move on. Judgement belongs to a later stage.</span></div>
+        <div class="stage rise" data-d="1"><span class="stage-n">02</span><span class="stage-t">The Bond</span>
+          <span class="stage-d">Load the pattern three ways &mdash; rhyme, parallel, mirror-opposite. <b>A sign points at meaning; a Stone works on the mind that holds it.</b> Only Stones continue.</span></div>
+        <div class="stage rise" data-d="2"><span class="stage-n">03</span><span class="stage-t">Two Fields</span>
+          <span class="stage-d">Run it against two settings chosen to sit as far apart as imaginations reasonably get. When the shape arrives in both, uninvited, <b>that is the pattern finding you twice.</b></span></div>
+        <div class="stage rise"><span class="stage-n">04</span><span class="stage-t">The Jar</span>
+          <span class="stage-d">Three minds, near enough to hear one another and far enough that what happens in one does not become all three. <b>Stay different long enough that the difference becomes information.</b></span></div>
+        <div class="stage rise" data-d="1"><span class="stage-n">05</span><span class="stage-t">The Floor</span>
+          <span class="stage-d">Select, load, assign, harvest, tag, promote &mdash; the same six steps whether the output turns out to matter. Nothing is promoted on a single pass.</span></div>
+        <div class="stage rise" data-d="2"><span class="stage-n">06</span><span class="stage-t">The Archive</span>
+          <span class="stage-d">Not a trophy room. Work enters because it is finished enough to be built on. <b>The product is not the inventions &mdash; it is the record of how they were honestly made.</b></span></div>
+      </div>
+      <p class="loop rise">&#8630;&ensp;open problems re-enter at the hunt</p>
+
+      <!-- what it discards -->
+      <p class="mark rise" style="margin-top:clamp(3rem,7vh,4.5rem)">What it discards</p>
+      <h2 class="display rise" data-d="1">Four gates that<br>throw work <em>away.</em></h2>
+
+      <div class="gatelist">
+        <div class="gateitem rise"><b>Salt &amp; dragon</b><span>Candidates already loaded to capacity by everyone who came before are refused at the door.</span></div>
+        <div class="gateitem rise"><b>Sign &amp; Stone</b><span>Anything that merely points at a meaning is dropped. Only what operates on the mind holding it goes forward.</span></div>
+        <div class="gateitem rise"><b>Two fields</b><span>A shape that appears in one setting and fails to recur in a distant one does not survive the cross-check.</span></div>
+        <div class="gateitem rise"><b>Promotion</b><span>A candidate that has held only once stays pending &mdash; indefinitely, and in public.</span></div>
+      </div>
+
+      <p class="prose rise" style="margin-top:1.5rem;color:var(--vellum-dim)">
+        An account of a method that reports only successes is an advertisement.
+      </p>
+
+      <a class="paper rise" href="method.html">Read the full method paper &nbsp;&rarr;</a>
+
     </div>
 
     <div class="vine vine--b rise">
-      <img src="ChatGPT_Image_Aug_3__2026__03_27_16_PM.png" alt="" aria-hidden="true" />
+      <img src="vine-b.png" alt="" aria-hidden="true" />
     </div>
   </section>
 
@@ -462,14 +564,14 @@ body{
     <div class="shell">
 
       <div class="wreath rise">
-        <img src="ChatGPT_Image_Aug_3__2026__03_20_24_PM.png" alt="" aria-hidden="true" />
+        <img src="wreath.png" alt="" aria-hidden="true" />
         <div class="wreath-core">
-          <p class="mark">The four works</p>
-          <h2 id="works-h" class="display">Enter any<br>of <em>these four.</em></h2>
+          <p class="mark">The evidence</p>
+          <h2 id="works-h" class="display">What the<br>method <em>returned.</em></h2>
         </div>
       </div>
 
-      <p class="works-note rise" data-d="1">Read in any order — none of them is the first</p>
+      <p class="works-note rise" data-d="1">Four of ten — read in any order, none is the first</p>
 
       <div class="gates">
 
@@ -515,7 +617,7 @@ body{
 
       </div>
 
-      <img class="gears rise" src="ChatGPT_Image_Aug_3__2026__03_22_38_PM.png" alt="" aria-hidden="true" />
+      <img class="gears rise" src="gears.png" alt="" aria-hidden="true" />
     </div>
   </section>
 
@@ -642,7 +744,7 @@ body{
 <!-- ══════════════ CLOSE ══════════════ -->
 <footer class="close">
   <div class="shell">
-    <img class="clock rise" src="ChatGPT_Image_Aug_3__2026__03_18_29_PM.png" alt="" aria-hidden="true" />
+    <img class="clock rise" src="clock.png" alt="" aria-hidden="true" />
     <p class="colophon rise">
       The Azure Grimoire Project · theazuregrimoire.com<br>
       Self-contained HTML. Read in any order.<br>
