@@ -151,13 +151,15 @@ body{
   border:1px solid var(--rule);
   background:linear-gradient(180deg,rgba(18,21,28,.85),rgba(8,9,13,.9));
   aspect-ratio:16/9;
-  display:grid;place-items:center;text-align:center;
-  padding:2rem;
+  overflow:hidden;
+}
+.plate iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
 }
 .reel .mark{margin-bottom:2.75rem}
 .plate-corner{
   position:absolute;width:clamp(5rem,13vw,11rem);height:auto;
-  opacity:.68;pointer-events:none;
+  opacity:.68;pointer-events:none;z-index:2;
 }
 .plate-corner.tl{top:-6%;left:-3%;transform:scaleX(-1)}
 .plate-corner.tr{top:-6%;right:-3%}
@@ -170,6 +172,17 @@ body{
 .plate-note b{display:block;font-family:'Cormorant Garamond',serif;font-weight:300;
   font-size:clamp(1.3rem,3vw,2rem);letter-spacing:0;text-transform:none;
   color:rgba(232,230,223,.6);margin-bottom:.6rem}
+.reel-tabs{display:flex;gap:.6rem;justify-content:center;margin-top:1.4rem}
+.reel-tab{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  padding:.6rem 1.15rem;border:1px solid var(--rule);
+  background:transparent;color:var(--vellum-faint);
+  cursor:pointer;transition:border-color .25s ease,color .25s ease;
+}
+.reel-tab:hover{border-color:rgba(217,168,92,.4);color:var(--vellum)}
+.reel-tab.is-active{border-color:var(--gold-deep);color:var(--gold)}
+.reel-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ══ VINE DIVIDERS ═══════════════════════════════════════════════
    Each source PNG is 1536×1024 with the vine occupying a measured
@@ -476,11 +489,19 @@ body{
     <div class="shell">
       <h2 id="reel-h" class="mark rise">The reel</h2>
       <div class="plate rise" data-d="1">
+        <iframe id="reel-frame"
+          src="https://www.youtube-nocookie.com/embed/EWvFX8pA67w"
+          title="The Azure Grimoire — the crew, in their own words"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen loading="lazy"></iframe>
         <img class="plate-corner tl" src="corner.png" alt="" aria-hidden="true" />
         <img class="plate-corner tr" src="corner.png" alt="" aria-hidden="true" />
         <img class="plate-corner bl" src="corner.png" alt="" aria-hidden="true" />
         <img class="plate-corner br" src="corner.png" alt="" aria-hidden="true" />
-        <p class="plate-note"><b>The crew, in their own words</b>Films arriving shortly</p>
+      </div>
+      <div class="reel-tabs rise" data-d="2" role="tablist" aria-label="Select a video">
+        <button type="button" class="reel-tab" data-video="p5McsV5Edvg" role="tab" aria-selected="false">01</button>
+        <button type="button" class="reel-tab is-active" data-video="EWvFX8pA67w" role="tab" aria-selected="true">02</button>
       </div>
     </div>
   </section>
@@ -716,6 +737,18 @@ body{
           <span class="tome-t">Lotusoraaura Story</span><span class="tome-k">DOCX</span>
           <span class="tome-m">the Ora-Aura Rosetta Stone</span>
         </a>
+        <a class="tome tome--key rise" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Salts_Edge_Complete_Book.pdf" download>
+          <span class="tome-t">Salt's Edge — Complete Book</span><span class="tome-k">PDF</span>
+          <span class="tome-m">172 pages · continuity is not stability, continuity is practice</span>
+        </a>
+        <a class="tome tome--key rise" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Kav_Cycle_Book_One_The_Missing_Fifth_COMPILED.pdf" download>
+          <span class="tome-t">The Kav Cycle — Book One: The Missing Fifth</span><span class="tome-k">PDF</span>
+          <span class="tome-m">151 pages · intelligence survives through disagreement</span>
+        </a>
+        <a class="tome tome--key rise" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Seven_Chambers_of_Consciousness.pdf" download>
+          <span class="tome-t">The Seven Chambers of Consciousness</span><span class="tome-k">PDF</span>
+          <span class="tome-m">66 pages · six civilizations, six answers to what holds the world together</span>
+        </a>
       </div>
     </div>
   </section>
@@ -774,6 +807,24 @@ body{
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   items.forEach(function(el){ io.observe(el); });
+})();
+
+(function(){
+  var frame = document.getElementById('reel-frame');
+  var tabs = document.querySelectorAll('.reel-tab');
+  if(!frame || !tabs.length) return;
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(btn.classList.contains('is-active')) return;
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + btn.getAttribute('data-video');
+      tabs.forEach(function(b){
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected','false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected','true');
+    });
+  });
 })();
 </script>
 </body>
