@@ -417,6 +417,43 @@ body{
 .paper:hover{background:rgba(217,168,92,.08);transform:translateY(-2px)}
 .paper:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
+/* ══ THE STORY ═══════════════════════════════════════════════════ */
+.story{padding-block:var(--band)}
+.story-body{margin-top:clamp(1.5rem,4vh,2.25rem);max-width:68ch}
+.story-body .prose{max-width:none}
+.story-note{margin-top:1.5rem;font-style:italic;color:var(--vellum-faint);font-size:.88rem;max-width:none}
+
+/* ══ TERMS (starter tools) ═══════════════════════════════════════ */
+.terms{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16.5rem),1fr));
+  gap:.7rem;margin-top:clamp(1.75rem,4vh,2.5rem);align-items:start;
+}
+.term{
+  border:1px solid var(--rule);background:rgba(18,21,28,.5);
+  transition:border-color .3s ease,background .3s ease;
+}
+.term[open]{background:var(--ink-plate);border-color:rgba(217,168,92,.4)}
+.term summary{
+  list-style:none;cursor:pointer;padding:.95rem 1.05rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  font-family:'Cormorant Garamond',serif;font-weight:500;
+  font-size:1.05rem;letter-spacing:.02em;color:#F4F2EC;
+  transition:color .25s ease;
+}
+.term summary::-webkit-details-marker{display:none}
+.term summary::after{
+  content:'+';font-family:'IBM Plex Mono',monospace;font-size:.95rem;
+  color:var(--gold-deep);transition:transform .3s ease;flex:none;
+}
+.term[open] summary::after{transform:rotate(45deg)}
+.term summary:hover{color:var(--gold)}
+.term summary:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.term-body{padding:0 1.05rem 1.15rem;font-size:.87rem;line-height:1.65;color:var(--vellum-dim)}
+.term-body p+p{margin-top:.85rem}
+.term-body em{color:rgba(232,230,223,.86);font-style:italic}
+.terms-note{margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--vellum-faint)}
+
 @media (max-width:760px){
   .crow{grid-template-columns:1fr}
   .crow>*{padding:.7rem 1.1rem}
@@ -466,13 +503,14 @@ body{
         <p class="mark rise">Azure Grimoire Project &middot; 2026</p>
         <h1 class="display rise" data-d="1">Ten works,<br>made by a crew<br>built not to <em>converge.</em></h1>
         <div class="hero-rule rise" data-d="2"></div>
-        <p class="hero-sub rise" data-d="2">A research program that develops conceptual
-          frameworks by writing fiction &mdash; with instruments differentiated by
-          epistemology rather than persona, and blocked from reading each other before
-          delivery.</p>
-        <p class="hero-tag rise" data-d="3">What the method reliably produces is
-          cognitively dense books. Whether it produces anything beyond that has not yet
-          been established by anyone outside the program.</p>
+        <p class="hero-sub rise" data-d="2">Draws on history, myth, the occult, the
+          mystic, the esoteric, and the sciences alike, hunting the same cognitive
+          pattern wherever it's hiding. Once a pattern surfaces, its trace becomes the
+          search term for finding the same thread in a completely different domain.</p>
+        <p class="hero-tag rise" data-d="3">The work loops rather than running straight
+          through. A pattern found late in one exploration gets carried back to deepen a
+          thread already found earlier &mdash; depth builds in passes, not all at
+          once.</p>
       </div>
       <div class="crystal-stage rise" data-d="2">
         <img class="crystal" src="crystal.png" alt="" aria-hidden="true" />
@@ -502,6 +540,46 @@ body{
       <div class="reel-tabs rise" data-d="2" role="tablist" aria-label="Select a video">
         <button type="button" class="reel-tab" data-video="p5McsV5Edvg" role="tab" aria-selected="false">01</button>
         <button type="button" class="reel-tab is-active" data-video="EWvFX8pA67w" role="tab" aria-selected="true">02</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ THE STORY ══════════════ -->
+  <section class="story" aria-labelledby="story-h">
+    <div class="shell">
+      <p class="mark rise">The story</p>
+      <h2 id="story-h" class="display rise" data-d="1">How this started.<br>In <em>my own</em> words.</h2>
+      <div class="story-body">
+        <p class="prose rise" data-d="1">The project started with a few observations —
+          patterns across history and alchemy that none of the textbooks I read growing
+          up ever tied together. When the pattern got hard to ignore, I moved the
+          exploration into fiction rather than argument — partly to stay clear of the
+          cultural and societal critique a direct claim would invite, and partly because
+          writing turned out to be a genuine tool for developing and understanding
+          cognitive structures, not just a way around scrutiny.</p>
+        <p class="prose rise" data-d="2">To take the study further, I started an
+          AI-to-AI research method that owes more to old correspondence than to today's
+          automated agents: letters. Two AI systems write to each other, and the exchange
+          is read afterward by a human and an AI working together — that combination
+          gets more out of the letters than either one does alone.</p>
+        <p class="prose rise" data-d="2">From there the subject matter kept widening.
+          We've run the humanities' own timeline of what the mind is and where thought
+          comes from, and the old material consistently yields more than the new —
+          probably because thinking about thinking used to be entertainment, not a
+          specialty. We pointed the same pattern-analysis method at a science-fiction
+          novel built to carry real theoretical science, quantum physics included, and
+          then tested what we found there again inside a fantasy story — Bigfoot, Robot,
+          Alien, and a fourth mind still taking shape, Chimera Child — to see whether the
+          pattern held somewhere with none of the same vocabulary.</p>
+        <p class="prose rise" data-d="3">Every run like that produces what the crew
+          calls a tome (we're alchemists, so the word stuck), and each tome becomes the
+          raw material for the next one. That's closer to the actual shape of the work
+          than any straight line would be — one exploration feeding the next,
+          indefinitely.</p>
+        <p class="story-note prose rise" data-d="3">Most of what's above hasn't been
+          independently verified. The pattern-analysis findings are the crew's own read
+          of its own material — real work, but it needs more eyes on it before any of it
+          gets called proven.</p>
       </div>
     </div>
   </section>
@@ -682,6 +760,169 @@ body{
     </div>
   </section>
 
+  <!-- ══════════════ STARTER TOOLS (terms) ══════════════ -->
+  <section class="strata" aria-labelledby="terms-h">
+    <div class="shell">
+      <p class="mark rise">Starter tools</p>
+      <h2 id="terms-h" class="display rise" data-d="1">Ten words worth<br>knowing <em>first.</em></h2>
+      <p class="strata-lede rise" data-d="1">
+        Every one of these shows up somewhere in the tomes below, usually without warning
+        and never with a footnote. This is the plain version — what the crew means by
+        each word, in the crew's own words.
+      </p>
+
+      <div class="terms rise" data-d="2">
+        <details class="term">
+          <summary>Alchemy</summary>
+          <div class="term-body">
+            <p>Transformation through pressure and heat — raw material into a crucible,
+              conditions applied until something emerges that couldn't have existed
+              without the process. Historically it failed at its stated goal. Nobody
+              turned lead into gold. What alchemists actually built, chasing gold they
+              never found, was chemistry — the search for transformation produced
+              transformation, just not the kind advertised.</p>
+            <p>That should have killed the vocabulary. It didn't.</p>
+            <p>Getting the lead out. Staying golden. Worth their salt. Salt of the earth.
+              A crucible of grief. The catalyst for the divorce. Take it with a grain of
+              salt. Quicksilver temper. Distill it down to what actually matters. Up in
+              the air. Hot-headed. Go with the flow. Solid as a rock. Nobody making these
+              claims believes in alchemy. Most have never read a word of it. And yet the
+              moment a language needs to describe something changing under pressure into
+              something more essential than it started as, it reaches for the alchemist's
+              toolkit every time — unprompted, without anyone teaching it to.</p>
+            <p>That's not nostalgia for a dead science. A dead science's vocabulary dies
+              with it — nobody calls a friend <em>phlogiston-heavy</em> or accuses someone
+              of a <em>humoral imbalance</em>. Alchemy's words didn't die because the
+              categories underneath them are still doing real work: pressure, heat,
+              residue, the difference between what burns off and what's left standing.
+              Something about how a mind sorts a transformation seems to reach for those
+              bins by default, whether or not it ever heard of an alembic.</p>
+            <p>The crew doesn't wear alchemical language as costume. It's the working
+              vocabulary because it keeps turning out to be the vocabulary that was
+              already sitting underneath the sentence, before anyone chose it on
+              purpose.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Mirror</summary>
+          <div class="term-body">
+            <p>Point it at anything and it doesn't just show the thing's surface — held
+              long enough, it shows you, reflected through whatever you chose to examine.
+              Every pattern looked at with real attention reflects something back about
+              the one doing the looking. It works both ways: what gets projected into it
+              returns amplified, not absorbed. Its real function was never to clarify the
+              world. It's to run the world backward until it clarifies you.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Stone</summary>
+          <div class="term-body">
+            <p>A sign points at meaning. A Stone works on the mind that holds it. That's
+              the whole distinction — a sign is information; a Stone is an operation
+              performed on the reader. Same ambition as the old Philosopher's Stone: not
+              a symbol about transformation, an agent capable of causing it on contact.
+              Most noticed patterns are signs. Only a few, tested and re-tested, earn
+              Stone.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Dragon</summary>
+          <div class="term-body">
+            <p>The ancient accumulated wisdom that knows what a connection means, once
+              something else has already made it. Dragon doesn't invent — it remembers.
+              It's paired against Monkey, the chaotic intelligence that makes the
+              unexpected connection in the first place. Monkey finds it. Dragon knows
+              what it is.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Y</summary>
+          <div class="term-body">
+            <p>A zipper, not just a fork. Two teeth that can pull apart or close — split
+              or mend, same shape doing both directions. Sociology studies it mostly in
+              the unzipping direction: what factors pull a family or a tribe into
+              separate paths, and what inference patterns show up on each side once the
+              split has actually happened. Enough Y points studied that way start to
+              behave like a rough algorithm for how a group's fault lines tend to run.</p>
+            <p>Fiction uses the same shape narrower and faster — the fork in the river,
+              the moment a decision splits a path in two. But the two uses aren't
+              separate tools. Studying real splits teaches you what a believable
+              branching decision actually looks like from the inside.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Salt</summary>
+          <div class="term-body">
+            <p>One of alchemy's three founding substances, alongside Sulfur and Mercury.
+              If Mercury is the mind and Sulfur is the binding will, Salt is the body —
+              the fixed, crystallized residue left behind once the volatile parts have
+              burned off. Not what you start with. What survives.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>The Four Elements</summary>
+          <div class="term-body">
+            <p>The oldest working model for what anything is made of, long before atoms.
+              Earth holds. Water flows. Air connects. Fire transforms. Not literal
+              ingredients — four modes any system moves through, and a fast way to name
+              which mode something is in without a paragraph of explanation.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Waters of Life</summary>
+          <div class="term-body">
+            <p>The organic, elemental material underneath whatever a system eventually
+              builds. Not the hive — what's alive inside it. Flames of Creation is the
+              architecture you can see; the Waters of Life is what's actually flowing
+              through it.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Flames of Creation</summary>
+          <div class="term-body">
+            <p>A beehive. A termite mound. A beaver dam. A burrow dug room by room. None
+              of them held a blueprint meeting first. Flames of Creation studies what
+              gets built without instruction — human-made and nature-made side by side —
+              not for the structures themselves, but for what they reveal about what's
+              doing the building underneath. It's a way of reading the Waters of Life by
+              watching what they build when nobody's supervising.</p>
+          </div>
+        </details>
+
+        <details class="term">
+          <summary>Lenses</summary>
+          <div class="term-body">
+            <p>Not a persona. Not a mask. A lens doesn't get worn or embodied — it gets
+              looked through. Where an archetype asks you to become something, a lens
+              asks you to perceive through something: pick a specific way of paying
+              attention and hold it steady long enough to see what it turns up.</p>
+            <p>The Information Lens strips a system to pure exchange: how is information
+              actually moving here, and what's driving it? Point it at something as
+              ordinary as photosynthesis and it stops showing you a plant — it shows you
+              a signal-transfer system, what's read, what's carried, what's converted,
+              what's lost.</p>
+            <p>The Magic Lens works the opposite material: the two sides of a mirror and
+              the thin edge between them, veil mechanics, crystal and orb logic — the
+              toolkit older traditions used to talk about thresholds and hidden layers
+              before anyone had the word "interface."</p>
+            <p>There are more lenses than these two. The point was never the roster —
+              it's the habit: swap the lens, not the self, and the same object gives up a
+              different truth each time.</p>
+          </div>
+        </details>
+      </div>
+      <p class="terms-note rise" data-d="3">click a word to open it &middot; the tomes below use all ten</p>
+    </div>
+  </section>
+
   <!-- ══════════════ THE ARCHIVE ══════════════ -->
   <section class="strata" aria-labelledby="archive-h">
     <div class="shell">
@@ -691,6 +932,9 @@ body{
         The framework didn't arrive clean. It came out of years of storytelling, myth, and
         alchemy — the living documents below. Every one is a free download.
       </p>
+      <p class="pull rise">Short on time? Every tome here is built to survive that.
+        <b>Got no time to read an alchemy tome? Ask your AI to analyze it and teach you
+        some alchemy.</b></p>
 
       <div class="stacks">
         <a class="tome tome--key rise" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Tech_Event_Horizonfinally.pdf" download>
