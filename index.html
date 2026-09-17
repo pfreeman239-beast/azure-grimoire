@@ -184,6 +184,47 @@ body{
 .reel-tab.is-active{border-color:var(--gold-deep);color:var(--gold)}
 .reel-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
+/* ══ SPOTLIGHT — two new arrivals, big links near the top ═════════ */
+.spotlight{padding-block:var(--band)}
+.spotlight-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));
+  gap:clamp(1.25rem,3vw,2rem);
+  margin-top:clamp(1.75rem,4vh,2.5rem);
+}
+.spot{
+  display:block;text-decoration:none;color:inherit;position:relative;
+  padding:clamp(1.75rem,4vw,2.5rem) clamp(1.5rem,3.5vw,2.1rem);
+  border:1px solid rgba(217,168,92,.24);
+  background:linear-gradient(165deg,rgba(18,21,28,.78),rgba(8,9,13,.94));
+  box-shadow:0 14px 40px rgba(0,0,0,.45);
+  overflow:hidden;
+  transition:border-color .4s ease,box-shadow .4s ease,transform .4s cubic-bezier(.2,.6,.3,1);
+}
+.spot::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 85% -10%,rgba(91,155,232,.16),transparent 55%);
+}
+.spot-k{
+  display:block;margin-bottom:.9rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);
+}
+.spot-t{
+  display:block;margin-bottom:.65rem;
+  font-family:'Cormorant Garamond',serif;font-weight:500;
+  font-size:clamp(1.45rem,2.9vw,1.95rem);line-height:1.14;color:#F4F2EC;
+}
+.spot-d{display:block;font-size:.92rem;line-height:1.62;color:var(--vellum-dim);max-width:40ch}
+.spot-cta{
+  display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+}
+.spot-cta span{display:inline-block;transition:transform .35s ease}
+.spot:hover{border-color:rgba(217,168,92,.55);box-shadow:0 22px 60px rgba(0,0,0,.55);transform:translateY(-4px)}
+.spot:hover .spot-cta span{transform:translateX(5px)}
+.spot:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
 /* ══ VINE DIVIDERS ═══════════════════════════════════════════════
    Each source PNG is 1536×1024 with the vine occupying a measured
    band. The wrapper crops to exactly that band so the divider reads
@@ -521,6 +562,28 @@ body{
 </header>
 
 <main>
+
+  <!-- ══════════════ SPOTLIGHT — the two newest tomes ══════════════ -->
+  <section class="spotlight" aria-labelledby="spotlight-h">
+    <div class="shell">
+      <p class="mark rise">Just arrived</p>
+      <h2 id="spotlight-h" class="display rise" data-d="1">Two new tomes,<br>fresh off the <em>press.</em></h2>
+      <div class="spotlight-grid">
+        <a class="spot rise" data-d="1" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/enkidu-book-one.pdf" download>
+          <span class="spot-k">PDF &middot; Book One of the Enkidu Cycle</span>
+          <span class="spot-t">Enkidu: Shadow of the Past? Echo of the Future? Both.</span>
+          <span class="spot-d">Scenes and essays from the Residue Project — the scenario ladder, the wildling's ethic, and the residue that outlives the body.</span>
+          <span class="spot-cta">Download the PDF <span>&rarr;</span></span>
+        </a>
+        <a class="spot rise" data-d="2" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/The_Collapse_Prints_-_An_Alchemists_Guide_to_What_Survives__Part_One_.pdf" download>
+          <span class="spot-k">PDF &middot; Part One — The Foundation &amp; The Cascade</span>
+          <span class="spot-t">The Collapse Prints: An Alchemist's Guide to What Survives</span>
+          <span class="spot-d">The Zero-Field Cascade, explained — nine stages, one line, and a collapse that doesn't erase. It prints.</span>
+          <span class="spot-cta">Download the PDF <span>&rarr;</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════ THE REEL — video embeds land in .plate ══════════════ -->
   <section class="reel" aria-labelledby="reel-h">
