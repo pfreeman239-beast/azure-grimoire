@@ -185,6 +185,34 @@ body{
 .reel-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ══ SPOTLIGHT — two new arrivals, big links near the top ═════════ */
+/* ── hero: latest-work button ───────────────────────────────────── */
+.latest{
+  display:inline-flex;flex-direction:column;gap:.35rem;
+  margin-top:1.9rem;padding:1rem 1.4rem 1.05rem;
+  text-decoration:none;color:inherit;
+  border:1px solid rgba(217,168,92,.45);
+  background:linear-gradient(165deg,rgba(217,168,92,.12),rgba(8,9,13,.85));
+  box-shadow:0 10px 34px rgba(0,0,0,.45);
+  transition:border-color .35s ease,box-shadow .35s ease,transform .35s cubic-bezier(.2,.6,.3,1);
+}
+.latest-k{
+  font-family:'IBM Plex Mono',monospace;font-size:.64rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);
+}
+.latest-t{
+  font-family:'Cormorant Garamond',serif;font-weight:500;
+  font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.15;color:#F4F2EC;
+}
+.latest-cta{
+  display:inline-flex;align-items:center;gap:.55rem;margin-top:.2rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+}
+.latest-cta span{display:inline-block;transition:transform .35s ease}
+.latest:hover{border-color:var(--gold);box-shadow:0 18px 50px rgba(0,0,0,.55);transform:translateY(-3px)}
+.latest:hover .latest-cta span{transform:translateX(5px)}
+.latest:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
 .spotlight{padding-block:var(--band)}
 .spotlight-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));
@@ -548,6 +576,11 @@ body{
           mystic, the esoteric, and the sciences alike, hunting the same cognitive
           pattern wherever it's hiding. Once a pattern surfaces, its trace becomes the
           search term for finding the same thread in a completely different domain.</p>
+        <a class="latest rise" data-d="3" href="https://raw.githubusercontent.com/pfreeman239-beast/azure-grimoire/main/Gnome_Saga_Book_One_v3_Illustrated.pdf" download>
+          <span class="latest-k">The crew's latest work</span>
+          <span class="latest-t">The Gnome Saga &middot; Book One, Illustrated</span>
+          <span class="latest-cta">Download the PDF <span>&rarr;</span></span>
+        </a>
         <p class="hero-tag rise" data-d="3">The work loops rather than running straight
           through. A pattern found late in one exploration gets carried back to deepen a
           thread already found earlier &mdash; depth builds in passes, not all at
